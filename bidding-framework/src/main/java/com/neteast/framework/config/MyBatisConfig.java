@@ -29,7 +29,7 @@ import com.neteast.common.utils.StringUtils;
  * 
  * @author ruoyi
  */
-@Configuration
+//@Configuration
 public class MyBatisConfig
 {
     @Autowired
