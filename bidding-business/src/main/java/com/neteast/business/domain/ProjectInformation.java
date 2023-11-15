@@ -34,7 +34,7 @@ public class ProjectInformation {
     @TableField("project_type")
     private String projectType ;
 
-    /** 项目状态 */
+    /** 项目状态 1-招标 2-流标 3-结束 */
     @TableField("project_status")
     private Integer projectStatus ;
 
@@ -61,4 +61,31 @@ public class ProjectInformation {
     /** 分包号 */
     @TableField("package_num")
     private String packageNum ;
+
+    /** 招标开始时间 */
+    @TableField("bidding_start_time")
+    private Date biddingStartTime ;
+
+    /** 招标结束时间 */
+    @TableField("bidding_end_time")
+    private Date biddingEndTime ;
+
+    /** 开标时间 */
+    @TableField("bidding_open_time")
+    private Date biddingOpenTime ;
+
+    /** 开标地址 */
+    @TableField("bidding_open_address")
+    private String biddingOpenAddress ;
+
+    /** 招标类型 */
+    @TableField("bidding_type")
+    private String biddingType ;
+
+    /** 项目删除，0-已删除,1-未删除 **/
+    @TableField("project_del")
+    private Integer projectDel;
+
+    @TableField(exist = false)
+    private String failReason;
 }

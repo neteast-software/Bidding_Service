@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 招标代理商
+ * 招标代理商信息
  * @author lzp
  * @date 2023年11月15 11:47
  */
@@ -28,7 +28,7 @@ public class AgencyBiddingController extends BaseController {
     IAgencyBiddingService agencyBiddingService;
 
     @GetMapping("/list")
-    public AjaxResult getAgencyBiddingList(@RequestBody AgencyBidding agencyBidding){
+    public AjaxResult getAgencyBiddingList(AgencyBidding agencyBidding){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
@@ -38,7 +38,6 @@ public class AgencyBiddingController extends BaseController {
         return success(body);
     }
 
-
     @PostMapping("/add")
     public AjaxResult addAgencyBiddingData(@RequestBody AgencyBidding agencyBidding){
         agencyBiddingService.save(agencyBidding);
@@ -46,7 +45,7 @@ public class AgencyBiddingController extends BaseController {
     }
 
     @PostMapping("/del/{id}")
-    public AjaxResult delAgencyBiddingData(@PathVariable String id){
+    public AjaxResult delAgencyBiddingData(@PathVariable Integer id){
         agencyBiddingService.removeById(id);
         return success();
     }

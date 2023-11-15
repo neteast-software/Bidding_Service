@@ -1,7 +1,7 @@
 package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neteast.business.domain.ProjectBiddingMsg;
+import com.neteast.business.domain.FailBiddingMsg;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface ProjectBiddingMsgMapper extends BaseMapper<ProjectBiddingMsg> {
+public interface FailBiddingMsgMapper extends BaseMapper<FailBiddingMsg> {
 }

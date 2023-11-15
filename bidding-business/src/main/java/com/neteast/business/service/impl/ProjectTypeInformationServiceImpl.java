@@ -6,6 +6,8 @@ import com.neteast.business.mapper.ProjectTypeInformationMapper;
 import org.springframework.stereotype.Service;
 import com.neteast.business.service.IProjectTypeInformationService;
 
+import java.util.List;
+
 /**
  * @author lzp
  * @date 2023年11月15 11:56
@@ -13,4 +15,9 @@ import com.neteast.business.service.IProjectTypeInformationService;
 
 @Service
 public class ProjectTypeInformationServiceImpl extends ServiceImpl<ProjectTypeInformationMapper, ProjectTypeInformation> implements IProjectTypeInformationService {
+
+    @Override
+    public List<String> getProjectType(ProjectTypeInformation projectTypeInformation) {
+        return null;
+    }
 }
