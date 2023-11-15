@@ -114,7 +114,7 @@ mybatis-plus:
 
 # PageHelper分页插件
 pagehelper:
-  helperDialect: mysql
+  helperDialect: sqlite
   supportMethodsArguments: true
   params: count=countSql
 
