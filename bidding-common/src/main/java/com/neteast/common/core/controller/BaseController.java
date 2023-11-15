@@ -1,8 +1,11 @@
 package com.neteast.common.core.controller;
 
 import java.beans.PropertyEditorSupport;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import com.alibaba.fastjson2.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -74,6 +77,25 @@ public class BaseController
     protected void clearPage()
     {
         PageUtils.clearPage();
+    }
+
+    /**
+     * 初始化分页参数
+     */
+    protected JSONObject initPageParams(TableDataInfo dataTable, Integer pageSize, Integer pageNum){
+        return initPageParams(new JSONObject(),dataTable,pageSize,pageNum);
+    }
+
+    /**
+     * 初始化分页参数
+     */
+    protected JSONObject initPageParams(JSONObject jsonObject, TableDataInfo dataTable, Integer pageSize, Integer pageNum){
+        jsonObject.put("data", dataTable.getRows());
+        jsonObject.put("total", dataTable.getTotal());
+        jsonObject.put("size", pageSize);
+        jsonObject.put("page", pageNum);
+        jsonObject.put("sizes", Arrays.asList(1,10,20,30,50));
+        return jsonObject;
     }
 
     /**

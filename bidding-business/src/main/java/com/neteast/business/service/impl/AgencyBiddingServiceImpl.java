@@ -7,6 +7,9 @@ import com.neteast.business.domain.AgencyBidding;
 import org.springframework.stereotype.Service;
 import com.neteast.business.service.IAgencyBiddingService;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * @author lzp
  * @date 2023年11月14 13:45
@@ -14,4 +17,12 @@ import com.neteast.business.service.IAgencyBiddingService;
 
 @Service
 public class AgencyBiddingServiceImpl extends ServiceImpl<AgencyBiddingMapper, AgencyBidding> implements IAgencyBiddingService {
+
+    @Resource
+    AgencyBiddingMapper agencyBiddingMapper;
+
+    @Override
+    public List<AgencyBidding> getAgencyBiddingData(AgencyBidding agencyBidding) {
+        return list();
+    }
 }

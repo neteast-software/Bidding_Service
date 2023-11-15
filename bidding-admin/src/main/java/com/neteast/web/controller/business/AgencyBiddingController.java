@@ -1,6 +1,18 @@
 package com.neteast.web.controller.business;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.alibaba.fastjson2.JSONObject;
+import com.neteast.business.domain.AgencyBidding;
+import com.neteast.business.service.IAgencyBiddingService;
+import com.neteast.common.core.controller.BaseController;
+import com.neteast.common.core.domain.AjaxResult;
+import com.neteast.common.core.page.PageDomain;
+import com.neteast.common.core.page.TableDataInfo;
+import com.neteast.common.core.page.TableSupport;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 招标代理商
@@ -9,7 +21,39 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-public class AgencyBiddingController {
+@RequestMapping("/agencyBidding")
+public class AgencyBiddingController extends BaseController {
+
+    @Resource
+    IAgencyBiddingService agencyBiddingService;
+
+    @GetMapping("/list")
+    public AjaxResult getAgencyBiddingList(@RequestBody AgencyBidding agencyBidding){
+
+        startPage();
+        PageDomain pageDomain = TableSupport.getPageDomain();
+        List<AgencyBidding> list = agencyBiddingService.getAgencyBiddingData(agencyBidding);
+        TableDataInfo info = getDataTable(list);
+        JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
+        return success(body);
+    }
 
 
+    @PostMapping("/add")
+    public AjaxResult addAgencyBiddingData(@RequestBody AgencyBidding agencyBidding){
+        agencyBiddingService.save(agencyBidding);
+        return success();
+    }
+
+    @PostMapping("/del/{id}")
+    public AjaxResult delAgencyBiddingData(@PathVariable String id){
+        agencyBiddingService.removeById(id);
+        return success();
+    }
+
+    @PostMapping("/update")
+    public AjaxResult updateAgencyBiddingData(@RequestBody AgencyBidding agencyBidding){
+        agencyBiddingService.updateById(agencyBidding);
+        return success();
+    }
 }
