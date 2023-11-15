@@ -8,10 +8,9 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +39,7 @@ public class AgencyBiddingController extends BaseController {
 
     @PostMapping("/add")
     public AjaxResult addAgencyBiddingData(@RequestBody AgencyBidding agencyBidding){
+        agencyBidding.setCreateTime(new Date());
         agencyBiddingService.save(agencyBidding);
         return success();
     }
@@ -52,6 +52,7 @@ public class AgencyBiddingController extends BaseController {
 
     @PostMapping("/update")
     public AjaxResult updateAgencyBiddingData(@RequestBody AgencyBidding agencyBidding){
+        agencyBidding.setUpdateTime(new Date());
         agencyBiddingService.updateById(agencyBidding);
         return success();
     }

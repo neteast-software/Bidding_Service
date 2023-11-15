@@ -1,5 +1,6 @@
 package com.neteast.common.filter;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -40,6 +41,18 @@ public class RepeatableFilter implements Filter
         }
         else
         {
+            BufferedReader reader = requestWrapper.getReader();
+            StringBuilder builder = new StringBuilder();
+            String line = reader.readLine();
+            while(line != null){
+                builder.append(line);
+                line = reader.readLine();
+            }
+            reader.close();
+
+            String reqBody = builder.toString();
+            System.out.println("请求体参数:" + reqBody);
+
             chain.doFilter(requestWrapper, response);
         }
     }

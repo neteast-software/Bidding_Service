@@ -1,11 +1,14 @@
 package com.neteast.business.domain;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * 招标公司

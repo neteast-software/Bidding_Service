@@ -41,6 +41,8 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         if (projectInformation.getProjectStatus()==2){
             FailBiddingMsg failBiddingMsg = FailBiddingMsg.convert(projectInformation);
             failBiddingMsgService.addProjectBiddingMsgData(failBiddingMsg);
+            int count = projectInformation.getFailBiddingCount()+1;
+            projectInformation.setFailBiddingCount(count);
             this.updateById(projectInformation);
         }else if (projectInformation.getProjectStatus()==3){
             //设置中标公司信息
@@ -53,7 +55,9 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
     @Transactional(rollbackFor = Exception.class)
     public boolean addProjectInformation(ProjectInformation projectInformation) {
         ProjectTypeInformation information = ProjectTypeInformation.convert(projectInformation);
-        projectTypeInformationService.save(information);
+        if (projectInformation.getParentId()==null){
+            projectTypeInformationService.save(information);
+        }
         return save(projectInformation);
     }
 }

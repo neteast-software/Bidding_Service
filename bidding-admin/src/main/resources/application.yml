@@ -111,6 +111,8 @@ token:
 mybatis-plus:
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   typeAliasesPackage: com.neteast.**.domain
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # PageHelper分页插件
 pagehelper:
