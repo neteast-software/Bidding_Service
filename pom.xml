@@ -191,6 +191,13 @@
                 <version>${bidding.version}</version>
             </dependency>
 
+            <!-- 业务代码 -->
+            <dependency>
+                <groupId>com.neteast</groupId>
+                <artifactId>bidding-business</artifactId>
+                <version>${bidding.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -201,6 +208,7 @@
         <module>bidding-quartz</module>
         <module>bidding-generator</module>
         <module>bidding-common</module>
+        <module>bidding-business</module>
     </modules>
     <packaging>pom</packaging>
 

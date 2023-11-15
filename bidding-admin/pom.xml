@@ -67,6 +67,12 @@
             <artifactId>bidding-generator</artifactId>
         </dependency>
 
+        <!-- 业务代码 -->
+        <dependency>
+            <groupId>com.neteast</groupId>
+            <artifactId>bidding-business</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

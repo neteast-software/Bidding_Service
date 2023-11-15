@@ -1,4 +1,4 @@
-package com.neteast.system.domain.bidding;
+package domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
