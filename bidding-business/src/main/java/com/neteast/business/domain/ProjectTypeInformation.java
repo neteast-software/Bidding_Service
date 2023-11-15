@@ -37,5 +37,14 @@ public class ProjectTypeInformation extends BaseEntity {
     @TableField("project_name")
     private String projectName ;
 
+    public static ProjectTypeInformation convert(ProjectInformation project){
+        ProjectTypeInformation type = new ProjectTypeInformation();
+        type.setProjectType(project.getProjectType());
+        type.setPartyaId(project.getPartyaId());
+        type.setProjectId(project.getId());
+        type.setPartyaName(project.getCompanyName());
+        type.setProjectName(project.getProjectName());
+        return type;
+    }
 
 }

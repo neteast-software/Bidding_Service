@@ -14,4 +14,6 @@ public interface IProjectInformationService extends IService<ProjectInformation>
     List<ProjectInformation> getProjectInformationList(ProjectInformation projectInformation);
 
     boolean updateProjectInformation(ProjectInformation projectInformation);
+
+    boolean addProjectInformation(ProjectInformation projectInformation);
 }

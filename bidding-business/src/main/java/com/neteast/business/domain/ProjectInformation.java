@@ -82,6 +82,9 @@ public class ProjectInformation {
     @TableField("bidding_type")
     private String biddingType ;
 
+    @TableField("company_name")
+    private String companyName;
+
     /** 项目删除，0-已删除,1-未删除 **/
     @TableField("project_del")
     private Integer projectDel;

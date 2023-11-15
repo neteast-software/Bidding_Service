@@ -40,7 +40,7 @@ public class ProjectInformationController extends BaseController {
 
     @PostMapping("/add")
     public AjaxResult addProjectInformationData(@RequestBody ProjectInformation projectInformation){
-        projectInformationService.save(projectInformation);
+        projectInformationService.addProjectInformation(projectInformation);
         return success();
     }
 
