@@ -1,11 +1,11 @@
-package service.impl;
+package com.neteast.business.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import domain.AgencyBidding;
-import mapper.AgencyBiddingMapper;
+import com.neteast.business.mapper.AgencyBiddingMapper;
+import com.neteast.business.domain.AgencyBidding;
 import org.springframework.stereotype.Service;
-import service.IAgencyBiddingService;
+import com.neteast.business.service.IAgencyBiddingService;
 
 /**
  * @author lzp

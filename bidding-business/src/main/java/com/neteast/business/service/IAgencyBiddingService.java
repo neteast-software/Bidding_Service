@@ -1,8 +1,8 @@
-package service;
+package com.neteast.business.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import domain.AgencyBidding;
+import com.neteast.business.domain.AgencyBidding;
 
 /**
  * @author lzp

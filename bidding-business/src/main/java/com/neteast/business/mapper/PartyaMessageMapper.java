@@ -1,7 +1,7 @@
-package mapper;
+package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import domain.PartyaMessage;
+import com.neteast.business.domain.PartyaMessage;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
