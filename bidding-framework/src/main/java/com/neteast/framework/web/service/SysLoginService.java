@@ -29,6 +29,8 @@ import com.neteast.framework.security.context.AuthenticationContextHolder;
 import com.neteast.system.service.ISysConfigService;
 import com.neteast.system.service.ISysUserService;
 
+import java.util.Date;
+
 /**
  * 登录校验方法
  * 
@@ -64,7 +66,7 @@ public class SysLoginService
     public String login(String username, String password, String code, String uuid)
     {
         // 验证码校验
-        validateCaptcha(username, code, uuid);
+        //validateCaptcha(username, code, uuid);
         // 登录前置校验
         loginPreCheck(username, password);
         // 用户验证
@@ -176,6 +178,7 @@ public class SysLoginService
         sysUser.setUserId(userId);
         sysUser.setLoginIp(IpUtils.getIpAddr());
         sysUser.setLoginDate(DateUtils.getNowDate());
+        sysUser.setUpdateTime(new Date());
         userService.updateUserProfile(sysUser);
     }
 }
