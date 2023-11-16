@@ -61,13 +61,13 @@ public class FailBiddingMsg extends BaseEntity {
     private String failReason;
 
     public static FailBiddingMsg convert(ProjectInformation projectInformation){
-        System.out.println(projectInformation);
         FailBiddingMsg failBiddingMsg = new FailBiddingMsg();
         BeanUtil.copyProperties(projectInformation,failBiddingMsg);
+        failBiddingMsg.setId(null);
         failBiddingMsg.setExtProjectId(projectInformation.getId());
         failBiddingMsg.setCompanyName(projectInformation.getPartyaName());
-        failBiddingMsg.setId(null);
         failBiddingMsg.setCreateTime(new Date());
+        failBiddingMsg.setCreateBy(projectInformation.getUpdateBy());
         return failBiddingMsg;
     }
 }

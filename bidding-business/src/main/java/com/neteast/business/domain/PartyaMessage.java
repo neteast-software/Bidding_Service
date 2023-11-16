@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
@@ -14,7 +15,7 @@ import lombok.Data;
 
 @Data
 @TableName("partya_message")
-public class PartyaMessage {
+public class PartyaMessage extends BaseEntity {
 
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id ;

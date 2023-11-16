@@ -8,9 +8,11 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
+import com.neteast.common.utils.SecurityUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +41,8 @@ public class PartyaMessageController extends BaseController {
 
     @PostMapping("/add")
     public AjaxResult addPartyAMessageData(@RequestBody PartyaMessage partyaMessage){
+        partyaMessage.setCreateTime(new Date());
+        partyaMessage.setCreateBy(SecurityUtils.getUsername());
         partyaMessageService.save(partyaMessage);
         return success();
     }
@@ -51,6 +55,8 @@ public class PartyaMessageController extends BaseController {
 
     @PostMapping("/update")
     public AjaxResult updatePartyAMessage(@RequestBody PartyaMessage partyaMessage){
+        partyaMessage.setUpdateBy(SecurityUtils.getUsername());
+        partyaMessage.setUpdateTime(new Date());
         partyaMessageService.updateById(partyaMessage);
         return success();
     }

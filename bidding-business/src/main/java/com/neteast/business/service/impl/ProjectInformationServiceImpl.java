@@ -7,6 +7,7 @@ import com.neteast.business.domain.ProjectTypeInformation;
 import com.neteast.business.mapper.ProjectInformationMapper;
 import com.neteast.business.service.IFailBiddingMsgService;
 import com.neteast.business.service.IProjectTypeInformationService;
+import com.neteast.common.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 import com.neteast.business.service.IProjectInformationService;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,7 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
     public boolean updateProjectInformation(ProjectInformation projectInformation) {
 
         projectInformation.setUpdateTime(new Date());
+        projectInformation.setUpdateBy(SecurityUtils.getUsername());
         if (projectInformation.getProjectStatus()==2){
             ProjectInformation info = lambdaQuery().eq(ProjectInformation::getId,projectInformation.getId()).one();
             info.setFailReason(projectInformation.getFailReason());
@@ -62,6 +64,7 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         List<ProjectInformation> list = lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
         if (list.size()==0){
             projectInformation.setCreateTime(new Date());
+            projectInformation.setCreateBy(SecurityUtils.getUsername());
             save(projectInformation);
             List<ProjectInformation> temp = this.lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
             if (projectInformation.getParentId()==null&&temp.size()==1){

@@ -46,8 +46,8 @@ public class ProjectTypeInformation extends BaseEntity {
         type.setProjectId(project.getId());
         type.setPartyaName(project.getPartyaName());
         type.setProjectName(project.getProjectName());
-        type.setUpdateTime(new Date());
         type.setCreateTime(new Date());
+        type.setCreateBy(project.getCreateBy());
         return type;
     }
 

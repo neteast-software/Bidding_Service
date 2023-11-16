@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
+ * 项目类型相关信息
  * @author lzp
  * @date 2023年11月15 11:51
  */
