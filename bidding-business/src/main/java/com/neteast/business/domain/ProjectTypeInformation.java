@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author lzp
  * @date 2023年11月15 11:21
@@ -42,8 +44,10 @@ public class ProjectTypeInformation extends BaseEntity {
         type.setProjectType(project.getProjectType());
         type.setPartyaId(project.getPartyaId());
         type.setProjectId(project.getId());
-        type.setPartyaName(project.getCompanyName());
+        type.setPartyaName(project.getPartyaName());
         type.setProjectName(project.getProjectName());
+        type.setUpdateTime(new Date());
+        type.setCreateTime(new Date());
         return type;
     }
 

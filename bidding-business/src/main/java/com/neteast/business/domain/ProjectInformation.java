@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -15,8 +19,9 @@ import java.util.Date;
  */
 
 @Data
+@ToString
 @TableName("project_information")
-public class ProjectInformation {
+public class ProjectInformation extends BaseEntity {
 
     /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
@@ -46,6 +51,9 @@ public class ProjectInformation {
     @TableField("amount")
     private Double amount ;
 
+    @TableField("partya_name")
+    private String partyaName;
+
     /** 对应甲方id */
     @TableField("partya_id")
     private Integer partyaId ;
@@ -64,14 +72,17 @@ public class ProjectInformation {
 
     /** 招标开始时间 */
     @TableField("bidding_start_time")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date biddingStartTime ;
 
     /** 招标结束时间 */
     @TableField("bidding_end_time")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date biddingEndTime ;
 
     /** 开标时间 */
     @TableField("bidding_open_time")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date biddingOpenTime ;
 
     /** 开标地址 */
@@ -81,9 +92,6 @@ public class ProjectInformation {
     /** 招标类型 */
     @TableField("bidding_type")
     private String biddingType ;
-
-    @TableField("company_name")
-    private String companyName;
 
     /** 项目删除，0-已删除,1-未删除 **/
     @TableField("project_del")
