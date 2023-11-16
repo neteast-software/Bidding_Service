@@ -68,6 +68,8 @@ public class FailBiddingMsg extends BaseEntity {
         failBiddingMsg.setCompanyName(projectInformation.getPartyaName());
         failBiddingMsg.setCreateTime(new Date());
         failBiddingMsg.setCreateBy(projectInformation.getUpdateBy());
+        failBiddingMsg.setUpdateTime(null);
+        failBiddingMsg.setUpdateBy(null);
         return failBiddingMsg;
     }
 }

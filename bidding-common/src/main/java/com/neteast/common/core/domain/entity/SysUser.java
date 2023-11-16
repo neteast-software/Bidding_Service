@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.ToString;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.neteast.common.annotation.Excel;
@@ -13,12 +15,15 @@ import com.neteast.common.annotation.Excel.Type;
 import com.neteast.common.annotation.Excels;
 import com.neteast.common.core.domain.BaseEntity;
 import com.neteast.common.xss.Xss;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 用户对象 sys_user
  * 
  * @author ruoyi
  */
+
+@Data
 public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -70,7 +75,7 @@ public class SysUser extends BaseEntity
 
     /** 最后登录时间 */
     @Excel(name = "最后登录时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date loginDate;
 
     /** 部门对象 */

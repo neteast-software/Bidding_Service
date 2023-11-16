@@ -25,9 +25,6 @@ public class FailBiddingMsgServiceImpl extends ServiceImpl<FailBiddingMsgMapper,
 
     @Override
     public boolean addProjectBiddingMsgData(FailBiddingMsg failBiddingMsg) {
-
-        failBiddingMsg.setCreateTime(new Date());
-        failBiddingMsg.setUpdateTime(new Date());
         return save(failBiddingMsg);
     }
 }
