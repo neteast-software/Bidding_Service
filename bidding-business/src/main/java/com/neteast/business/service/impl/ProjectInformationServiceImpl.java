@@ -54,10 +54,13 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addProjectInformation(ProjectInformation projectInformation) {
-        ProjectTypeInformation information = ProjectTypeInformation.convert(projectInformation);
-        if (projectInformation.getParentId()==null){
+
+        save(projectInformation);
+        List<ProjectInformation> temp = this.lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
+        if (projectInformation.getParentId()==null&&temp.size()==0){
+            ProjectTypeInformation information = ProjectTypeInformation.convert(projectInformation);
             projectTypeInformationService.save(information);
         }
-        return save(projectInformation);
+        return true;
     }
 }
