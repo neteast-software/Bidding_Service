@@ -1,9 +1,8 @@
 package com.neteast.web.controller.business;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.neteast.business.domain.ProjectInformation;
-import com.neteast.business.domain.ProjectTypeInformation;
-import com.neteast.business.service.IProjectInformationService;
+import com.neteast.business.domain.project.ProjectInformation;
+import com.neteast.business.domain.project.ProjectTypeInformation;
 import com.neteast.business.service.IProjectTypeInformationService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;

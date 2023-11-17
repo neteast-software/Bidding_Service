@@ -2,7 +2,7 @@ package com.neteast.business.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.neteast.business.domain.AgencyBidding;
+import com.neteast.business.domain.custom.AgencyBidding;
 
 import java.util.List;
 

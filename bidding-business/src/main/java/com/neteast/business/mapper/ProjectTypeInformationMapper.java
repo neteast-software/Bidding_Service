@@ -1,7 +1,7 @@
 package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neteast.business.domain.ProjectTypeInformation;
+import com.neteast.business.domain.project.ProjectTypeInformation;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

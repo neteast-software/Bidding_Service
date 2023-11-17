@@ -1,4 +1,4 @@
-package com.neteast.business.domain;
+package com.neteast.business.domain.custom;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -43,5 +43,8 @@ public class AgencyBidding extends BaseEntity {
 
     @TableField("enpower_message")
     private String enPowerMsg;
+
+    @TableField("company_net")
+    private String companyNet;
 
 }

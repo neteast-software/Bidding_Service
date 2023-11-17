@@ -1,7 +1,7 @@
 package com.neteast.web.controller.business;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.neteast.business.domain.FailBiddingMsg;
+import com.neteast.business.domain.project.FailBiddingMsg;
 import com.neteast.business.service.IFailBiddingMsgService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -11,7 +11,6 @@ import com.neteast.common.core.page.TableSupport;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /**

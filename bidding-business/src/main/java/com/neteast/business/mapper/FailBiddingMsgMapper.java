@@ -1,7 +1,7 @@
 package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neteast.business.domain.FailBiddingMsg;
+import com.neteast.business.domain.project.FailBiddingMsg;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

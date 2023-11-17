@@ -1,7 +1,7 @@
 package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.neteast.business.domain.PartyaMessage;
+import com.neteast.business.domain.custom.PartyaMessage;
 
 import java.util.List;
 

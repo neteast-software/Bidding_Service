@@ -1,4 +1,4 @@
-package com.neteast.business.domain;
+package com.neteast.business.domain.project;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -24,33 +24,17 @@ public class FailBiddingMsg extends BaseEntity {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id ;
 
-    /** 招标开始时间 */
-    @TableField("bidding_start_time")
-    private Date biddingStartTime ;
-
-    /** 招标结束时间 */
-    @TableField("bidding_end_time")
-    private Date biddingEndTime ;
-
-    /** 招标类型 */
-    @TableField("bidding_type")
-    private String biddingType ;
-
-    /** 开标时间 */
-    @TableField("bidding_open_time")
-    private Date biddingOpenTime ;
-
-    /** 开标地址 */
-    @TableField("bidding_open_address")
-    private String biddingOpenAddress ;
-
     /** 项目id */
     @TableField("ext_project_id")
     private Integer extProjectId ;
 
-    /** 项目名称 */
+    /** 项目名称 **/
     @TableField("project_name")
     private String projectName;
+
+    /** 采购类型 */
+    @TableField("procure_type")
+    private String procureType;
 
     /** 公司名称 */
     @TableField("company_name")
@@ -65,7 +49,6 @@ public class FailBiddingMsg extends BaseEntity {
         BeanUtil.copyProperties(projectInformation,failBiddingMsg);
         failBiddingMsg.setId(null);
         failBiddingMsg.setExtProjectId(projectInformation.getId());
-        failBiddingMsg.setCompanyName(projectInformation.getPartyaName());
         failBiddingMsg.setCreateTime(new Date());
         failBiddingMsg.setCreateBy(projectInformation.getUpdateBy());
         failBiddingMsg.setUpdateTime(null);

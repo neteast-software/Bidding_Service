@@ -1,7 +1,7 @@
 package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.neteast.business.domain.ProjectTypeInformation;
+import com.neteast.business.domain.project.ProjectTypeInformation;
 
 import java.util.List;
 

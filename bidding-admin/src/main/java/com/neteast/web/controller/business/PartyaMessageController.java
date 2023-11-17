@@ -1,7 +1,7 @@
 package com.neteast.web.controller.business;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.neteast.business.domain.PartyaMessage;
+import com.neteast.business.domain.custom.PartyaMessage;
 import com.neteast.business.service.IPartyaMessageService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;

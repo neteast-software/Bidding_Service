@@ -1,9 +1,9 @@
 package com.neteast.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.neteast.business.domain.FailBiddingMsg;
-import com.neteast.business.domain.ProjectInformation;
-import com.neteast.business.domain.ProjectTypeInformation;
+import com.neteast.business.domain.project.FailBiddingMsg;
+import com.neteast.business.domain.project.ProjectInformation;
+import com.neteast.business.domain.project.ProjectTypeInformation;
 import com.neteast.business.mapper.ProjectInformationMapper;
 import com.neteast.business.service.IFailBiddingMsgService;
 import com.neteast.business.service.IProjectTypeInformationService;
@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author lzp
@@ -44,7 +43,6 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         projectInformation.setUpdateBy(SecurityUtils.getUsername());
         if (projectInformation.getProjectStatus()==2){
             ProjectInformation info = lambdaQuery().eq(ProjectInformation::getId,projectInformation.getId()).one();
-            info.setFailReason(projectInformation.getFailReason());
             FailBiddingMsg failBiddingMsg = FailBiddingMsg.convert(info);
             failBiddingMsgService.addProjectBiddingMsgData(failBiddingMsg);
             int count = info.getFailBiddingCount()+1;
@@ -67,7 +65,7 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
             projectInformation.setCreateBy(SecurityUtils.getUsername());
             save(projectInformation);
             List<ProjectInformation> temp = this.lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
-            if (projectInformation.getParentId()==null&&temp.size()==1){
+            if (temp.size()==1){
                 ProjectTypeInformation information = ProjectTypeInformation.convert(projectInformation);
                 projectTypeInformationService.save(information);
             }

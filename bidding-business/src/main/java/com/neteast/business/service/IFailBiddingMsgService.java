@@ -1,7 +1,7 @@
 package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.neteast.business.domain.FailBiddingMsg;
+import com.neteast.business.domain.project.FailBiddingMsg;
 
 import java.util.List;
 

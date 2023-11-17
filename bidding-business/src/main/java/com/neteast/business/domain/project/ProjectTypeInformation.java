@@ -1,4 +1,4 @@
-package com.neteast.business.domain;
+package com.neteast.business.domain.project;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -19,17 +19,13 @@ public class ProjectTypeInformation extends BaseEntity {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id ;
 
-    /** 项目类型 */
-    @TableField("project_type")
-    private String projectType ;
+    /** 项目id */
+    @TableField("project_id")
+    private Integer projectId ;
 
     /** 甲方公司id */
     @TableField("partya_id")
     private Integer partyaId ;
-
-    /** 项目id */
-    @TableField("project_id")
-    private Integer projectId ;
 
     /** 甲方公司名称 */
     @TableField("partya_name")
@@ -39,12 +35,15 @@ public class ProjectTypeInformation extends BaseEntity {
     @TableField("project_name")
     private String projectName ;
 
+    /** 项目类型 */
+    @TableField("project_type")
+    private String projectType ;
+
     public static ProjectTypeInformation convert(ProjectInformation project){
         ProjectTypeInformation type = new ProjectTypeInformation();
         type.setProjectType(project.getProjectType());
         type.setPartyaId(project.getPartyaId());
         type.setProjectId(project.getId());
-        type.setPartyaName(project.getPartyaName());
         type.setProjectName(project.getProjectName());
         type.setCreateTime(new Date());
         type.setCreateBy(project.getCreateBy());
