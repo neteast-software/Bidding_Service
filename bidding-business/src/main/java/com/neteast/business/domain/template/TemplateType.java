@@ -8,7 +8,7 @@ import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
- * 模板类型数据
+ * (母)模板类型数据
  * @author lzp
  * @date 2023年11月17 13:37
  */
