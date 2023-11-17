@@ -10,35 +10,32 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 甲方信息
+ * 供应商信息
  * @author lzp
- * @date 2023年11月14 10:51
+ * @date 2023年11月17 11:41
  */
 
 @Data
-@TableName("project_message")
-public class PartyaMessage extends BaseEntity {
+@TableName("supplier_message")
+public class SupplierMessage extends BaseEntity {
 
+    /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    /** 公司名称 */
+    /** 供应商名称 */
     @TableField("name")
     private String name;
 
-    /** 公司类型 */
-    @TableField("type")
-    private String type;
+    /** 入账方式 */
+    @TableField("entry_method")
+    private String entryMethod;
 
-    /** 公司所在地 */
-    @TableField("address")
-    private String address;
+    /** 报名时间 */
+    @TableField("register_time")
+    private Date registerTime;
 
-    @TableField("postcode")
-    private String postcode;
-
-    /** 公司法人 */
-    @TableField("legal_person")
-    private String legalPerson;
-
+    /** 保证金情况 */
+    @TableField("earnest_money")
+    private String earnestMoney;
 }
