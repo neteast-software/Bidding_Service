@@ -40,7 +40,7 @@ public class WorkPlaceNameController extends BaseController {
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<WorkPlaceName> list = workPlaceNameService.getWorkPlaceNameList(workPlaceName);
-        List<AgentMessageVO> voList = new ArrayList<>();
+        List<WorkPlaceName> voList = new ArrayList<>();
         list.forEach(one->{
 //            AgentMessageVO temp = AgentMessageVO.convert(one);
 //            BankMessage bankMessage = BankMessage.builder().extId(one.getId()).type(2).build();
