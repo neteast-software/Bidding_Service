@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ExpertMessageMapper">
+
+    <resultMap type="com.neteast.business.domain.custom.ExpertMessage" id="ExpertMessageMap">
+        <result property="id" column="id" jdbcType="Integer"/>
+        <result property="contractPhone" column="contract_phone" jdbcType="String"/>
+        <result property="industry" column="industry" jdbcType="String"/>
+        <result property="workAddr" column="work_addr" jdbcType="String"/>
+        <result property="name" column="name" jdbcType="String"/>
+        <result property="identityNumber" column="identity_number" jdbcType="String"/>
+        <result property="age" column="age" jdbcType="Integer"/>
+        <result property="address" column="address" jdbcType="String"/>
+        <result property="createBy" column="create_by" jdbcType="String"/>
+        <result property="createTime" column="create_time" jdbcType="Date"/>
+        <result property="updateBy" column="update_by" jdbcType="String"/>
+        <result property="updateTime" column="update_time" jdbcType="Date"/>
+    </resultMap>
+
+    <select id="getList" resultMap="ExpertMessageMap" >
+        select
+            id,contract_phone,industry,work_addr,name,identity_number,age,address,create_by,create_time,update_by,update_time
+        from expert_message
+        <where>
+            <if test="contractPhone != null and contractPhone != ''">
+                and contract_phone = #{contractPhone}
+            </if>
+            <if test="industry != null and industry != ''">
+                and industry = #{industry}
+            </if>
+            <if test="workAddr != null and workAddr != ''">
+                and work_addr = #{workAddr}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="identityNumber != null and identityNumber != ''">
+                and identity_number = #{identityNumber}
+            </if>
+            <if test="age != null and age != ''">
+                and age = #{age}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>

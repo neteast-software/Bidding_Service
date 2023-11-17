@@ -1,4 +1,4 @@
-package com.neteast.business.domain.custom;
+package com.neteast.business.domain.project;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -10,7 +10,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 供应商信息
+ * 甲方供应商信息
  * @author lzp
  * @date 2023年11月17 11:41
  */
@@ -22,6 +22,14 @@ public class SupplierMessage extends BaseEntity {
     /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
+
+    /** 项目id */
+    @TableField("project_id")
+    private Integer projectId;
+
+    /** 是否推荐 **/
+    @TableField("recommend")
+    private String recommend;
 
     /** 供应商名称 */
     @TableField("name")

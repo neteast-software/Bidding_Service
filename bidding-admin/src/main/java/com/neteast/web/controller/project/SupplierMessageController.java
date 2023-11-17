@@ -1,9 +1,9 @@
-package com.neteast.web.controller.business;
+package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.neteast.business.domain.project.ProjectInformation;
-import com.neteast.business.domain.project.ProjectTypeInformation;
-import com.neteast.business.service.IProjectTypeInformationService;
+import com.neteast.business.domain.custom.AgencyBidding;
+import com.neteast.business.domain.project.SupplierMessage;
+import com.neteast.business.service.ISupplierMessageService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -17,27 +17,28 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 项目类型相关信息
+ * 甲方供应商信息
  * @author lzp
- * @date 2023年11月15 11:51
+ * @date 2023年11月17 16:33
  */
 
 @RestController
-@RequestMapping("/projectTypeInformation")
-public class ProjectTypeInformationController extends BaseController {
+@RequestMapping("/supplierMessage")
+public class SupplierMessageController extends BaseController {
 
     @Resource
-    IProjectTypeInformationService projectTypeInformationService;
+    ISupplierMessageService supplierMessageService;
 
     @GetMapping("/list")
-    public AjaxResult getProjectTypeInformationList(ProjectInformation projectInformation){
+    public AjaxResult getSupplierMessageList(SupplierMessage supplierMessage){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<ProjectTypeInformation> list = projectTypeInformationService.list();
+        List<SupplierMessage> list = supplierMessageService.getSupplierMessageList(supplierMessage);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
     }
+
 
 }

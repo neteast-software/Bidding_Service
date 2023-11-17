@@ -1,4 +1,4 @@
-package com.neteast.web.controller.business;
+package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.FailBiddingMsg;
