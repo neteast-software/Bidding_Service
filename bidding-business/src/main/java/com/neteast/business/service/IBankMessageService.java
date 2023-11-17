@@ -17,4 +17,11 @@ public interface IBankMessageService extends IService<BankMessage> {
      * @Date 2023/11/17
      */
     List<BankMessage> getBankMessageByType(BankMessage bankMessage);
+
+    /**
+     * @Description
+     * @author lzp
+     * @Date 2023/11/17
+     */
+    List<BankMessage> getBankMessageList(BankMessage bankMessage);
 }

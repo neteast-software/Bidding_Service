@@ -18,4 +18,11 @@ public interface IContractMessageService extends IService<ContractMessage> {
      */
     List<ContractMessage> getContractMessageByType(ContractMessage contractMessage);
 
+    /**
+     * @Description 获取联系方式信息
+     * @author lzp
+     * @Date 2023/11/17
+     */
+    List<ContractMessage> getContractMessageList(ContractMessage contractMessage);
+
 }

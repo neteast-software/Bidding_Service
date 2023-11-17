@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface AgencyBiddingMapper extends BaseMapper<AgentMessage> {
+public interface AgentMessageMapper extends BaseMapper<AgentMessage> {
 }

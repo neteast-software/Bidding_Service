@@ -10,7 +10,7 @@ import java.util.List;
  * @author lzp
  * @date 2023年11月14 13:44
  */
-public interface IAgencyBiddingService extends IService<AgentMessage> {
+public interface IAgentMessageService extends IService<AgentMessage> {
 
     List<AgentMessage> getAgencyBiddingData(AgentMessage agentMessage);
 }

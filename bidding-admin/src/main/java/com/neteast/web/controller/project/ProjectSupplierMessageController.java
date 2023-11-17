@@ -2,7 +2,7 @@ package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.ProjectSupplierMessage;
-import com.neteast.business.service.ISupplierMessageService;
+import com.neteast.business.service.IProjectSupplierMessageService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -22,11 +22,11 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/supplierMessage")
-public class SupplierMessageController extends BaseController {
+@RequestMapping("/projectSupplierMessage")
+public class ProjectSupplierMessageController extends BaseController {
 
     @Resource
-    ISupplierMessageService supplierMessageService;
+    IProjectSupplierMessageService supplierMessageService;
 
     @GetMapping("/list")
     public AjaxResult getSupplierMessageList(ProjectSupplierMessage projectSupplierMessage){

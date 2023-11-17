@@ -6,6 +6,7 @@ import com.neteast.business.mapper.ContractMessageMapper;
 import com.neteast.business.service.IContractMessageService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,11 +17,17 @@ import java.util.List;
 @Service
 public class ContractMessageServiceImpl extends ServiceImpl<ContractMessageMapper, ContractMessage> implements IContractMessageService {
 
+    @Resource
+    ContractMessageMapper contractMessageMapper;
+
     @Override
     public List<ContractMessage> getContractMessageByType(ContractMessage contractMessage) {
         return lambdaQuery().eq(ContractMessage::getType,contractMessage.getType())
                 .eq(ContractMessage::getExtId,contractMessage.getExtId()).list();
     }
 
-
+    @Override
+    public List<ContractMessage> getContractMessageList(ContractMessage contractMessage) {
+        return contractMessageMapper.getList(contractMessage);
+    }
 }

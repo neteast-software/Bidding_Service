@@ -2,7 +2,12 @@ package com.neteast.web.controller.custom;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.custom.AgentMessage;
-import com.neteast.business.service.IAgencyBiddingService;
+import com.neteast.business.domain.custom.BankMessage;
+import com.neteast.business.domain.custom.ContractMessage;
+import com.neteast.business.domain.custom.vo.AgentMessageVO;
+import com.neteast.business.service.IAgentMessageService;
+import com.neteast.business.service.IBankMessageService;
+import com.neteast.business.service.IContractMessageService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -11,6 +16,7 @@ import com.neteast.common.core.page.TableSupport;
 import com.neteast.common.utils.SecurityUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,10 +28,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/agencyBidding")
-public class AgencyBiddingController extends BaseController {
+public class AgentMessageController extends BaseController {
 
     @Resource
-    IAgencyBiddingService agencyBiddingService;
+    IAgentMessageService agencyBiddingService;
+
+    @Resource
+    IContractMessageService contractMessageService;
+
+    @Resource
+    IBankMessageService bankMessageService;
 
     @GetMapping("/list")
     public AjaxResult getAgencyBiddingList(AgentMessage agentMessage){
@@ -33,15 +45,22 @@ public class AgencyBiddingController extends BaseController {
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<AgentMessage> list = agencyBiddingService.getAgencyBiddingData(agentMessage);
-        TableDataInfo info = getDataTable(list);
+        List<AgentMessageVO> voList = new ArrayList<>();
+        list.forEach(one->{
+            AgentMessageVO temp = AgentMessageVO.convert(one);
+            BankMessage bankMessage = BankMessage.builder().extId(one.getId()).type(2).build();
+            ContractMessage contractMessage = ContractMessage.builder().extId(one.getId()).type(2).build();
+            temp.setBankMessages(bankMessageService.getBankMessageByType(bankMessage));
+            temp.setContractMessages(contractMessageService.getContractMessageByType(contractMessage));
+            voList.add(temp);
+        });
+        TableDataInfo info = getDataTable(voList);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
     }
 
     @PostMapping("/add")
     public AjaxResult addAgencyBiddingData(@RequestBody AgentMessage agentMessage){
-        agentMessage.setCreateTime(new Date());
-        agentMessage.setCreateBy(SecurityUtils.getUsername());
         agencyBiddingService.save(agentMessage);
         return success();
     }
@@ -54,8 +73,6 @@ public class AgencyBiddingController extends BaseController {
 
     @PostMapping("/update")
     public AjaxResult updateAgencyBiddingData(@RequestBody AgentMessage agentMessage){
-        agentMessage.setUpdateTime(new Date());
-        agentMessage.setUpdateBy(SecurityUtils.getUsername());
         agencyBiddingService.updateById(agentMessage);
         return success();
     }

@@ -18,7 +18,7 @@ import lombok.Data;
 public class AgentMessage extends BaseEntity {
 
     @TableId(value = "id",type = IdType.AUTO)
-    private Long id;
+    private Integer id;
 
     @TableField("company_name")
     private String companyName;

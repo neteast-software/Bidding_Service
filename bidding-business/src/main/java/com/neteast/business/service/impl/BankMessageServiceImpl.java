@@ -7,6 +7,7 @@ import com.neteast.business.mapper.BankMessageMapper;
 import com.neteast.business.service.IBankMessageService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,6 +18,9 @@ import java.util.List;
 @Service
 public class BankMessageServiceImpl extends ServiceImpl<BankMessageMapper, BankMessage> implements IBankMessageService {
 
+    @Resource
+    BankMessageMapper bankMessageMapper;
+
     @Override
     public List<BankMessage> getBankMessageByType(BankMessage bankMessage) {
 
@@ -26,5 +30,10 @@ public class BankMessageServiceImpl extends ServiceImpl<BankMessageMapper, BankM
             return wrapper.eq(BankMessage::getUse,bankMessage.getUse()).list();
         }
         return wrapper.list();
+    }
+
+    @Override
+    public List<BankMessage> getBankMessageList(BankMessage bankMessage) {
+        return bankMessageMapper.getList(bankMessage);
     }
 }

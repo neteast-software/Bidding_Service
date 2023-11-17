@@ -2,10 +2,10 @@ package com.neteast.business.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.neteast.business.mapper.AgencyBiddingMapper;
+import com.neteast.business.mapper.AgentMessageMapper;
 import com.neteast.business.domain.custom.AgentMessage;
 import org.springframework.stereotype.Service;
-import com.neteast.business.service.IAgencyBiddingService;
+import com.neteast.business.service.IAgentMessageService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -16,10 +16,10 @@ import java.util.List;
  */
 
 @Service
-public class AgencyBiddingServiceImpl extends ServiceImpl<AgencyBiddingMapper, AgentMessage> implements IAgencyBiddingService {
+public class AgentMessageServiceImpl extends ServiceImpl<AgentMessageMapper, AgentMessage> implements IAgentMessageService {
 
     @Resource
-    AgencyBiddingMapper agencyBiddingMapper;
+    AgentMessageMapper agentMessageMapper;
 
     @Override
     public List<AgentMessage> getAgencyBiddingData(AgentMessage agentMessage) {
