@@ -1,7 +1,7 @@
 package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neteast.business.domain.custom.AgencyBidding;
+import com.neteast.business.domain.custom.AgentMessage;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface AgencyBiddingMapper extends BaseMapper<AgencyBidding> {
+public interface AgencyBiddingMapper extends BaseMapper<AgentMessage> {
 }

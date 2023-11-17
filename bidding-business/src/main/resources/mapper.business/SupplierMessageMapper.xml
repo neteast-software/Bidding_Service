@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.SupplierMessageMapper">
 
-    <resultMap type="com.neteast.business.domain.project.SupplierMessage" id="SupplierMessageMap">
+    <resultMap type="com.neteast.business.domain.project.ProjectSupplierMessage" id="SupplierMessageMap">
         <result property="id" column="id" jdbcType="Integer"/>
         <result property="name" column="name" jdbcType="String"/>
         <result property="projectId" column="project_id" jdbcType="Integer"/>

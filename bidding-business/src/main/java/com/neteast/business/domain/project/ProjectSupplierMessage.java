@@ -16,8 +16,8 @@ import java.util.Date;
  */
 
 @Data
-@TableName("supplier_message")
-public class SupplierMessage extends BaseEntity {
+@TableName("project_supplier_message")
+public class ProjectSupplierMessage extends BaseEntity {
 
     /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)

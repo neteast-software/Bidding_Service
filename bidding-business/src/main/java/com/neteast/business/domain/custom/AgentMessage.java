@@ -14,8 +14,8 @@ import lombok.Data;
  */
 
 @Data
-@TableName("agency_bidding")
-public class AgencyBidding extends BaseEntity {
+@TableName("agent_message")
+public class AgentMessage extends BaseEntity {
 
     @TableId(value = "id",type = IdType.AUTO)
     private Long id;

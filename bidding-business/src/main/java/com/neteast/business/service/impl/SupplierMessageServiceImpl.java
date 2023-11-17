@@ -1,7 +1,7 @@
 package com.neteast.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.neteast.business.domain.project.SupplierMessage;
+import com.neteast.business.domain.project.ProjectSupplierMessage;
 import com.neteast.business.mapper.SupplierMessageMapper;
 import com.neteast.business.service.ISupplierMessageService;
 import org.springframework.stereotype.Service;
@@ -15,13 +15,13 @@ import java.util.List;
  */
 
 @Service
-public class SupplierMessageServiceImpl extends ServiceImpl<SupplierMessageMapper, SupplierMessage> implements ISupplierMessageService {
+public class SupplierMessageServiceImpl extends ServiceImpl<SupplierMessageMapper, ProjectSupplierMessage> implements ISupplierMessageService {
 
     @Resource
     SupplierMessageMapper supplierMessageMapper;
 
     @Override
-    public List<SupplierMessage> getSupplierMessageList(SupplierMessage supplierMessage) {
-        return supplierMessageMapper.getList(supplierMessage);
+    public List<ProjectSupplierMessage> getSupplierMessageList(ProjectSupplierMessage projectSupplierMessage) {
+        return supplierMessageMapper.getList(projectSupplierMessage);
     }
 }

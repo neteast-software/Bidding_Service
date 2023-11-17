@@ -1,8 +1,7 @@
 package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.neteast.business.domain.custom.AgencyBidding;
-import com.neteast.business.domain.project.SupplierMessage;
+import com.neteast.business.domain.project.ProjectSupplierMessage;
 import com.neteast.business.service.ISupplierMessageService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -30,11 +29,11 @@ public class SupplierMessageController extends BaseController {
     ISupplierMessageService supplierMessageService;
 
     @GetMapping("/list")
-    public AjaxResult getSupplierMessageList(SupplierMessage supplierMessage){
+    public AjaxResult getSupplierMessageList(ProjectSupplierMessage projectSupplierMessage){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<SupplierMessage> list = supplierMessageService.getSupplierMessageList(supplierMessage);
+        List<ProjectSupplierMessage> list = supplierMessageService.getSupplierMessageList(projectSupplierMessage);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);

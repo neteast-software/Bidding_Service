@@ -1,7 +1,7 @@
 package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neteast.business.domain.project.SupplierMessage;
+import com.neteast.business.domain.project.ProjectSupplierMessage;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @Mapper
-public interface SupplierMessageMapper extends BaseMapper<SupplierMessage> {
+public interface SupplierMessageMapper extends BaseMapper<ProjectSupplierMessage> {
 
-    List<SupplierMessage> getList(SupplierMessage supplierMessage);
+    List<ProjectSupplierMessage> getList(ProjectSupplierMessage projectSupplierMessage);
 }
