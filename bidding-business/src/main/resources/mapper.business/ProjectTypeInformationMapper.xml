@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ProjectTypeInformationMapper">
+
+    <resultMap type="com.neteast.business.domain.project.vo.ProjectTypeInformationVO" id="ProjectTypeInformationVO">
+        <result property="id" column="id" jdbcType="Integer"/>
+        <result property="projectId" column="project_id" jdbcType="Integer"/>
+        <result property="partyaId" column="partya_id" jdbcType="Integer"/>
+        <result property="projectName" column="project_name" jdbcType="String"/>
+        <result property="projectType" column="project_type" jdbcType="String"/>
+        <result property="projectCode" column="project_code" jdbcType="VARCHAR"/>
+        <result property="procureType" column="procure_type" jdbcType="String"/>
+        <result property="createBy" column="create_by" jdbcType="String"/>
+        <result property="createTime" column="create_time" jdbcType="Date"/>
+        <result property="updateBy" column="update_by" jdbcType="String"/>
+        <result property="updateTime" column="update_time" jdbcType="Date"/>
+    </resultMap>
+
+</mapper>

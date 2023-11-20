@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ProjectSupplierMapper">
+
+    <resultMap type="com.neteast.business.domain.project.vo.ProjectSupplierVO" id="ProjectSupplierVOMap">
+        <result property="id" column="id" jdbcType="Integer"/>
+        <result property="projectId" column="project_id" jdbcType="Integer"/>
+        <result property="packageId" column="package_id" jdbcType="Integer"/>
+        <result property="supplierId" column="supplier_id" jdbcType="Integer"/>
+        <result property="name" column="name" jdbcType="String"/>
+        <result property="address" column="address" jdbcType="String"/>
+        <result property="money" column="money" jdbcType="Double"/>
+        <result property="projectName" column="project_name" javaType="String" />
+        <result property="projectCode" column="project_code" javaType="String"/>
+        <result property="contractPackage" column="contract_package" javaType="String"/>
+        <result property="packageNum" column="package_num" javaType="String"/>
+        <result property="biddingSubject" column="bidding_subject" javaType="String"/>
+        <result property="createBy" column="create_by" jdbcType="String"/>
+        <result property="createTime" column="create_time" jdbcType="Date"/>
+        <result property="updateBy" column="update_by" jdbcType="String"/>
+        <result property="updateTime" column="update_time" jdbcType="Date"/>
+    </resultMap>
+
+    <select id="getList" resultMap="ProjectSupplierVOMap">
+        select s.id,s.project_id,package_id,supplier_id,name,address,money,project_name,project_code,contract_package,package_num,bidding_subject,s.create_by,s.create_time,s.update_by,s.update_time from project_supplier s
+            INNER JOIN project_message on project_id = project_message.id INNER JOIN package_information on package_id = package_information.id
+        <where>
+            <if test="projectId != null and projectId != ''">
+                and project_id = #{projectId}
+            </if>
+            <if test="packageId != null and packageId != ''">
+                and package_id = #{packageId}
+            </if>
+            <if test="supplierId != null and supplierId != ''">
+                and supplier_id = #{supplierId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="money != null and money != ''">
+                and money = #{money}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                and projectName = #{project_name}
+            </if>
+            <if test="projectCode != null and projectCode != ''">
+                and projectCode = #{project_code}
+            </if>
+            <if test="biddingSubject != null and biddingSubject != ''">
+                and biddingSubject = #{bidding_subject}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

@@ -49,10 +49,6 @@ public class FailBiddingMsg extends BaseEntity {
         BeanUtil.copyProperties(projectInformation,failBiddingMsg);
         failBiddingMsg.setId(null);
         failBiddingMsg.setExtProjectId(projectInformation.getId());
-        failBiddingMsg.setCreateTime(new Date());
-        failBiddingMsg.setCreateBy(projectInformation.getUpdateBy());
-        failBiddingMsg.setUpdateTime(null);
-        failBiddingMsg.setUpdateBy(null);
         return failBiddingMsg;
     }
 }

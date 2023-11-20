@@ -28,26 +28,30 @@ public class ProjectTypeInformation extends BaseEntity {
     @TableField("partya_id")
     private Integer partyaId ;
 
-    /** 甲方公司名称 */
-    @TableField("partya_name")
-    private String partyaName ;
-
     /** 项目名称 */
     @TableField("project_name")
     private String projectName ;
 
-    /** 项目类型 */
+    /** 项目行业 */
     @TableField("project_type")
     private String projectType ;
 
+    /** 项目编号 */
+    @TableField("project_code")
+    private String projectCode;
+
+    /** 采购方式 */
+    @TableField("procure_type")
+    private String procureType;
+
     public static ProjectTypeInformation convert(ProjectInformation project){
         ProjectTypeInformation type = new ProjectTypeInformation();
-        type.setProjectType(project.getProjectType());
-        type.setPartyaId(project.getPartyaId());
         type.setProjectId(project.getId());
+        type.setPartyaId(project.getPartyaId());
         type.setProjectName(project.getProjectName());
-        type.setCreateTime(new Date());
-        type.setCreateBy(project.getCreateBy());
+        type.setProjectType(project.getProjectType());
+        type.setProjectCode(project.getProjectCode());
+        type.setProcureType(project.getProcureType());
         return type;
     }
 

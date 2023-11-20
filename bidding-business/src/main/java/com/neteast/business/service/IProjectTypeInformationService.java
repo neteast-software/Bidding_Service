@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.project.ProjectTypeInformation;
+import com.neteast.business.domain.project.vo.ProjectTypeInformationVO;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
 public interface IProjectTypeInformationService extends IService<ProjectTypeInformation> {
 
     /**
-     * @Description 获取项目类型
+     * @Description 获取项目类别列表
      * @author lzp
-     * @Date 2023/11/15
+     * @Date 2023/11/20
      */
-    List<String> getProjectType(ProjectTypeInformation projectTypeInformation);
+    List<ProjectTypeInformationVO> getProjectTypeList(ProjectTypeInformationVO projectTypeInformationVO);
 }

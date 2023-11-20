@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ProjectInformationMapper">
+
+    <resultMap type="com.neteast.business.domain.project.ProjectInformation" id="ProjectMessageMap">
+        <result property="id" column="id" jdbcType="Integer"/>
+        <result property="projectaId" column="partya_id" jdbcType="Integer"/>
+        <result property="projectCode" column="project_code" jdbcType="VARCHAR"/>
+        <result property="filingsNumber" column="filings_number" jdbcType="String"/>
+        <result property="projectType" column="project_type" jdbcType="Integer"/>
+        <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+        <result property="procureType" column="procure_type" jdbcType="String"/>
+        <result property="projectStatus" column="project_status" jdbcType="Integer"/>
+        <result property="inviteBidding" column="invite_bidding" jdbcType="Date"/>
+        <result property="openBidding" column="open_bidding" jdbcType="Date"/>
+        <result property="budgetMoney" column="budget_money" jdbcType="Double"/>
+        <result property="maxMoney" column="max_money" jdbcType="Double"/>
+        <result property="tradeMoney" column="trade_money" jdbcType="Double"/>
+        <result property="failBiddingCount" column="fail_bidding_count" jdbcType="String"/>
+        <result property="agentMony" column="agent_mony" jdbcType="Double"/>
+        <result property="projectDel" column="project_del" jdbcType="Integer"/>
+        <result property="createBy" column="create_by" jdbcType="String"/>
+        <result property="createTime" column="create_time" jdbcType="Date"/>
+        <result property="updateBy" column="update_by" jdbcType="String"/>
+        <result property="updateTime" column="update_time" jdbcType="Date"/>
+    </resultMap>
+
+    <select id="getList" resultMap="ProjectMessageMap" >
+        select
+            id,partya_id,project_code,filings_number,project_type,project_name,procure_type,project_status,invite_bidding,open_bidding,budget_money,max_money,
+            trade_money,fail_bidding_count,agent_mony,project_del,create_by,create_time,update_by,update_time
+        from project_message
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="projectaId != null and projectaId != ''">
+                and partya_id = #{projectaId}
+            </if>
+            <if test="projectCode != null and projectCode != ''">
+                and project_code = #{projectCode}
+            </if>
+            <if test="filingsNumber != null and filingsNumber != ''">
+                and filings_number = #{filingsNumber}
+            </if>
+            <if test="projectType != null and projectType != ''">
+                and project_type = #{projectType}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                and project_name = #{projectName}
+            </if>
+            <if test="procureType != null and procureType != ''">
+                and procure_type = #{procureType}
+            </if>
+            <if test="projectStatus != null and projectStatus != ''">
+                and project_status = #{projectStatus}
+            </if>
+            <if test="inviteBidding != null and inviteBidding != ''">
+                and invite_bidding = #{inviteBidding}
+            </if>
+            <if test="openBidding != null and openBidding != ''">
+                and open_bidding = #{openBidding}
+            </if>
+            <if test="budgetMoney != null and budgetMoney != ''">
+                and budget_money = #{budgetMoney}
+            </if>
+            <if test="maxMoney != null and maxMoney != ''">
+                and max_money = #{maxMoney}
+            </if>
+            <if test="tradeMoney != null and tradeMoney != ''">
+                and trade_money = #{tradeMoney}
+            </if>
+            <if test="failBiddingCount != null and failBiddingCount != ''">
+                and fail_bidding_count = #{failBiddingCount}
+            </if>
+            <if test="agentMony != null and agentMony != ''">
+                and agent_mony = #{agentMony}
+            </if>
+            <if test="projectDel != null and projectDel != ''">
+                and project_del = #{projectDel}
+            </if>
+        </where>
+    </select>
+
+</mapper>

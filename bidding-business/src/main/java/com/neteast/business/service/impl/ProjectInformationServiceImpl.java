@@ -7,6 +7,7 @@ import com.neteast.business.domain.project.ProjectTypeInformation;
 import com.neteast.business.mapper.ProjectInformationMapper;
 import com.neteast.business.service.IFailBiddingMsgService;
 import com.neteast.business.service.IProjectTypeInformationService;
+import com.neteast.common.exception.BaseBusException;
 import com.neteast.common.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 import com.neteast.business.service.IProjectInformationService;
@@ -30,17 +31,19 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
     @Resource
     IProjectTypeInformationService projectTypeInformationService;
 
+    @Resource
+    ProjectInformationMapper projectInformationMapper;
+
     @Override
     public List<ProjectInformation> getProjectInformationList(ProjectInformation projectInformation) {
-        return lambdaQuery().list();
+        projectInformation.setProjectDel(1);
+        return projectInformationMapper.getList(projectInformation);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateProjectInformation(ProjectInformation projectInformation) {
 
-        projectInformation.setUpdateTime(new Date());
-        projectInformation.setUpdateBy(SecurityUtils.getUsername());
         if (projectInformation.getProjectStatus()==2){
             ProjectInformation info = lambdaQuery().eq(ProjectInformation::getId,projectInformation.getId()).one();
             FailBiddingMsg failBiddingMsg = FailBiddingMsg.convert(info);
@@ -49,7 +52,6 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
             projectInformation.setFailBiddingCount(count);
             this.updateById(projectInformation);
         }else if (projectInformation.getProjectStatus()==3){
-            //设置中标公司信息
             this.updateById(projectInformation);
         }
         return this.updateById(projectInformation);
@@ -61,15 +63,10 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
 
         List<ProjectInformation> list = lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
         if (list.size()==0){
-            projectInformation.setCreateTime(new Date());
-            projectInformation.setCreateBy(SecurityUtils.getUsername());
             save(projectInformation);
-            List<ProjectInformation> temp = this.lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
-            if (temp.size()==1){
-                ProjectTypeInformation information = ProjectTypeInformation.convert(projectInformation);
-                projectTypeInformationService.save(information);
-            }
+            ProjectTypeInformation information = ProjectTypeInformation.convert(projectInformation);
+            return projectTypeInformationService.save(information);
         }
-        return true;
+        throw new BaseBusException("项目编号重复");
     }
 }

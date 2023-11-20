@@ -2,10 +2,12 @@ package com.neteast.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.project.ProjectTypeInformation;
+import com.neteast.business.domain.project.vo.ProjectTypeInformationVO;
 import com.neteast.business.mapper.ProjectTypeInformationMapper;
 import org.springframework.stereotype.Service;
 import com.neteast.business.service.IProjectTypeInformationService;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,8 +18,11 @@ import java.util.List;
 @Service
 public class ProjectTypeInformationServiceImpl extends ServiceImpl<ProjectTypeInformationMapper, ProjectTypeInformation> implements IProjectTypeInformationService {
 
+    @Resource
+    ProjectTypeInformationMapper projectTypeInformationMapper;
+
     @Override
-    public List<String> getProjectType(ProjectTypeInformation projectTypeInformation) {
-        return null;
+    public List<ProjectTypeInformationVO> getProjectTypeList(ProjectTypeInformationVO projectTypeInformationVO) {
+        return projectTypeInformationMapper.getList(projectTypeInformationVO);
     }
 }

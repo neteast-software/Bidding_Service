@@ -27,6 +27,10 @@ public class ProjectSupplier extends BaseEntity {
     @TableField("supplier_id")
     private Integer supplierId;
 
+    /** 分包id */
+    @TableField("package_id")
+    private Integer packageId;
+
     /** 供应商名称 */
     @TableField("name")
     private String name;

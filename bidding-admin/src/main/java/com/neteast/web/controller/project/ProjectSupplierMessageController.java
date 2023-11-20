@@ -8,9 +8,7 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,5 +37,24 @@ public class ProjectSupplierMessageController extends BaseController {
         return success(body);
     }
 
+    @PostMapping("/add")
+    public AjaxResult addSupplierMessageData(@RequestBody ProjectSupplierMessage projectSupplierMessage){
+        supplierMessageService.save(projectSupplierMessage);
+        return success();
+    }
+
+    @PostMapping("/del/{id}")
+    public AjaxResult delSupplierMessageData(@PathVariable Integer id){
+
+        supplierMessageService.removeById(id);
+        return success();
+    }
+
+    @PostMapping("/update")
+    public AjaxResult updateSupplierMessageData(@RequestBody ProjectSupplierMessage projectSupplierMessage){
+
+        supplierMessageService.updateById(projectSupplierMessage);
+        return success();
+    }
 
 }

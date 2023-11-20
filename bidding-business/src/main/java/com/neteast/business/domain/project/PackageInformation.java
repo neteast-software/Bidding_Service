@@ -23,7 +23,7 @@ public class PackageInformation extends BaseEntity {
 
     /** 对应甲方项目id */
     @TableField("partya_id")
-    private Integer partyaId;
+    private Integer projectaId;
 
     /** 分包预算金额 */
     @TableField("budget_amount")
