@@ -43,10 +43,6 @@ public class BankMessage extends BaseEntity {
     @TableField("card_name")
     private String cardName;
 
-    /** 银行卡归属;1-甲方公司、2-供应商、3-代理商 */
-    @TableField("type")
-    private Integer type;
-
     /** 关联表id */
     @TableField("extId")
     private Integer extId;

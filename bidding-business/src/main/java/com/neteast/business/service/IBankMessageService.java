@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.custom.BankMessage;
+import com.neteast.business.domain.custom.vo.BankMessageVO;
 
 import java.util.List;
 
@@ -16,12 +17,12 @@ public interface IBankMessageService extends IService<BankMessage> {
      * @author lzp
      * @Date 2023/11/17
      */
-    List<BankMessage> getBankMessageByType(BankMessage bankMessage);
+    List<BankMessage> getBankMessageByExId(BankMessage bankMessage);
 
     /**
      * @Description
      * @author lzp
      * @Date 2023/11/17
      */
-    List<BankMessage> getBankMessageList(BankMessage bankMessage);
+    List<BankMessageVO> getBankMessageList(BankMessageVO bankMessageVO);
 }

@@ -2,6 +2,7 @@ package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.neteast.business.domain.custom.ContractMessage;
+import com.neteast.business.domain.custom.vo.ContractMessageVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,5 +15,5 @@ import java.util.List;
 @Mapper
 public interface ContractMessageMapper extends BaseMapper<ContractMessage> {
 
-    List<ContractMessage> getList(ContractMessage contractMessage);
+    List<ContractMessageVO> getList(ContractMessageVO contractMessageVO);
 }

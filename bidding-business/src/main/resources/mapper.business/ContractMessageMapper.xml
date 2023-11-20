@@ -4,4 +4,56 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.ContractMessageMapper">
 
+    <resultMap type="com.neteast.business.domain.custom.vo.ContractMessageVO" id="ContractMessageVO">
+        <result property="id" column="id" jdbcType="Integer"/>
+        <result property="extId" column="ext_id" jdbcType="Integer"/>
+        <result property="type" column="type" jdbcType="String"/>
+        <result property="personName" column="person_name" jdbcType="String"/>
+        <result property="contractPhone" column="contract_phone" jdbcType="String"/>
+        <result property="mail" column="mail" jdbcType="String"/>
+        <result property="workName" column="work_name" javaType="String" />
+        <result property="workPlace" column="work_place" javaType="String" />
+        <result property="legalPerson" column="legal_person" javaType="String" />
+        <result property="net" column="net" javaType="String" />
+        <result property="postcode" column="postcode" javaType="String" />
+        <result property="placeType" column="place_type" javaType="Integer" />
+        <result property="createBy" column="create_by" jdbcType="String"/>
+        <result property="createTime" column="create_time" jdbcType="Date"/>
+        <result property="updateBy" column="update_by" jdbcType="String"/>
+        <result property="updateTime" column="update_time" jdbcType="Date"/>
+        <result property="placeName" column="place_name" jdbcType="String"/>
+    </resultMap>
+
+    <select id="getList" resultMap="ContractMessageVO" >
+        select c.id,c.person_name,c.contract_phone,c.mail,w.name work_name,w.address work_address,w.legal_person,w.net,w.place_type,w.postcode,c.create_by,c.create_time,c.update_by,c.update_time
+        from work_place_name w inner join contract_message c
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="personName != null and personName != ''">
+                and person_name = #{personName}
+            </if>
+            <if test="contractPhone != null and contractPhone != ''">
+                and contract_phone = #{contractPhone}
+            </if>
+            <if test="mail != null and mail != ''">
+                and mail = #{mail}
+            </if>
+            <if test="legalPerson != null and legalPerson != ''">
+                and legal_person like concat('%',#{legal_person},'%')
+            </if>
+            <if test="workName != null and workName != ''">
+                and work_name like concat('%',#{work_name},'%')
+            </if>
+            <if test="workPlace != null and workPlace != ''">
+                and work_place like concat('%',#{work_place},'%')
+            </if>
+            <if test="placeType != null">
+                and place_type = #{place_type}
+            </if>
+        </where>
+    </select>
+
+
 </mapper>

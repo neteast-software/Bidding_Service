@@ -3,6 +3,7 @@ package com.neteast.web.controller.custom;
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.custom.BankMessage;
 import com.neteast.business.domain.custom.ContractMessage;
+import com.neteast.business.domain.custom.vo.BankMessageVO;
 import com.neteast.business.service.IBankMessageService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -27,11 +28,11 @@ public class BankMessageController extends BaseController {
     IBankMessageService bankMessageService;
 
     @GetMapping("/list")
-    public AjaxResult getBankMessageList(BankMessage bankMessage){
+    public AjaxResult getBankMessageList(BankMessageVO bankMessageVO){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<BankMessage> list = bankMessageService.getBankMessageList(bankMessage);
+        List<BankMessageVO> list = bankMessageService.getBankMessageList(bankMessageVO);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);

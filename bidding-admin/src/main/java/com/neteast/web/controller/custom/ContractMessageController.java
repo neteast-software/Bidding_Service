@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.custom.BankMessage;
 import com.neteast.business.domain.custom.ContractMessage;
 import com.neteast.business.domain.custom.ExpertMessage;
+import com.neteast.business.domain.custom.vo.ContractMessageVO;
 import com.neteast.business.service.IContractMessageService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -28,11 +29,11 @@ public class ContractMessageController extends BaseController {
     IContractMessageService contractMessageService;
 
     @PostMapping("/list")
-    public AjaxResult getContractMessageData(ContractMessage contractMessage){
+    public AjaxResult getContractMessageData(ContractMessageVO contractMessageVO){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<ContractMessage> list = contractMessageService.getContractMessageList(contractMessage);
+        List<ContractMessageVO> list = contractMessageService.getContractMessageList(contractMessageVO);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);

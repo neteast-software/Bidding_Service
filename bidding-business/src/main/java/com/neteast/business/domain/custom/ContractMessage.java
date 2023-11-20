@@ -27,10 +27,6 @@ public class ContractMessage extends BaseEntity {
     @TableField("ext_id")
     private Integer extId;
 
-    /** 联系所属类型;甲方、供应方、招标代理商 */
-    @TableField("type")
-    private Integer type;
-
     /** 联系人名称 */
     @TableField("person_name")
     private String personName;

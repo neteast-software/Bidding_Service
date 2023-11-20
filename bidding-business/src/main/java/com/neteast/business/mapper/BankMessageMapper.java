@@ -2,6 +2,7 @@ package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.neteast.business.domain.custom.BankMessage;
+import com.neteast.business.domain.custom.vo.BankMessageVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,5 +14,5 @@ import java.util.List;
 @Mapper
 public interface BankMessageMapper extends BaseMapper<BankMessage> {
 
-    List<BankMessage> getList(BankMessage bankMessage);
+    List<BankMessageVO> getList(BankMessageVO bankMessageVO);
 }

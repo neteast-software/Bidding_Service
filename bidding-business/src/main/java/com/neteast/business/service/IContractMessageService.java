@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.custom.ContractMessage;
+import com.neteast.business.domain.custom.vo.ContractMessageVO;
 
 import java.util.List;
 
@@ -16,13 +17,13 @@ public interface IContractMessageService extends IService<ContractMessage> {
      * @author lzp
      * @Date 2023/11/17
      */
-    List<ContractMessage> getContractMessageByType(ContractMessage contractMessage);
+    List<ContractMessage> getContractMessageByExId(ContractMessage contractMessage);
 
     /**
      * @Description 获取联系方式信息
      * @author lzp
      * @Date 2023/11/17
      */
-    List<ContractMessage> getContractMessageList(ContractMessage contractMessage);
+    List<ContractMessageVO> getContractMessageList(ContractMessageVO contractMessageVO);
 
 }

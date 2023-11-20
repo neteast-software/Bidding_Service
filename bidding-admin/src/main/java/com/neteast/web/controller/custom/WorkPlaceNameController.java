@@ -1,7 +1,10 @@
 package com.neteast.web.controller.custom;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.neteast.business.domain.custom.BankMessage;
+import com.neteast.business.domain.custom.ContractMessage;
 import com.neteast.business.domain.custom.WorkPlaceName;
+import com.neteast.business.domain.custom.vo.WorkPlaceNameVO;
 import com.neteast.business.service.IBankMessageService;
 import com.neteast.business.service.IContractMessageService;
 import com.neteast.business.service.IWorkPlaceNameService;
@@ -40,14 +43,14 @@ public class WorkPlaceNameController extends BaseController {
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<WorkPlaceName> list = workPlaceNameService.getWorkPlaceNameList(workPlaceName);
-        List<WorkPlaceName> voList = new ArrayList<>();
+        List<WorkPlaceNameVO> voList = new ArrayList<>();
         list.forEach(one->{
-//            AgentMessageVO temp = AgentMessageVO.convert(one);
-//            BankMessage bankMessage = BankMessage.builder().extId(one.getId()).type(2).build();
-//            ContractMessage contractMessage = ContractMessage.builder().extId(one.getId()).type(2).build();
-//            temp.setBankMessages(bankMessageService.getBankMessageByType(bankMessage));
-//            temp.setContractMessages(contractMessageService.getContractMessageByType(contractMessage));
-//            voList.add(temp);
+            WorkPlaceNameVO temp = WorkPlaceNameVO.convert(one);
+            BankMessage bankMessage = BankMessage.builder().extId(one.getId()).build();
+            ContractMessage contractMessage = ContractMessage.builder().extId(one.getId()).build();
+            temp.setBankMessages(bankMessageService.getBankMessageByExId(bankMessage));
+            temp.setContractMessages(contractMessageService.getContractMessageByExId(contractMessage));
+            voList.add(temp);
         });
         TableDataInfo info = getDataTable(voList);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
