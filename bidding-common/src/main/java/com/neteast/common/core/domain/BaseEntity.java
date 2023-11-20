@@ -9,6 +9,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.neteast.common.annotation.CreateBy;
+import com.neteast.common.annotation.CreateTime;
+import com.neteast.common.annotation.UpdateBy;
+import com.neteast.common.annotation.UpdateTime;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,17 +32,21 @@ public class BaseEntity implements Serializable
     private String searchValue;
 
     /** 创建者 */
+    @CreateBy
     private String createBy;
 
     /** 创建时间 */
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @CreateTime
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /** 更新者 */
+    @UpdateBy
     private String updateBy;
 
     /** 更新时间 */
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @UpdateTime
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /** 备注 */

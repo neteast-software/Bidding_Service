@@ -8,6 +8,7 @@ import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
+ * 单位信息
  * @author lzp
  * @date 2023年11月17 18:24
  */
@@ -36,7 +37,7 @@ public class WorkPlaceName extends BaseEntity {
     @TableField("net")
     private String net;
 
-    /** 单位类型(甲方、代理商、供应商) */
+    /** 单位类型(甲方、代理商、供应商) 1-甲方,2-代理商,3-供应商 */
     @TableField("place_type")
     private Integer placeType;
 

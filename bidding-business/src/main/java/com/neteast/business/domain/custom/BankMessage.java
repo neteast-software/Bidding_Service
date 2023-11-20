@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.neteast.common.core.domain.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 银行卡信息
@@ -16,6 +18,8 @@ import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("bank_message")
 public class BankMessage extends BaseEntity {
 
@@ -36,7 +40,7 @@ public class BankMessage extends BaseEntity {
     private String number;
 
     /** 银行卡账户名称 */
-    @TableField("cardName")
+    @TableField("card_name")
     private String cardName;
 
     /** 银行卡归属;1-甲方公司、2-供应商、3-代理商 */

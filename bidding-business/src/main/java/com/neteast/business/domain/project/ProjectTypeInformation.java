@@ -9,6 +9,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
+ * 项目类型数据
  * @author lzp
  * @date 2023年11月15 11:21
  */
