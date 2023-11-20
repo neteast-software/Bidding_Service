@@ -89,7 +89,6 @@ public class BaseEntityMsgInterceptor implements Interceptor {
                     }
                 }
             }
-
         }
     }
 }
