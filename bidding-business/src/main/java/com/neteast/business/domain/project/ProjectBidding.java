@@ -29,6 +29,10 @@ public class ProjectBidding extends BaseEntity {
     @TableField("template_id")
     private Integer templateId;
 
+    /** 分包id */
+    @TableField("package_id")
+    private Integer packageId;
+
     /** 项目文件类型(如招标文件) */
     @TableField("type")
     private String type;
