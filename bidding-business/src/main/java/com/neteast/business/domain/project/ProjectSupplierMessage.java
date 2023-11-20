@@ -27,6 +27,10 @@ public class ProjectSupplierMessage extends BaseEntity {
     @TableField("project_id")
     private Integer projectId;
 
+    /** 分包id */
+    @TableField("package_id")
+    private Integer packageId;
+
     /** 是否推荐 **/
     @TableField("recommend")
     private String recommend;

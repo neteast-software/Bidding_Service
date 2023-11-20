@@ -28,8 +28,4 @@ public class ProjectExpert extends BaseEntity{
     /** 专家id */
     @TableField("expert_id")
     private Integer expertId ;
-
-    /** 专家名称 */
-    @TableField("name")
-    private String name ;
 }

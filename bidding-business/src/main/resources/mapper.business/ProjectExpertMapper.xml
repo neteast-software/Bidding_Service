@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ProjectExpertMapper">
+
+    <resultMap type="com.neteast.business.domain.project.vo.ProjectExpertVO" id="ProjectExpertVOMap">
+        <result property="id" column="id" jdbcType="Integer"/>
+        <result property="projectId" column="project_id" jdbcType="Integer"/>
+        <result property="expertId" column="expert_id" jdbcType="Integer"/>
+        <result property="name" column="name" javaType="String"/>
+        <result property="identityNumber" column="identity_number" javaType="String"/>
+        <result property="workAddr" column="work_addr" javaType="String"/>
+        <result property="contractPhone" column="contract_phone" javaType="String"/>
+        <result property="projectCode" column="project_code" javaType="String"/>
+        <result property="filingsNumber" column="filings_number" javaType="String"/>
+        <result property="projectName" column="project_name" javaType="String"/>
+        <result property="createBy" column="create_by" jdbcType="String"/>
+        <result property="createTime" column="create_time" jdbcType="Date"/>
+        <result property="updateBy" column="update_by" jdbcType="String"/>
+        <result property="updateTime" column="update_time" jdbcType="Date"/>
+    </resultMap>
+
+    <select id="getList" resultMap="ProjectExpertVOMap">
+        select e.id,project_id,expert_id,name,identity_number,work_addr,contract_phone,project_code,filings_number,project_name,e.create_by,e.create_time,e.update_by,e.update_time from project_expert e
+            INNER JOIN project_message on project_id = project_message.id INNER JOIN expert_message on expert_id = expert_message.id
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="projectId != null and projectId != ''">
+                and project_id = #{projectId}
+            </if>
+            <if test="expertId != null and expertId != ''">
+                and expert_id = #{expertId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

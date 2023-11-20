@@ -20,7 +20,7 @@
 
     <select id="getList" resultMap="SupplierMessageMap">
         select
-            id,project_id,recommend,name,entry_method,register_time,earnest_money,create_by,create_time,update_by,update_time
+            id,project_id,package_id,recommend,name,entry_method,register_time,earnest_money,create_by,create_time,update_by,update_time
         from supplier_message
         <where>
             <if test="name != null and name != ''">
@@ -35,8 +35,11 @@
             <if test="earnestMoney != null and earnestMoney != ''">
                 and earnest_money = #{earnestMoney}
             </if>
-            <if test="projectId != null and projectId != ''">
+            <if test="projectId != null">
                 and project_id = #{projectId}
+            </if>
+            <if test="packageId != null">
+                and package_id = #{packageId}
             </if>
             <if test="recommend != null and recommend != ''">
                 and recommend = #{recommend}

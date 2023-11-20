@@ -2,7 +2,10 @@ package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.neteast.business.domain.project.ProjectExpert;
+import com.neteast.business.domain.project.vo.ProjectExpertVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author lzp
@@ -11,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ProjectExpertMapper extends BaseMapper<ProjectExpert> {
+
+    List<ProjectExpertVO> getList(ProjectExpertVO projectExpertVO);
 }

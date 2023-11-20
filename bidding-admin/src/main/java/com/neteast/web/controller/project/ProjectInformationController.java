@@ -40,16 +40,18 @@ public class ProjectInformationController extends BaseController {
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<ProjectInformation> list = projectInformationService.getProjectInformationList(projectInformation);
-        List<ProjectInformationVO> voList = new ArrayList<>();
-        list.forEach(t->{
-            ProjectInformationVO projectInformationVO = ProjectInformationVO.convert(t);
-            List<PackageInformation> temp = packageInformationService.lambdaQuery().eq(PackageInformation::getProjectaId,projectInformation.getId()).list();
-            projectInformationVO.setPackageInformationList(temp);
-            voList.add(projectInformationVO);
-        });
-        TableDataInfo info = getDataTable(voList);
+        TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
+    }
+
+    @GetMapping("/one")
+    public AjaxResult getProjectInformationOne(ProjectInformation projectInformation){
+        ProjectInformation data = projectInformationService.getById(projectInformation);
+        ProjectInformationVO projectInformationVO = ProjectInformationVO.convert(data);
+        List<PackageInformation> temp = packageInformationService.lambdaQuery().eq(PackageInformation::getProjectaId,projectInformation.getId()).list();
+        projectInformationVO.setPackageInformationList(temp);
+        return success(projectInformationVO);
     }
 
     @PostMapping("/add")
