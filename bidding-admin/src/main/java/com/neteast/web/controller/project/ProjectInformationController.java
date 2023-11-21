@@ -6,7 +6,6 @@ import com.neteast.business.domain.project.ProjectInformation;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.business.service.IPackageInformationService;
 import com.neteast.business.service.IProjectInformationService;
-import com.neteast.business.service.IProjectTypeInformationService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -15,7 +14,6 @@ import com.neteast.common.core.page.TableSupport;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

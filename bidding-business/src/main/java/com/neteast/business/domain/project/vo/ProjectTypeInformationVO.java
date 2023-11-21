@@ -13,7 +13,11 @@ import lombok.Data;
 @Data
 public class ProjectTypeInformationVO {
 
-    private Integer id;
+    /** 项目id */
+    private Integer projectId;
+
+    /** 甲方id */
+    private Integer partyaId;
 
     /** 项目名称 */
     private String projectName;

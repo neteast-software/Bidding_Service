@@ -73,9 +73,17 @@ public class ProjectInformation extends BaseEntity {
     @TableField("max_amount")
     private Double maxAmount;
 
+    /** 成交金额 */
+    @TableField("trade_money")
+    private Double tradeMoney;
+
     /** 流标次数 */
     @TableField("fail_bidding_count")
     private Integer failBiddingCount ;
+
+    /** 代理费用 */
+    @TableField("agent_money")
+    private Double agentMoney;
 
     /** 项目删除，0-已删除,1-未删除 **/
     @TableField("project_del")

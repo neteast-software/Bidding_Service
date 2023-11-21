@@ -2,6 +2,7 @@ package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.neteast.business.domain.project.ProjectInformation;
+import com.neteast.business.domain.project.vo.ProjectTypeInformationVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,4 +16,6 @@ import java.util.List;
 public interface ProjectInformationMapper extends BaseMapper<ProjectInformation> {
 
     List<ProjectInformation> getList(ProjectInformation projectInformation);
+
+    List<ProjectTypeInformationVO> getListByType(ProjectTypeInformationVO projectTypeInformationVO);
 }

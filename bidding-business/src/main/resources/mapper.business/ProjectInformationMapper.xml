@@ -27,6 +27,17 @@
         <result property="updateTime" column="update_time" jdbcType="Date"/>
     </resultMap>
 
+    <resultMap type="com.neteast.business.domain.project.vo.ProjectTypeInformationVO" id="ProjectTypeInformationVOMap">
+        <result property="projectId" column="project_id" jdbcType="Integer" />
+        <result property="partyaId" column="partya_id" jdbcType="Integer"/>
+        <result property="projectName" column="project_name" jdbcType="String" />
+        <result property="projectType" column="project_type" jdbcType="String" />
+        <result property="projectCode" column="project_code" jdbcType="String" />
+        <result property="procureType" column="procure_type" jdbcType="String" />
+        <result property="name" column="name" jdbcType="String" />
+        <result property="address" column="address" jdbcType="String" />
+    </resultMap>
+
     <select id="getList" resultMap="ProjectMessageMap" >
         select
             id,partya_id,project_code,filings_number,project_type,project_name,procure_type,project_status,invite_bidding,open_bidding,budget_money,max_money,
@@ -80,6 +91,18 @@
             </if>
             <if test="projectDel != null and projectDel != ''">
                 and project_del = #{projectDel}
+            </if>
+        </where>
+    </select>
+
+    <select id="getListByType" resultMap="ProjectTypeInformationVOMap" >
+        select m.id project_id,w.id partya_id,project_name,project_type,project_code,procure_type,name,address from project_message m inner JOIN work_place_name w on m.partya_id = w.id
+        <where>
+            <if test="projectId != null">
+                and project_id = #{projectId}
+            </if>
+            <if test="partya_id != null">
+                and partya_id = #{partyaId}
             </if>
         </where>
     </select>
