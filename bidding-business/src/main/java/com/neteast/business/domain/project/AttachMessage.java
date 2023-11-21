@@ -25,7 +25,7 @@ public class AttachMessage extends BaseEntity{
     @TableField("name")
     private String name;
 
-    /** 附件地址 */
+    /** 附件地址url */
     @TableField("address")
     private String address;
 
@@ -33,19 +33,24 @@ public class AttachMessage extends BaseEntity{
     @TableField("project_id")
     private Integer projectId;
 
+    /** 关联分包id */
+    @TableField("package_id")
+    private Integer packageId ;
+
+    /** 文件类型(如开标文件) */
+    @TableField("file_type")
+    private String fileType;
+
     /** 附件类型 */
     @TableField("type")
     private String type;
 
     /** 附件大小 */
     @TableField("size")
-    private Integer size;
+    private Long size;
 
     /** 下载次数 */
     @TableField("num")
     private Integer num;
 
-    /** 文件类型 */
-    @TableField("file_type")
-    private String fileType;
 }
