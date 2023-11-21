@@ -37,7 +37,7 @@ public class WorkPlaceName extends BaseEntity {
     @TableField("net")
     private String net;
 
-    /** 单位类型(甲方、代理商、供应商) 1-甲方,2-代理商,3-供应商 */
+    /** 单位类型(甲方、代理商、供应商) 1-甲方,2-代理商 */
     @TableField("place_type")
     private Integer placeType;
 

@@ -49,8 +49,4 @@ public class TemplateDict extends BaseEntity{
     @TableField("dict_type")
     private String dictType;
 
-    /** 是否有效 */
-    @TableField("use")
-    private Integer use;
-
 }
