@@ -52,4 +52,8 @@ public class PackageInformation extends BaseEntity {
     /** 采购标的 */
     @TableField("bidding_subject")
     private String biddingSubject;
+
+    /** 保证金额 */
+    @TableField("earnest")
+    private Double earnest;
 }

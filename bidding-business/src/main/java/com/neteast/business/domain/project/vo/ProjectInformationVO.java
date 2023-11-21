@@ -64,6 +64,9 @@ public class ProjectInformationVO {
     /** 流标原因 */
     private String failReason;
 
+    /** 保证金额 */
+    private Double earnest;
+
     private List<PackageInformation> packageInformationList;
 
     public static ProjectInformationVO convert(ProjectInformation projectInformation){

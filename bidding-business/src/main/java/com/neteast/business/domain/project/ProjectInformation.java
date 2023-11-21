@@ -85,6 +85,10 @@ public class ProjectInformation extends BaseEntity {
     @TableField("agent_money")
     private Double agentMoney;
 
+    /** 保证金金额 */
+    @TableField("earnest")
+    private Double earnest;
+
     /** 项目删除，0-已删除,1-未删除 **/
     @TableField("project_del")
     private Integer projectDel;
