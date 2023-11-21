@@ -61,6 +61,9 @@ public class ProjectInformationVO {
     /** 项目删除，0-已删除,1-未删除 **/
     private Integer projectDel;
 
+    /** 流标原因 */
+    private String failReason;
+
     private List<PackageInformation> packageInformationList;
 
     public static ProjectInformationVO convert(ProjectInformation projectInformation){

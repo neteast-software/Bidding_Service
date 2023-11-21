@@ -1,10 +1,12 @@
 package com.neteast.business.domain.project;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 import lombok.ToString;
@@ -78,4 +80,10 @@ public class ProjectInformation extends BaseEntity {
     /** 项目删除，0-已删除,1-未删除 **/
     @TableField("project_del")
     private Integer projectDel;
+
+    public static ProjectInformation convert(ProjectInformationVO projectInformationVO){
+        ProjectInformation projectInformation = new ProjectInformation();
+        BeanUtil.copyProperties(projectInformationVO,projectInformation);
+        return projectInformation;
+    }
 }

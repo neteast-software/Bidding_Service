@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.project.FailBiddingMsg;
 import com.neteast.business.domain.project.ProjectInformation;
 import com.neteast.business.domain.project.ProjectTypeInformation;
+import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.business.mapper.ProjectInformationMapper;
 import com.neteast.business.service.IFailBiddingMsgService;
 import com.neteast.business.service.IProjectTypeInformationService;
@@ -42,16 +43,20 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateProjectInformation(ProjectInformation projectInformation) {
+    public boolean updateProjectInformation(ProjectInformationVO projectInformationVO) {
 
-        if (projectInformation.getProjectStatus()==2){
-            ProjectInformation info = lambdaQuery().eq(ProjectInformation::getId,projectInformation.getId()).one();
-            FailBiddingMsg failBiddingMsg = FailBiddingMsg.convert(info);
+        ProjectInformation projectInformation = ProjectInformation.convert(projectInformationVO);
+        //流标
+        if (projectInformationVO.getProjectStatus()==2){
+            ProjectInformation info = lambdaQuery().eq(ProjectInformation::getId,projectInformationVO.getId()).one();
+            FailBiddingMsg failBiddingMsg = FailBiddingMsg.convert(projectInformationVO);
             failBiddingMsgService.addProjectBiddingMsgData(failBiddingMsg);
             int count = info.getFailBiddingCount()+1;
             projectInformation.setFailBiddingCount(count);
             this.updateById(projectInformation);
-        }else if (projectInformation.getProjectStatus()==3){
+        }
+        //招标成功
+        else if (projectInformationVO.getProjectStatus()==3){
             this.updateById(projectInformation);
         }
         return this.updateById(projectInformation);

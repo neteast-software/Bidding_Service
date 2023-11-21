@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.project.FailBiddingMsg;
+import com.neteast.business.domain.project.vo.FailBiddingMsgVO;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface IFailBiddingMsgService extends IService<FailBiddingMsg> {
      * @param failBiddingMsg
      * @return
      */
-    List<FailBiddingMsg> getProjectBiddingMsgList(FailBiddingMsg failBiddingMsg);
+    List<FailBiddingMsgVO> getProjectBiddingMsgList(FailBiddingMsgVO failBiddingMsgVO);
 
     /**
      * @Description 添加招标信息

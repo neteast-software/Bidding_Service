@@ -2,6 +2,7 @@ package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.FailBiddingMsg;
+import com.neteast.business.domain.project.vo.FailBiddingMsgVO;
 import com.neteast.business.service.IFailBiddingMsgService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -27,11 +28,11 @@ public class FailBiddingMsgController extends BaseController {
     IFailBiddingMsgService projectBiddingMsgService;
 
     @GetMapping("/history")
-    public AjaxResult getProjectBiddingMsgHistory(FailBiddingMsg failBiddingMsg){
+    public AjaxResult getProjectBiddingMsgHistory(FailBiddingMsgVO failBiddingMsgVO){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<FailBiddingMsg> list = projectBiddingMsgService.getProjectBiddingMsgList(failBiddingMsg);
+        List<FailBiddingMsgVO> list = projectBiddingMsgService.getProjectBiddingMsgList(failBiddingMsgVO);
         TableDataInfo info = getDataTable(list);
         JSONObject data = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(data);

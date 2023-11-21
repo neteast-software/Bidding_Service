@@ -61,8 +61,8 @@ public class ProjectInformationController extends BaseController {
     }
 
     @PostMapping("/update")
-    public AjaxResult updateProjectInformationData(@RequestBody ProjectInformation projectInformation){
-        projectInformationService.updateProjectInformation(projectInformation);
+    public AjaxResult updateProjectInformationData(@RequestBody ProjectInformationVO projectInformationVO){
+        projectInformationService.updateProjectInformation(projectInformationVO);
         return success();
     }
 

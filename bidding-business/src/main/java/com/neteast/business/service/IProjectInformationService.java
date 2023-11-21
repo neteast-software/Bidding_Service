@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.project.ProjectInformation;
+import com.neteast.business.domain.project.vo.ProjectInformationVO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface IProjectInformationService extends IService<ProjectInformation>
 
     List<ProjectInformation> getProjectInformationList(ProjectInformation projectInformation);
 
-    boolean updateProjectInformation(ProjectInformation projectInformation);
+    boolean updateProjectInformation(ProjectInformationVO projectInformationVO);
 
     boolean addProjectInformation(ProjectInformation projectInformation);
 }
