@@ -3,7 +3,6 @@ package com.neteast.web.controller.project;
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.ProjectBidding;
 import com.neteast.business.domain.project.vo.ProjectBiddingVO;
-import com.neteast.business.domain.project.vo.ProjectSupplierVO;
 import com.neteast.business.service.IProjectBiddingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
