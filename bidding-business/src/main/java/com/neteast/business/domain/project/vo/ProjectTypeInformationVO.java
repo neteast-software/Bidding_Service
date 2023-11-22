@@ -1,11 +1,9 @@
 package com.neteast.business.domain.project.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
+ * 项目类别信息
  * @author lzp
  * @date 2023年11月20 15:29
  */
