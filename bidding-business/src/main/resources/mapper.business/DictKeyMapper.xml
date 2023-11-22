@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.DictKeyMapper">
+
+    <resultMap type="com.neteast.business.domain.dict.DictKey" id="DictKeyMap">
+        <result property="id" column="id" jdbcType="Integer"/>
+        <result property="key" column="key" jdbcType="String"/>
+        <result property="common" column="common" jdbcType="Integer"/>
+        <result property="projectType" column="project_type" jdbcType="String"/>
+        <result property="biddingType" column="bidding_type" jdbcType="String"/>
+        <result property="fileType" column="file_type" jdbcType="String"/>
+        <result property="dictType" column="dict_type" jdbcType="Integer"/>
+        <result property="createBy" column="create_by" jdbcType="String"/>
+        <result property="createTime" column="create_time" jdbcType="Date"/>
+        <result property="updateBy" column="update_by" jdbcType="String"/>
+        <result property="updateTime" column="update_time" jdbcType="Date"/>
+    </resultMap>
+
+    <select id="getList" resultMap="DictKeyMap" >
+        select
+            id,key,common,project_type,bidding_type,file_type,dict_type,create_by,create_time,update_by,update_time
+        from dict_key
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="key != null and key != ''">
+                and key = #{key}
+            </if>
+            <if test="common != null and common != ''">
+                and common = #{common}
+            </if>
+            <if test="projectType != null and projectType != ''">
+                and project_type = #{projectType}
+            </if>
+            <if test="biddingType != null and biddingType != ''">
+                and bidding_type = #{biddingType}
+            </if>
+            <if test="fileType != null and fileType != ''">
+                and file_type = #{fileType}
+            </if>
+            <if test="dictType != null and dictType != ''">
+                and dict_type = #{dictType}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

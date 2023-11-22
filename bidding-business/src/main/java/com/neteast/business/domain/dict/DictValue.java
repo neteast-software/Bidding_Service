@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.neteast.common.core.domain.BaseEntity;
+import lombok.Data;
 
 /**
  * 变量值
@@ -13,6 +14,7 @@ import com.neteast.common.core.domain.BaseEntity;
  */
 
 @TableName("dict_value")
+@Data
 public class DictValue extends BaseEntity{
 
     /** 主键id */
@@ -26,4 +28,13 @@ public class DictValue extends BaseEntity{
     /** 键值 */
     @TableField("value")
     private String value;
+
+    /** 键名 */
+    @TableField("value_name")
+    private String valueName;
+
+    /** 是否启用 */
+    @TableField("use")
+    private Integer use;
+
 }

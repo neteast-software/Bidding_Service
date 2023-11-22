@@ -1,10 +1,19 @@
 package com.neteast.business.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neteast.business.domain.dict.DictHistory;
 import com.neteast.business.domain.dict.DictKey;
+import com.neteast.business.domain.dict.DictValue;
 import com.neteast.business.mapper.DictKeyMapper;
+import com.neteast.business.service.IDictHistoryService;
 import com.neteast.business.service.IDictKeyService;
+import com.neteast.business.service.IDictValueService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author lzp
@@ -13,4 +22,29 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IDictKeyServiceImpl extends ServiceImpl<DictKeyMapper, DictKey> implements IDictKeyService {
+
+    @Resource
+    DictKeyMapper dictKeyMapper;
+
+    @Resource
+    IDictValueService dictValueService;
+
+    @Resource
+    IDictHistoryService dictHistoryService;
+
+    @Override
+    public List<DictKey> getDictKeyList(DictKey dictKey) {
+        return dictKeyMapper.getList(dictKey);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean delDictKey(Integer keyId) {
+        removeById(keyId);
+        dictHistoryService.delByKeyId(keyId);
+        dictValueService.delDictValueByKeyId(keyId);
+        return true;
+    }
+
+
 }

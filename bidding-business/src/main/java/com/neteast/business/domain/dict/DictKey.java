@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.neteast.common.core.domain.BaseEntity;
+import lombok.Data;
 
 /**
  * 变量的Key
@@ -13,6 +14,7 @@ import com.neteast.common.core.domain.BaseEntity;
  */
 
 @TableName("dict_key")
+@Data
 public class DictKey extends BaseEntity {
 
     /** 主键id */

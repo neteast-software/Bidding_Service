@@ -48,6 +48,7 @@ public class AttachMessageController extends BaseController {
         List<AttachMessageVO> list = attachMessageService.getAttachMessageList(attachMessageVO);
         return success(list);
     }
+
     @PostMapping("/upload")
     public AjaxResult uploadAttachMessage(
             @RequestParam(value = "projectId") Integer projectId,
