@@ -5,6 +5,7 @@ import com.neteast.business.domain.project.ProjectExpert;
 import com.neteast.business.domain.project.vo.ProjectExpertVO;
 import com.neteast.business.mapper.ProjectExpertMapper;
 import com.neteast.business.service.IProjectExpertService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.List;
  * @author lzp
  * @date 2023年11月17 15:45
  */
+
+@Service
 public class ProjectExpertServiceImpl extends ServiceImpl<ProjectExpertMapper, ProjectExpert> implements IProjectExpertService {
 
     @Resource

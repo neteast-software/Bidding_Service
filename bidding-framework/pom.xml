@@ -59,6 +59,12 @@
             <artifactId>bidding-system</artifactId>
         </dependency>
 
+        <!-- socket.io -->
+        <dependency>
+            <groupId>com.corundumstudio.socketio</groupId>
+            <artifactId>netty-socketio</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
