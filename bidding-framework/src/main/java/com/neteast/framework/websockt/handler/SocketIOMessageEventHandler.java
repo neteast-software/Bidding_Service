@@ -49,10 +49,15 @@ public class SocketIOMessageEventHandler{
     }
 
     @OnConnect
-    public void onConnect(SocketIOClient client,String channel){
+    public void onConnect(SocketIOClient client){
         String sessionId = client.getSessionId().toString().replace("-","");
         clientHashMap.put(sessionId,client);
-        client.sendEvent(channel,sessionId);
+        String channel = client.getHandshakeData().getSingleUrlParam("channel");
+        if (channel!=null){
+            client.sendEvent(channel,sessionId);
+        }else {
+            client.sendEvent("default",sessionId);
+        }
         log.info("客户端-{},session-{}",client.getRemoteAddress(),client.getSessionId());
     }
 

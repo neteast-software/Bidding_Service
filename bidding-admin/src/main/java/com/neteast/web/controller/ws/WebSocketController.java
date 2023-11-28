@@ -5,12 +5,11 @@ import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.framework.websockt.listner.SocketIOListener;
 import com.neteast.framework.websockt.service.SocketIOService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author lzp
@@ -30,6 +29,16 @@ public class WebSocketController extends BaseController {
     @GetMapping("/channel")
     public AjaxResult getWsOneChannel(String channelName) {
         socketIOServer.addEventListener(channelName, String.class, new SocketIOListener());
+        return success();
+    }
+
+    @PostMapping("/sendMsg")
+    public AjaxResult sendMsg(@RequestBody HashMap<String, String> map){
+
+        String key = map.get("clientId");
+        String channel = map.get("channel");
+        String body = map.get("body");
+        socketIOService.sendMsg(key,channel,body);
         return success();
     }
 
