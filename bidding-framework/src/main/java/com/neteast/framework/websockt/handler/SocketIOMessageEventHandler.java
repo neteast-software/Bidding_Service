@@ -49,11 +49,11 @@ public class SocketIOMessageEventHandler{
     }
 
     @OnConnect
-    public void onConnect(SocketIOClient client){
+    public void onConnect(SocketIOClient client,String channel){
         String sessionId = client.getSessionId().toString().replace("-","");
         clientHashMap.put(sessionId,client);
+        client.sendEvent(channel,sessionId);
         log.info("客户端-{},session-{}",client.getRemoteAddress(),client.getSessionId());
-        client.sendEvent("test_channel",sessionId);
     }
 
     @OnDisconnect
