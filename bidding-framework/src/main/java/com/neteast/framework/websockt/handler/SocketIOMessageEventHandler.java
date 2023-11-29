@@ -4,6 +4,7 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnConnect;
 import com.corundumstudio.socketio.annotation.OnDisconnect;
+import com.neteast.framework.websockt.bean.Custom;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -23,9 +26,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class SocketIOMessageEventHandler{
 
-    private static ConcurrentHashMap<String,SocketIOClient> clientHashMap = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String,Custom> clientHashMap = new ConcurrentHashMap<>();
 
-    public static SocketIOClient getSocketIOClient(String key){
+    public static Custom getSocketIOClient(String key){
         return clientHashMap.get(key);
     }
 
@@ -51,12 +54,18 @@ public class SocketIOMessageEventHandler{
     @OnConnect
     public void onConnect(SocketIOClient client){
         String sessionId = client.getSessionId().toString().replace("-","");
-        clientHashMap.put(sessionId,client);
         String channel = client.getHandshakeData().getSingleUrlParam("channel");
-        if (channel!=null){
+        String role = client.getHandshakeData().getSingleUrlParam("role");
+        if (channel!=null&&role!=null){
+            Custom custom = new Custom();
+            custom.setSessionId(sessionId);
+            custom.setChannel(channel);
+            custom.setRole(role);
+            custom.setSocketIOClient(client);
+            clientHashMap.put(sessionId,custom);
             client.sendEvent(channel,sessionId);
         }else {
-            client.sendEvent("default",sessionId);
+            client.sendEvent("default",false);
         }
         log.info("客户端-{},session-{}",client.getRemoteAddress(),client.getSessionId());
     }
