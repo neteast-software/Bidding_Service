@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,6 +31,17 @@ public class SocketIOMessageEventHandler{
 
     public static Custom getSocketIOClient(String key){
         return clientHashMap.get(key);
+    }
+
+    public static List<Custom> getSocketIOByRole(String role){
+
+        List<Custom> customs = new ArrayList<>();
+        clientHashMap.forEach((k,y)->{
+            if (role.equals(y.getRole())){
+                customs.add(y);
+            }
+        });
+        return customs;
     }
 
     private SocketIOServer socketIOServer;

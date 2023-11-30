@@ -1,5 +1,7 @@
 package com.neteast.framework.websockt.listner;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.DataListener;
@@ -10,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author lzp
@@ -26,8 +29,13 @@ public class SocketIOListener implements DataListener<String> {
     @Override
     public void onData(SocketIOClient client, String s, AckRequest ackRequest) throws Exception {
         log.info("客户端-{},发送消息-{}",client.getRemoteAddress(),s);
-        String sessionId = client.getSessionId().toString().replace("-","");
-        Custom custom = SocketIOMessageEventHandler.getSocketIOClient(sessionId);
-        socketIOService.sendMsg(custom,"处理内容");
+        //String sessionId = client.getSessionId().toString().replace("-","");
+        //Custom custom = SocketIOMessageEventHandler.getSocketIOClient(sessionId);
+        JSONObject jsonObject = JSON.parseObject(s);
+        String receiver = jsonObject.getString("receiver");
+        List<Custom> customs = SocketIOMessageEventHandler.getSocketIOByRole(receiver);
+        customs.forEach(o->{
+            socketIOService.sendMsg(o,"处理内容");
+        });
     }
 }
