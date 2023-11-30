@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * @author lzp
@@ -22,9 +21,6 @@ public class WebSocketController extends BaseController {
 
     @Resource
     SocketIOServer socketIOServer;
-
-    @Resource
-    SocketIOService socketIOService;
 
     @GetMapping("/channel")
     public AjaxResult getWsOneChannel(String channelName) {
@@ -39,7 +35,7 @@ public class WebSocketController extends BaseController {
         String key = map.get("clientId");
         String channel = map.get("channel");
         String body = map.get("body");
-        socketIOService.sendMsg(key,channel,body);
+        SocketIOService.sendMsg(key,channel,body);
         return success();
     }
 

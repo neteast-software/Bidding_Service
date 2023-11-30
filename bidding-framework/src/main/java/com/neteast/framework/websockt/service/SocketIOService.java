@@ -12,11 +12,10 @@ import org.springframework.stereotype.Component;
  * @date 2023年11月28 17:37
  */
 
-@Component
 @Slf4j
 public class SocketIOService {
 
-    public void sendMsg(String key,String channel,String body){
+    public static void sendMsg(String key,String channel,String body){
         log.info("发送前端消息：用户-{},channel-{},body-{}",key,channel,body);
         Custom custom = SocketIOMessageEventHandler.getSocketIOClient(key);
         if (custom!=null){
@@ -27,13 +26,9 @@ public class SocketIOService {
         }
     }
 
-    public void sendMsg(Custom custom,String body){
+    public static void sendMsg(Custom custom,String body){
         log.info("发送前端消息：用户-{},channel-{},body-{}",custom.getSessionId(),custom.getChannel(),body);
-        if (custom!=null){
-            SocketIOClient socketIOClient = custom.getSocketIOClient();
-            socketIOClient.sendEvent(custom.getChannel(),body);
-        }else {
-            log.info("接收用户已离线-{},通道-{},请求体内容为-{}",custom.getSessionId(),custom.getChannel(),body);
-        }
+        SocketIOClient socketIOClient = custom.getSocketIOClient();
+        socketIOClient.sendEvent(custom.getChannel(),body);
     }
 }

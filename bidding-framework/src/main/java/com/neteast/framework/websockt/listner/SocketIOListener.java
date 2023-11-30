@@ -9,9 +9,7 @@ import com.neteast.framework.websockt.bean.Custom;
 import com.neteast.framework.websockt.handler.SocketIOMessageEventHandler;
 import com.neteast.framework.websockt.service.SocketIOService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,11 +18,7 @@ import java.util.List;
  */
 
 @Slf4j
-@Component
 public class SocketIOListener implements DataListener<String> {
-
-    @Resource
-    SocketIOService socketIOService;
 
     @Override
     public void onData(SocketIOClient client, String s, AckRequest ackRequest) throws Exception {
@@ -35,7 +29,7 @@ public class SocketIOListener implements DataListener<String> {
         String receiver = jsonObject.getString("receiver");
         List<Custom> customs = SocketIOMessageEventHandler.getSocketIOByRole(receiver);
         customs.forEach(o->{
-            socketIOService.sendMsg(o,"处理内容");
+            SocketIOService.sendMsg(o,"处理内容");
         });
     }
 }
