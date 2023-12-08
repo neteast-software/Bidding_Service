@@ -26,11 +26,13 @@ public class SocketIOListener implements DataListener<String> {
         log.info("客户端-{},发送消息-{}",client.getRemoteAddress(),s);
         //String sessionId = client.getSessionId().toString().replace("-","");
         //Custom custom = SocketIOMessageEventHandler.getSocketIOClient(sessionId);
-        JSONObject jsonObject = JSON.parseObject(s);
+        //JSONObject jsonObject = JSON.parseObject(s);
         //String receiver = jsonObject.getString("receiver");
-        OperaRecord operaRecord = jsonObject.getObject("operator",OperaRecord.class);
-        String receiver = jsonObject.getString("receiver");
+        OperaRecord operaRecord = JSONObject.parseObject(s,OperaRecord.class);
+        String receiver = operaRecord.getReceiver();
         List<Custom> customs = SocketIOMessageEventHandler.getSocketIOByRole(receiver);
+        //记录操作
+        SocketIOMessageEventHandler.setOperaRecord(operaRecord.getChannel(),operaRecord);
         customs.forEach(o->{
             //实时操作状态
             String body = JSON.toJSONString(operaRecord);

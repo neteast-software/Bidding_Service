@@ -28,6 +28,9 @@ public class OperaRecord {
     /** 用户操作记录 */
     private String record;
 
+    /** 会议记录通道 */
+    private String channel;
+
     /** 操作时间 */
     private Date time;
 }
