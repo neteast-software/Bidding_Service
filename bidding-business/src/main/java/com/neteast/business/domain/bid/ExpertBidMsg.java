@@ -19,9 +19,6 @@ public class ExpertBidMsg {
     /** 专家名称 */
     private String name;
 
-    /** 项目id */
-    private Integer projectId;
-
     /** 供应商id */
     private Integer supplierId;
 
