@@ -68,6 +68,7 @@ public class SocketIOMessageEventHandler{
         String sessionId = client.getSessionId().toString().replace("-","");
         String channel = client.getHandshakeData().getSingleUrlParam("channel");
         String role = client.getHandshakeData().getSingleUrlParam("role");
+        String userId = client.getHandshakeData().getSingleUrlParam("userId");
         if (channel!=null&&role!=null){
             Custom custom = new Custom();
             custom.setSessionId(sessionId);

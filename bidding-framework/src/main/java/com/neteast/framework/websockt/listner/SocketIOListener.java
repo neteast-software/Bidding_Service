@@ -6,6 +6,7 @@ import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.neteast.framework.websockt.bean.Custom;
+import com.neteast.framework.websockt.bean.OperaRecord;
 import com.neteast.framework.websockt.handler.SocketIOMessageEventHandler;
 import com.neteast.framework.websockt.service.SocketIOService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +27,14 @@ public class SocketIOListener implements DataListener<String> {
         //String sessionId = client.getSessionId().toString().replace("-","");
         //Custom custom = SocketIOMessageEventHandler.getSocketIOClient(sessionId);
         JSONObject jsonObject = JSON.parseObject(s);
+        //String receiver = jsonObject.getString("receiver");
+        OperaRecord operaRecord = jsonObject.getObject("operator",OperaRecord.class);
         String receiver = jsonObject.getString("receiver");
         List<Custom> customs = SocketIOMessageEventHandler.getSocketIOByRole(receiver);
         customs.forEach(o->{
-            SocketIOService.sendMsg(o,"处理内容");
+            //实时操作状态
+            String body = JSON.toJSONString(operaRecord);
+            SocketIOService.sendMsg(o,body);
         });
     }
 }
