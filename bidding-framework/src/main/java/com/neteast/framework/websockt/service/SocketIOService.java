@@ -15,20 +15,20 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SocketIOService {
 
-    public static void sendMsg(String key,String channel,String body){
+    public static void sendMsg(String key,String channel,String body,SocketIOClient socketIOClient){
         log.info("发送前端消息：用户-{},channel-{},body-{}",key,channel,body);
         Custom custom = SocketIOMessageEventHandler.getSocketIOClient(key);
         if (custom!=null){
-            SocketIOClient socketIOClient = custom.getSocketIOClient();
             socketIOClient.sendEvent(channel,body);
         }else {
             log.info("接收用户已离线-{},通道-{},请求体内容为-{}",key,channel,body);
         }
     }
 
-    public static void sendMsg(Custom custom,String body){
-        log.info("发送前端消息：用户-{},channel-{},body-{}",custom.getSessionId(),custom.getChannel(),body);
-        SocketIOClient socketIOClient = custom.getSocketIOClient();
+    public static void sendMsg(Custom custom,String body,SocketIOClient socketIOClient){
+        log.info("发送前端消息：用户-{},channel-{},body-{}",custom.getUserId(),custom.getChannel(),body);
         socketIOClient.sendEvent(custom.getChannel(),body);
     }
+
+
 }

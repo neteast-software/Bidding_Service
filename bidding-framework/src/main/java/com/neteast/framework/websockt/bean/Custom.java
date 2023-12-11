@@ -1,7 +1,8 @@
 package com.neteast.framework.websockt.bean;
 
-import com.corundumstudio.socketio.SocketIOClient;
 import lombok.Data;
+
+import java.util.UUID;
 
 /**
  * 客户端用户
@@ -15,13 +16,12 @@ public class Custom {
     /** 用户角色 */
     String role;
 
-    /** sessionId */
-    String sessionId;
+    /** 用户id */
+    String userId;
 
     /** 通道 */
     String channel;
 
-    /** socket客户端 */
-    SocketIOClient socketIOClient;
-
+    /** client的Id */
+    UUID uuid;
 }

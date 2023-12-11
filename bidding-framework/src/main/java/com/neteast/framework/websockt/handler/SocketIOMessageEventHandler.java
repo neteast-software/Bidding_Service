@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -28,7 +29,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class SocketIOMessageEventHandler{
 
-    private static ConcurrentHashMap<String,Custom> clientHashMap = new ConcurrentHashMap<>();
+
+    private static ConcurrentHashMap<UUID,Custom> clientHashMap = new ConcurrentHashMap<>();
 
     /** 在会议确定结束时清除 */
     private static ConcurrentHashMap<String, List<OperaRecord>> operaHashMap = new ConcurrentHashMap<>();
@@ -66,11 +68,23 @@ public class SocketIOMessageEventHandler{
         return clientHashMap.get(key);
     }
 
-    public static List<Custom> getSocketIOByRole(String role){
+    public static List<Custom> getSocketIOByRole(String role,String channel){
 
         List<Custom> customs = new ArrayList<>();
         clientHashMap.forEach((k,y)->{
-            if (role.equals(y.getRole())){
+            if (channel.equals(y.getChannel())){
+                if (role.equals(y.getRole())){
+                    customs.add(y);
+                }
+            }
+        });
+        return customs;
+    }
+
+    public static List<Custom> getSocketIOByChannel(String channel){
+        List<Custom> customs = new ArrayList<>();
+        clientHashMap.forEach((k,y)->{
+            if (channel.equals(y.getChannel())){
                 customs.add(y);
             }
         });
@@ -98,21 +112,29 @@ public class SocketIOMessageEventHandler{
 
     @OnConnect
     public void onConnect(SocketIOClient client){
-        String sessionId = client.getSessionId().toString().replace("-","");
+
         String channel = client.getHandshakeData().getSingleUrlParam("channel");
         String role = client.getHandshakeData().getSingleUrlParam("role");
+        String userId = client.getHandshakeData().getSingleUrlParam("userId");
         if (channel!=null&&role!=null){
             Custom custom = new Custom();
-            custom.setSessionId(sessionId);
+            custom.setUuid(client.getSessionId());
             custom.setChannel(channel);
             custom.setRole(role);
-            custom.setSocketIOClient(client);
-            clientHashMap.put(sessionId,custom);
-            client.sendEvent(channel,sessionId);
+            custom.setUserId(userId);
+            clientHashMap.put(client.getSessionId(),custom);
+            //client.sendEvent(channel,userId);
+            //当前通道的操作记录
             List<OperaRecord> list = getPeraRecord(channel,role);
             list.forEach(o->{
                 String body = JSONObject.toJSONString(o);
                 client.sendEvent(channel,body);
+            });
+            //通知用户登录
+            List<Custom> customs = getSocketIOByChannel(channel);
+            customs.forEach(c->{
+                SocketIOClient socketIOClient = socketIOServer.getClient(c.getUuid());
+                socketIOClient.sendEvent(channel,custom);
             });
         }else {
             client.sendEvent("default",false);
@@ -123,8 +145,7 @@ public class SocketIOMessageEventHandler{
     @OnDisconnect
     public void onDisconnect(SocketIOClient client){
         log.info("客户端-{},session-{},断开连接",client.getRemoteAddress(),client.getSessionId());
-        String sessionId = client.getSessionId().toString().replace("-","");
-        clientHashMap.remove(sessionId);
+        clientHashMap.remove(client.getSessionId());
     }
 
 }

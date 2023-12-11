@@ -1,5 +1,6 @@
 package com.neteast.web.controller.ws;
 
+import com.corundumstudio.socketio.SocketIONamespace;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -28,15 +29,4 @@ public class WebSocketController extends BaseController {
         socketIOServer.addEventListener(channelName, String.class, new SocketIOListener());
         return success();
     }
-
-    @PostMapping("/sendMsg")
-    public AjaxResult sendMsg(@RequestBody HashMap<String, String> map){
-
-        String key = map.get("clientId");
-        String channel = map.get("channel");
-        String body = map.get("body");
-        SocketIOService.sendMsg(key,channel,body);
-        return success();
-    }
-
 }
