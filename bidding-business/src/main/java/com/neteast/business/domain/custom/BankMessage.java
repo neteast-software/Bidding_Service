@@ -43,7 +43,7 @@ public class BankMessage extends BaseEntity {
     @TableField("card_name")
     private String cardName;
 
-    /** 关联表id */
+    /** 单位信息id */
     @TableField("extId")
     private Integer extId;
 

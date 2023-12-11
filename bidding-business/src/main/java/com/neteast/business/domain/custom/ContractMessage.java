@@ -23,7 +23,7 @@ public class ContractMessage extends BaseEntity {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    /** 关联表id */
+    /** 单位信息id */
     @TableField("ext_id")
     private Integer extId;
 
