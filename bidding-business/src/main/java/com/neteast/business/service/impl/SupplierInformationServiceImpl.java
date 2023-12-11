@@ -7,6 +7,7 @@ import com.neteast.business.service.IProjectInformationService;
 import com.neteast.business.service.ISupplierInformationService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,8 +18,16 @@ import java.util.List;
 @Service
 public class SupplierInformationServiceImpl extends ServiceImpl<SupplierInformationMapper, SupplierInformation> implements ISupplierInformationService {
 
+    @Resource
+    SupplierInformationMapper supplierInformationMapper;
+
     @Override
     public List<SupplierInformation> getList(Integer projectId, Integer packageId) {
         return this.lambdaQuery().eq(SupplierInformation::getPackageId,packageId).eq(SupplierInformation::getProjectId,projectId).list();
+    }
+
+    @Override
+    public List<SupplierInformation> getList(SupplierInformation supplierInformation) {
+        return supplierInformationMapper.getList(supplierInformation);
     }
 }

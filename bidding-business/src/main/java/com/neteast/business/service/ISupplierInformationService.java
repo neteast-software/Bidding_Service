@@ -13,4 +13,6 @@ import java.util.List;
 public interface ISupplierInformationService extends IService<SupplierInformation> {
 
     List<SupplierInformation> getList(Integer projectId,Integer packageId);
+
+    List<SupplierInformation> getList(SupplierInformation supplierInformation);
 }
