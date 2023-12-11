@@ -38,6 +38,10 @@ public class SupplierInformation {
     @TableField("email")
     private String email;
 
+    /** 供应商地址 */
+    @TableField("address")
+    private String address;
+
     /** 报名入账方式 */
     @TableField("pay_method")
     private String payMethod;
@@ -49,4 +53,8 @@ public class SupplierInformation {
     /** 是否中标 */
     @TableField("suc_bid")
     private boolean sucBid;
+
+    /** 是否到达现场 */
+    @TableField("in_scene")
+    private boolean inScene;
 }
