@@ -5,6 +5,7 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.neteast.business.domain.bid.ExpertBidMsg;
 import com.neteast.business.domain.bid.SupplierBidMsg;
 import com.neteast.business.domain.project.SupplierInformation;
+import com.neteast.business.service.ISupplierInformationService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.framework.websockt.service.SocketIOService;
@@ -30,6 +31,9 @@ public class WebSocketController extends BaseController {
     @Resource
     SocketIOServer socketIOServer;
 
+    @Resource
+    ISupplierInformationService supplierInformationService;
+
     @GetMapping("/channel")
     public AjaxResult getWsOneChannel(String channelName) {
         logger.info("创建通道-{}",channelName);
@@ -37,6 +41,11 @@ public class WebSocketController extends BaseController {
         return success();
     }
 
+    /**
+     * @Description 专家端展示
+     * @author lzp
+     * @Date 2023/12/11
+     */
     @GetMapping("/expertSelect")
     public AjaxResult getExpertSelectMsg(String channel,int userId,int packageId){
         List<ExpertBidMsg> list = SocketIOListener.map.get(channel);
@@ -44,11 +53,16 @@ public class WebSocketController extends BaseController {
         return success(res);
     }
 
+    /**
+     * @Description 主持人端展示
+     * @author lzp
+     * @Date 2023/12/11
+     */
     @GetMapping("/projectShow")
-    public AjaxResult getProjectShow(String channel){
+    public AjaxResult getProjectShow(String channel,Integer projectId,Integer packageId){
         List<ExpertBidMsg> list = SocketIOListener.map.get(channel);
         Map<Integer,List<ExpertBidMsg>> map = list.stream().collect(Collectors.groupingBy(ExpertBidMsg::getSupplierId));
-        List<SupplierInformation> information = new ArrayList<>();
+        List<SupplierInformation> information = supplierInformationService.getList(projectId,packageId);
         List<SupplierBidMsg> msgList = new ArrayList<>();
         information.forEach(i->{
             SupplierBidMsg supplierBidMsg = new SupplierBidMsg();
@@ -60,7 +74,6 @@ public class WebSocketController extends BaseController {
         });
         return success(msgList);
     }
-
 
 
 }

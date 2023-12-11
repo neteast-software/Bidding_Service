@@ -7,6 +7,8 @@ import com.neteast.business.service.IProjectInformationService;
 import com.neteast.business.service.ISupplierInformationService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author lzp
  * @date 2023年12月11 18:06
@@ -14,4 +16,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SupplierInformationServiceImpl extends ServiceImpl<SupplierInformationMapper, SupplierInformation> implements ISupplierInformationService {
+
+    @Override
+    public List<SupplierInformation> getList(Integer projectId, Integer packageId) {
+        return this.lambdaQuery().eq(SupplierInformation::getPackageId,packageId).eq(SupplierInformation::getProjectId,projectId).list();
+    }
 }
