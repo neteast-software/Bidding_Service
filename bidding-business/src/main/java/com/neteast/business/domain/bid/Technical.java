@@ -13,6 +13,7 @@ import java.util.Objects;
 @Data
 public class Technical {
 
+    /** 评审项id */
     private Integer id;
 
     private boolean value;

@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 public class Qualification {
 
+    /** 评审项id */
     private Integer id;
 
     private boolean value;

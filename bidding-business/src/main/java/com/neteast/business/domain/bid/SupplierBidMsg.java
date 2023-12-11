@@ -16,14 +16,11 @@ public class SupplierBidMsg {
     /** 供应商id */
     private Integer supplierId;
 
-    /** 项目id */
-    private Integer projectId;
-
     /** 供应商名称 */
     private String supplierName;
 
-    /** 项目名称 */
-    private String projectName;
+    /** 项目id */
+    private Integer projectId;
 
     /** 评审专家的评审信息 */
     private List<ExpertBidMsg> expertBidMsg;

@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 public class Price {
 
+    /** 评审项id */
     private Integer id;
 
     private double value;
