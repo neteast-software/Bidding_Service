@@ -5,6 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
+ * 项目招投标信息
  * @author lzp
  * @date 2023年12月11 9:45
  */

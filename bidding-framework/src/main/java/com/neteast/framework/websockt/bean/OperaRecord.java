@@ -3,7 +3,6 @@ package com.neteast.framework.websockt.bean;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * 评标操作记录
@@ -20,16 +19,25 @@ public class OperaRecord {
     /** 用户id */
     private int userId;
 
+    /** 供应商id */
+    private int supplierId;
+
+    /** 分包id */
+    private int packageId;
+
     /** 用户名称 */
     private String userName;
 
     /** 接收角色 */
     private String receiver;
 
+    /** 操作类型 */
+    private String operaType;
+
     /** 用户操作记录 */
     private String record;
 
-    /** 会议记录通道 */
+    /** 通道 */
     private String channel;
 
     /** 操作时间 */

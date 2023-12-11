@@ -22,6 +22,14 @@ public class SupplierInformation {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
+    /** 项目id */
+    @TableField("project_id")
+    private Integer projectId;
+
+    /** 分包id */
+    @TableField("package_id")
+    private Integer packageId;
+
     /** 供应商名称 */
     @TableField("name")
     private String name;
