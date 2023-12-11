@@ -122,6 +122,7 @@ public class SocketIOMessageEventHandler{
             custom.setChannel(channel);
             custom.setRole(role);
             custom.setUserId(userId);
+            custom.setStatus("用户加入");
             clientHashMap.put(client.getSessionId(),custom);
             //client.sendEvent(channel,userId);
             //当前通道的操作记录
@@ -134,7 +135,7 @@ public class SocketIOMessageEventHandler{
             List<Custom> customs = getSocketIOByChannel(channel);
             customs.forEach(c->{
                 SocketIOClient socketIOClient = socketIOServer.getClient(c.getUuid());
-                socketIOClient.sendEvent(channel,custom);
+                socketIOClient.sendEvent(channel,custom.toString());
             });
         }else {
             client.sendEvent("default",false);
@@ -145,7 +146,14 @@ public class SocketIOMessageEventHandler{
     @OnDisconnect
     public void onDisconnect(SocketIOClient client){
         log.info("客户端-{},session-{},断开连接",client.getRemoteAddress(),client.getSessionId());
-        clientHashMap.remove(client.getSessionId());
+        Custom custom = clientHashMap.remove(client.getSessionId());
+        custom.setStatus("用户离开");
+        String channel = custom.getChannel();
+        List<Custom> customs = getSocketIOByChannel(channel);
+        customs.forEach(c->{
+            SocketIOClient socketIOClient = socketIOServer.getClient(c.getUuid());
+            socketIOClient.sendEvent(channel,custom.toString());
+        });
     }
 
 }

@@ -3,6 +3,7 @@ package com.neteast.framework.websockt.bean;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * 评标操作记录

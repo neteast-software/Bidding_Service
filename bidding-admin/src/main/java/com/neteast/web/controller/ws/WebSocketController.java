@@ -26,7 +26,7 @@ public class WebSocketController extends BaseController {
     @GetMapping("/channel")
     public AjaxResult getWsOneChannel(String channelName) {
         logger.info("创建通道-{}",channelName);
-        socketIOServer.addEventListener(channelName, String.class, new SocketIOListener());
+        socketIOServer.addEventListener(channelName, String.class, new SocketIOListener(socketIOServer));
         return success();
     }
 }

@@ -1,6 +1,7 @@
 package com.neteast.framework.websockt.bean;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
  */
 
 @Data
+@ToString
 public class Custom {
 
     /** 用户角色 */
@@ -24,4 +26,7 @@ public class Custom {
 
     /** client的Id */
     UUID uuid;
+
+    /** 用户状态 */
+    String status;
 }
