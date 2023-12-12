@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.neteast.business.domain.dict.PlusesCondition;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
 import lombok.Data;
@@ -68,6 +69,8 @@ public class ProjectInformationVO {
     private Double earnest;
 
     private List<PackageInformation> packageInformationList;
+
+    private List<PlusesCondition> conditions;
 
     public static ProjectInformationVO convert(ProjectInformation projectInformation){
         ProjectInformationVO projectInformationVO = new ProjectInformationVO();

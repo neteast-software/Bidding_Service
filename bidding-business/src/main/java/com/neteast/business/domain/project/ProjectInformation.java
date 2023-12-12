@@ -93,10 +93,6 @@ public class ProjectInformation extends BaseEntity {
     @TableField("project_del")
     private Integer projectDel;
 
-    /** 项目加分项等条件 */
-    @TableField(exist = false)
-    private List<PlusesCondition> conditions;
-
     public static ProjectInformation convert(ProjectInformationVO projectInformationVO){
         ProjectInformation projectInformation = new ProjectInformation();
         BeanUtil.copyProperties(projectInformationVO,projectInformation);
