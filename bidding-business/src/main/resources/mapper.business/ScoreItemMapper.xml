@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ScoreItemMapper">
+
+    <resultMap type="com.neteast.business.domain.project.ScoreItem" id="ScoreItemMap">
+        <result property="id" column="id" jdbcType="Integer"/>
+        <result property="extId" column="ext_id" jdbcType="Integer"/>
+        <result property="content" column="content" jdbcType="String"/>
+        <result property="value" column="value" jdbcType="Double"/>
+        <result property="choose" column="choose" jdbcType="String"/>
+    </resultMap>
+
+    <select id="getList" resultMap="ScoreItemMap">
+        select
+        id,ext_id,content,value,choose
+        from score_item
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="extId != null and extId != ''">
+                and ext_id = #{extId}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="value != null and value != ''">
+                and value = #{value}
+            </if>
+            <if test="choose != null and choose != ''">
+                and choose = #{choose}
+            </if>
+        </where>
+    </select>
+
+</mapper>

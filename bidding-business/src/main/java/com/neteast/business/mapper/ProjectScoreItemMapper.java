@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.neteast.business.domain.project.ProjectScoreItem;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 评分项设置
  * @author lzp
@@ -12,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ProjectScoreItemMapper extends BaseMapper<ProjectScoreItem> {
+
+    List<ProjectScoreItem> getList(ProjectScoreItem projectScoreItem);
 }
