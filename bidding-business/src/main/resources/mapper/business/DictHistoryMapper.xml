@@ -4,17 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.DictHistoryMapper">
 
-    <resultMap type="com.neteast.business.domain.dict.DictHistory" id="DictHistoryMap">
-        <result property="id" column="id" jdbcType="Integer"/>
-        <result property="keyId" column="key_id" jdbcType="Integer"/>
-        <result property="valueId" column="value_id" jdbcType="Integer"/>
-        <result property="historyValue" column="history_value" jdbcType="String"/>
-        <result property="historyValueName" column="history_value_name" jdbcType="String"/>
-        <result property="historyTime" column="history_time" jdbcType="Date"/>
-        <result property="doBy" column="do_by" jdbcType="String"/>
-    </resultMap>
-
-    <select id="getList" resultMap="DictHistoryMap">
+    <select id="getList" resultType="com.neteast.business.domain.dict.DictHistory" parameterType="com.neteast.business.domain.dict.DictHistory">
         select
             id,key_id,value_id,history_value,history_time,do_by,history_value_name
         from dict_history

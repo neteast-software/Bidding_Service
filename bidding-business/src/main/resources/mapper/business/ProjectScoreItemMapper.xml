@@ -4,17 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.ProjectScoreItemMapper">
 
-    <resultMap type="com.neteast.business.domain.project.ProjectScoreItem" id="ProjectScoreItemMap">
-        <result property="id" column="id" jdbcType="Integer"/>
-        <result property="projectId" column="project_id" jdbcType="Integer"/>
-        <result property="packageId" column="package_id" jdbcType="Integer"/>
-        <result property="itemName" column="item_name" jdbcType="String"/>
-        <result property="itemType" column="item_type" jdbcType="String"/>
-        <result property="valueType" column="value_type" jdbcType="Integer"/>
-        <result property="value" column="value" jdbcType="Double"/>
-    </resultMap>
-
-    <select id="getList" resultMap="ProjectScoreItemMap">
+    <select id="getList" resultType="com.neteast.business.domain.project.ProjectScoreItem" parameterType="com.neteast.business.domain.project.ProjectScoreItem">
         select
         id,project_id,package_id,item_name,item_type,value_type,value
         from project_score_item

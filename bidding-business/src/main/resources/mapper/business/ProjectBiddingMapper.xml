@@ -4,30 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.ExpertMessageMapper">
 
-    <resultMap type=".entity.ProjectBidding" id="ProjectBiddingMap">
-        <result property="id" column="id" jdbcType="String"/>
-        <result property="projectId" column="project_id" jdbcType="Integer"/>
-        <result property="templateId" column="template_id" jdbcType="Integer"/>
-        <result property="packageId" column="package_id" jdbcType="Integer"/>
-        <result property="type" column="type" jdbcType="String"/>
-        <result property="stage" column="stage" jdbcType="Integer"/>
-        <result property="name" column="name" jdbcType="String"/>
-        <result property="fileType" column="file_type" jdbcType="String"/>
-        <result property="downloadUrl" column="download_url" jdbcType="String"/>
-        <result property="projectCode" column="project_code" jdbcType="String"/>
-        <result property="filingsNumber" column="filings_number" jdbcType="String"/>
-        <result property="projectName" column="project_name" jdbcType="String"/>
-        <result property="procureType" column="procure_type" jdbcType="String"/>
-        <result property="contractPackage" column="contract_package" jdbcType="String"/>
-        <result property="packageNum" column="package_num" jdbcType="String"/>
-        <result property="biddingSubject" column="bidding_subject" jdbcType="String"/>
-        <result property="createBy" column="create_by" jdbcType="String"/>
-        <result property="createTime" column="create_time" jdbcType="Date"/>
-        <result property="updateBy" column="update_by" jdbcType="String"/>
-        <result property="updateTime" column="update_time" jdbcType="Date"/>
-    </resultMap>
-
-    <select id="getList" resultMap="ProjectBiddingMap">
+    <select id="getList" resultType="com.neteast.business.domain.project.ProjectBidding" parameterType="com.neteast.business.domain.project.ProjectBidding">
         select b.id,b.project_id,b.template_id,b.package_id,b.type,b.stage,b.name,b.file_type,b.download_url,project_code,filings_number,project_name,procure_type,contract_package,package_num,bidding_subject,b.create_by,b.create_time,b.update_by,b.update_time from project_bidding b
             INNER JOIN project_message on project_id = project_message.id INNER JOIN package_information on package_id = package_information.id
         <where>
