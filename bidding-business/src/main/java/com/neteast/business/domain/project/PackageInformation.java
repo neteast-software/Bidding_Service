@@ -41,7 +41,7 @@ public class PackageInformation extends BaseEntity {
     @TableField("package_num")
     private String packageNum;
 
-    /** 包单位;包需要完成内容的数量 */
+    /** 包单位;包需要完成内容的数量,如项,个等单位等 */
     @TableField("package_unit")
     private Integer packageUnit;
 

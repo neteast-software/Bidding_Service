@@ -5,14 +5,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.neteast.business.domain.dict.PlusesCondition;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 甲方项目信息
@@ -92,6 +92,10 @@ public class ProjectInformation extends BaseEntity {
     /** 项目删除，0-已删除,1-未删除 **/
     @TableField("project_del")
     private Integer projectDel;
+
+    /** 项目加分项等条件 */
+    @TableField(exist = false)
+    private List<PlusesCondition> conditions;
 
     public static ProjectInformation convert(ProjectInformationVO projectInformationVO){
         ProjectInformation projectInformation = new ProjectInformation();
