@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.SupplierInformationMapper">
+
+    <resultMap type="com.neteast.business.domain.project.SupplierInformation" id="SupplierInformationMap">
+        <result property="id" column="id" jdbcType="Integer"/>
+        <result property="projectId" column="project_id" jdbcType="Integer"/>
+        <result property="packageId" column="package_id" jdbcType="Integer"/>
+        <result property="name" column="name" jdbcType="String"/>
+        <result property="contractPerson" column="contract_person" jdbcType="String"/>
+        <result property="phone" column="phone" jdbcType="Date"/>
+        <result property="email" column="email" jdbcType="String"/>
+        <result property="address" column="address" jdbcType="String"/>
+        <result property="payMethod" column="pay_method" jdbcType="String"/>
+        <result property="registerTime" column="register_time" jdbcType="String"/>
+        <result property="sucBid" column="suc_bid" jdbcType="String"/>
+        <result property="inScene" column="in_scene" jdbcType="String"/>
+        <result property="createBy" column="create_by" jdbcType="String"/>
+        <result property="createTime" column="create_time" jdbcType="Date"/>
+        <result property="updateBy" column="update_by" jdbcType="String"/>
+        <result property="updateTime" column="update_time" jdbcType="Date"/>
+        <result property="bankName" column="bank_name" jdbcType="String"/>
+        <result property="bankAddress" column="bank_address" jdbcType="String"/>
+        <result property="cardNumber" column="card_number" jdbcType="String"/>
+        <result property="accountNumber" column="account_number" jdbcType="String"/>
+    </resultMap>
+
+    <select id="getList" resultMap="SupplierInformationMap">
+        select
+        id,project_id,package_id,name,contract_person,phone,email,address,pay_method,register_time,suc_bid,in_scene,create_by,create_time,update_by,update_time,bank_name,bank_address,card_number,account_number
+        from SupplierInformation
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="projectId != null and projectId != ''">
+                and project_id = #{projectId}
+            </if>
+            <if test="packageId != null and packageId != ''">
+                and package_id = #{packageId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="contractPerson != null and contractPerson != ''">
+                and contract_person = #{contractPerson}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="payMethod != null and payMethod != ''">
+                and pay_method = #{payMethod}
+            </if>
+            <if test="registerTime != null and registerTime != ''">
+                and register_time = #{registerTime}
+            </if>
+            <if test="sucBid != null and sucBid != ''">
+                and suc_bid = #{sucBid}
+            </if>
+            <if test="inScene != null and inScene != ''">
+                and in_scene = #{inScene}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                and update_time = #{updateTime}
+            </if>
+            <if test="bankName != null and bankName != ''">
+                and bank_name = #{bankName}
+            </if>
+            <if test="bankAddress != null and bankAddress != ''">
+                and bank_address = #{bankAddress}
+            </if>
+            <if test="cardNumber != null and cardNumber != ''">
+                and card_number = #{cardNumber}
+            </if>
+            <if test="accountNumber != null and accountNumber != ''">
+                and account_number = #{accountNumber}
+            </if>
+        </where>
+    </select>
+
+</mapper>

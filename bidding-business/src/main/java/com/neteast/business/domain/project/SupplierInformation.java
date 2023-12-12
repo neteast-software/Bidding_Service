@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.Date;
 
 @Data
 @TableName("supplier_information")
-public class SupplierInformation {
+public class SupplierInformation extends BaseEntity{
 
     /** 供应商id */
     @TableId(value = "id",type = IdType.AUTO)
@@ -53,6 +54,22 @@ public class SupplierInformation {
     /** 报名入账方式 */
     @TableField("pay_method")
     private String payMethod;
+
+    /** 银行名称 */
+    @TableField("bank_name")
+    private String bankName;
+
+    /** 银行地址 */
+    @TableField("bank_address")
+    private String bankAddress;
+
+    /** 银行卡号 */
+    @TableField("card_number")
+    private String cardNumber;
+
+    /** 银行卡账户名称 */
+    @TableField("account_number")
+    private String accountName;
 
     /** 报名时间 */
     @TableField("register_time")
