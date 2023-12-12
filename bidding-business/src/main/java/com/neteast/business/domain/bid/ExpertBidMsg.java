@@ -27,54 +27,63 @@ public class ExpertBidMsg {
     private Integer packageId;
 
     /** 技术评审 */
-    private List<Technical> technicals = new ArrayList<>();
+    private List<Score> technicals = new ArrayList<>();
 
     /** 商务评审 */
-    private List<Commercial> commercials = new ArrayList<>();
+    private List<Score> commercials = new ArrayList<>();
 
     /** 资格评审 */
-    private List<Qualification> qualifications = new ArrayList<>();
+    private List<Score> qualifications = new ArrayList<>();
 
     /** 价格评审 */
-    private List<Price> prices = new ArrayList<>();
+    private List<Score> prices = new ArrayList<>();
 
-    public void setTechnicals(Technical technical) {
-        for (Technical temp : technicals) {
-            if (temp.getId().equals(technical.getId())){
-                temp.setValue(technical.isValue());
+    public void setTechnicals(Score score) {
+        for (Score temp : technicals) {
+            if (setScore(temp,score)){
                 return;
             }
         }
-        technicals.add(technical);
+        technicals.add(score);
     }
 
-    public void setCommercials(Commercial commercial){
-        for (Commercial temp:commercials) {
-            if (temp.getId().equals(commercial.getId())){
-                temp.setValue(commercial.isValue());
+    public void setCommercials(Score score){
+        for (Score temp:commercials) {
+            if (setScore(temp,score)){
                 return;
             }
         }
-        commercials.add(commercial);
+        commercials.add(score);
     }
 
-    public void setQualifications(Qualification qualification){
-        for (Qualification temp:qualifications){
-            if (temp.getId().equals(qualification.getId())){
-                temp.setValue(qualification.isValue());
+    public void setQualifications(Score score){
+        for (Score temp:qualifications){
+            if (setScore(temp,score)){
                 return;
             }
         }
-        qualifications.add(qualification);
+        qualifications.add(score);
     }
 
-    public void setPrices(Price price){
-        for (Price temp:prices){
-            if (temp.getId().equals(price.getId())){
-                temp.setValue(price.getValue());
+    public void setPrices(Score score){
+        for (Score temp:prices){
+            if (setScore(temp,score)){
                 return;
             }
         }
-        prices.add(price);
+        prices.add(score);
+    }
+
+    private boolean setScore(Score temp,Score score){
+        if (temp.getId().equals(score.getId())){
+            temp.setType(score.getType());
+            if (score.getType()==1){
+                temp.setChoose(score.getChoose());
+            }else {
+                temp.setValue(score.getValue());
+            }
+            return true;
+        }
+        return false;
     }
 }

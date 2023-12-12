@@ -92,22 +92,19 @@ public class SocketIOListener implements DataListener<String> {
         String type = operaRecord.getOperaType();
         String opera = operaRecord.getRecord();
         log.info("操作记录的值为-{}",opera);
+        Score score = JSONObject.parseObject(opera, Score.class);
         switch (type){
             case "commercial":
-                Commercial commercial = JSONObject.parseObject(opera, Commercial.class);
-                expertBidMsg.setCommercials(commercial);
+                expertBidMsg.setCommercials(score);
                 break;
             case "price":
-                Price price = JSONObject.parseObject(opera,Price.class);
-                expertBidMsg.setPrices(price);
+                expertBidMsg.setPrices(score);
                 break;
             case "qualification":
-                Qualification qualification = JSONObject.parseObject(opera,Qualification.class);
-                expertBidMsg.setQualifications(qualification);
+                expertBidMsg.setQualifications(score);
                 break;
             case "technical":
-                Technical technical = JSONObject.parseObject(opera,Technical.class);
-                expertBidMsg.setTechnicals(technical);
+                expertBidMsg.setTechnicals(score);
         }
         return expertBidMsg;
     }
