@@ -30,8 +30,11 @@ public class SocketIOListener implements DataListener<String> {
 
     private SocketIOServer socketIOServer;
 
-    /** channel作为key */
+    /** channel作为key 专家端数据 */
     public static ConcurrentHashMap<String,List<ExpertBidMsg>> map = new ConcurrentHashMap<>();
+
+    /** channel作为key 供应商数据 */
+    public static ConcurrentHashMap<String,List<SupplierBidMsg>> supplierMap = new ConcurrentHashMap<>();
 
     @Override
     public void onData(SocketIOClient client, String s, AckRequest ackRequest){
@@ -42,16 +45,28 @@ public class SocketIOListener implements DataListener<String> {
             String receiver = operaRecord.getReceiver();
             String channel = operaRecord.getChannel();
             //设置用户选择的信息
-            setExpertSelectRecord(operaRecord);
+            Score score = setExpertSelectRecord(operaRecord);
             //获取接收方
             List<Custom> customs = SocketIOMessageEventHandler.getSocketIOByRole(receiver,channel);
             //记录操作
             SocketIOMessageEventHandler.setOperaRecord(operaRecord.getChannel(),operaRecord);
+
+            String temp = "";
+            switch (receiver){
+                case "client":
+                    CompletionStatus completionStatus = getCompletionStatus(score);
+                    completionStatus.setUserId(operaRecord.getUserId());
+                    completionStatus.setName(operaRecord.getUserName());
+                    temp = JSONObject.toJSONString(completionStatus);
+                    setSupplierBidRecord(operaRecord,completionStatus);
+                    break;
+            }
+
+            String body = temp;
             customs.forEach(o->{
                 //实时操作状态
                 SocketIOClient socketIOClient = socketIOServer.getClient(o.getUuid());
-                String body = JSON.toJSONString(operaRecord);
-                SocketIOService.sendMsg(o,body,socketIOClient);
+                SocketIOService.sendMsg(o, body,socketIOClient);
             });
         }
     }
@@ -61,7 +76,7 @@ public class SocketIOListener implements DataListener<String> {
      * @author lzp
      * @Date 2023/12/11
      */
-    private static void setExpertSelectRecord(OperaRecord operaRecord){
+    private static Score setExpertSelectRecord(OperaRecord operaRecord){
 
         String channel = operaRecord.getChannel();
         List<ExpertBidMsg> list = map.get(channel);
@@ -70,21 +85,61 @@ public class SocketIOListener implements DataListener<String> {
                 if (expertBidMsg.getId()==operaRecord.getUserId()&&
                         expertBidMsg.getSupplierId()==operaRecord.getSupplierId()&&
                         expertBidMsg.getPackageId()==operaRecord.getPackageId()){
-                    setExpertBidMsg(expertBidMsg,operaRecord);
-                    return;
+                    return setExpertBidMsg(expertBidMsg,operaRecord);
                 }
             }
         }else {
             list = new ArrayList<>();
         }
         ExpertBidMsg expertBidMsg = new ExpertBidMsg();
-        setExpertBidMsg(expertBidMsg,operaRecord);
+        Score score = setExpertBidMsg(expertBidMsg,operaRecord);
         list.add(expertBidMsg);
         map.put(channel,list);
+        return score;
     }
 
-    private static ExpertBidMsg setExpertBidMsg(ExpertBidMsg expertBidMsg,OperaRecord operaRecord){
+    private static void setSupplierBidRecord(OperaRecord operaRecord,CompletionStatus completionStatus){
 
+        String channel = operaRecord.getChannel();
+        List<SupplierBidMsg> list = supplierMap.get(channel);
+        if (list != null){
+            for (SupplierBidMsg supplierBidMsg:list){
+                if (supplierBidMsg.getSupplierId()==operaRecord.getSupplierId()){
+                    setSupplierBidMsg(supplierBidMsg,operaRecord,completionStatus);
+                }
+            }
+        }else {
+            list = new ArrayList<>();
+        }
+        SupplierBidMsg supplierBidMsg = new SupplierBidMsg();
+        setSupplierBidMsg(supplierBidMsg,operaRecord,completionStatus);
+        list.add(supplierBidMsg);
+        supplierMap.put(channel,list);
+    }
+
+    private static void setSupplierBidMsg(SupplierBidMsg supplierBidMsg,OperaRecord operaRecord,CompletionStatus completionStatus){
+        supplierBidMsg.setSupplierId(operaRecord.getSupplierId());
+        supplierBidMsg.setSupplierName(operaRecord.getSupplierName());
+        supplierBidMsg.setPackageId(operaRecord.getPackageId());
+        List<TotalScore> list = supplierBidMsg.getTotalScores();
+        String opera = operaRecord.getRecord();
+        JSONObject jsonObject = JSON.parseObject(opera);
+        String itemType = jsonObject.getString("itemType");
+        Integer inputType  = jsonObject.getInteger("type");
+        for (TotalScore t:list){
+            if (itemType.equals(t.getItemType())){
+                t.setCompletionStatus(completionStatus);
+                return;
+            }
+        }
+        TotalScore totalScore = new TotalScore();
+        totalScore.setType(inputType);
+        totalScore.setItemType(itemType);
+        totalScore.setCompletionStatus(completionStatus);
+        supplierBidMsg.setTotalScores(totalScore);
+    }
+
+    private static Score setExpertBidMsg(ExpertBidMsg expertBidMsg,OperaRecord operaRecord){
 
         expertBidMsg.setId(operaRecord.getUserId());
         expertBidMsg.setName(operaRecord.getUserName());
@@ -103,7 +158,7 @@ public class SocketIOListener implements DataListener<String> {
                 s.setType(inputType);
                 Item item = JSONObject.parseObject(body,Item.class);
                 s.setList(item);
-                return expertBidMsg;
+                return s;
             }
         }
         Score score = new Score();
@@ -112,6 +167,15 @@ public class SocketIOListener implements DataListener<String> {
         Item item = JSONObject.parseObject(body,Item.class);
         score.setList(item);
         expertBidMsg.setReviewStatus(score);
-        return expertBidMsg;
+        return score;
     }
+
+    private static CompletionStatus getCompletionStatus(Score score){
+        CompletionStatus completionStatus = new CompletionStatus();
+        completionStatus.setNum(score.getList().size());
+        completionStatus.setPass(score.getPass());
+        completionStatus.setValue(score.getValue());
+        return completionStatus;
+    }
+
 }

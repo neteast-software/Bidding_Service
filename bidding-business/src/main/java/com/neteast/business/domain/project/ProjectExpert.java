@@ -25,6 +25,9 @@ public class ProjectExpert extends BaseEntity{
     @TableField("project_id")
     private Integer projectId;
 
+    @TableField("package_id")
+    private Integer packageId;
+
     /** 专家id */
     @TableField("expert_id")
     private Integer expertId;

@@ -64,24 +64,11 @@ public class WebSocketController extends BaseController {
      * @Date 2023/12/11
      */
     @GetMapping("/projectShow")
-    public AjaxResult getProjectShow(String channel,Integer projectId,Integer packageId){
-        List<ExpertBidMsg> list = SocketIOListener.map.get(channel);
-        Map<Integer,List<ExpertBidMsg>> map = list.stream().collect(Collectors.groupingBy(ExpertBidMsg::getSupplierId));
-        List<SupplierInformation> information = supplierInformationService.getList(projectId,packageId);
-        List<ProjectScoreItem> projectScoreItems = projectScoreItemService.getProjectScoreItemList(projectId,packageId);
-        List<SupplierBidMsg> msgList = new ArrayList<>();
-        information.forEach(i->{
-            projectScoreItems.forEach(p->{
-                SupplierBidMsg supplierBidMsg = new SupplierBidMsg();
-                supplierBidMsg.setProjectId(i.getProjectId());
-                supplierBidMsg.setSupplierId(i.getId());
-                supplierBidMsg.setSupplierName(i.getName());
-                TotalScore totalScore = getTotalScore(map.get(i.getId()),p);
-                supplierBidMsg.setTotalScores(totalScore);
-                msgList.add(supplierBidMsg);
-            });
-        });
-        return success(msgList);
+    public AjaxResult getProjectShow(String channel,Integer packageId){
+
+        List<SupplierBidMsg> list = SocketIOListener.supplierMap.get(channel);
+        List<SupplierBidMsg> res = list.stream().filter(u->u.getPackageId()==packageId).collect(Collectors.toList());
+        return success(res);
     }
 
     private TotalScore getTotalScore(List<ExpertBidMsg> expertBidMsg,ProjectScoreItem projectScoreItem){
@@ -89,7 +76,6 @@ public class WebSocketController extends BaseController {
         totalScore.setNum(projectScoreItem.getNum());
         totalScore.setType(projectScoreItem.getValueType());
         totalScore.setItemType(projectScoreItem.getItemType());
-        totalScore.setExpertNum(expertBidMsg.size());
         List<CompletionStatus> completionStatuses = new ArrayList<>();
         expertBidMsg.forEach(e->{
             CompletionStatus completionStatus = new CompletionStatus();
@@ -106,6 +92,4 @@ public class WebSocketController extends BaseController {
         totalScore.setCompletionStatuses(completionStatuses);
         return totalScore;
     }
-
-
 }

@@ -22,7 +22,10 @@ public class SupplierBidMsg {
     private String supplierName;
 
     /** 项目id */
-    private Integer projectId;
+    private Integer packageId;
+
+    /** 专家总数 */
+    private Integer expertNum;
 
     /** 供应商得分情况 */
     private List<TotalScore> totalScores = new ArrayList<>();

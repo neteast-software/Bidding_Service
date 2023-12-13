@@ -22,6 +22,9 @@ public class OperaRecord {
     /** 供应商id */
     private int supplierId;
 
+    /** 供应商名称 */
+    private String supplierName;
+
     /** 分包id */
     private int packageId;
 

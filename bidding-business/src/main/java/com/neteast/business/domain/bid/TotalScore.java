@@ -25,6 +25,17 @@ public class TotalScore {
     /**题目总数*/
     private Integer num;
 
-    /** 专家总数 */
-    private Integer expertNum;
+    public void setCompletionStatus(CompletionStatus completionStatus){
+
+        for (CompletionStatus c:completionStatuses){
+            if (completionStatus.getUserId().compareTo(c.getUserId())==0){
+                c.setName(completionStatus.getName());
+                c.setPass(completionStatus.isPass());
+                c.setNum(completionStatus.getNum());
+                c.setValue(completionStatus.getValue());
+                return;
+            }
+        }
+        completionStatuses.add(completionStatus);
+    }
 }
