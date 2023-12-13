@@ -61,7 +61,7 @@ public class WebSocketController extends BaseController {
     public AjaxResult getProjectShow(String channel,Integer packageId){
 
         List<SupplierBidMsg> list = SocketIOListener.supplierMap.get(channel);
-        List<SupplierBidMsg> res = list.stream().filter(u->u.getPackageId()==packageId).collect(Collectors.toList());
+        List<SupplierBidMsg> res = list.stream().filter(u->u.getPackageId().intValue()==packageId).collect(Collectors.toList());
         return success(res);
     }
 
