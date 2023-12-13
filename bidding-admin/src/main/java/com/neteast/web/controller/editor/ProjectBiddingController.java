@@ -66,6 +66,7 @@ public class ProjectBiddingController extends BaseController {
         ProjectBidding projectBidding = projectBiddingService.getById(id);
         String path = projectBidding.getFilePath();
         file.transferTo(new File(path));
+        //todo 敏感词判断
         return success();
     }
 
