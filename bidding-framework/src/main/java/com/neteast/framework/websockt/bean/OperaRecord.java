@@ -34,9 +34,6 @@ public class OperaRecord {
     /** 接收角色 */
     private String receiver;
 
-    /** 操作类型 */
-    private String operaType;
-
     /** 用户操作记录 */
     private String record;
 
@@ -45,4 +42,10 @@ public class OperaRecord {
 
     /** 操作时间 */
     private Date time;
+
+    /**操作类型 */
+    private String itemType;
+
+    /** 输入值类型 */
+    private Integer type;
 }

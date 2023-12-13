@@ -65,25 +65,25 @@ public class WebSocketController extends BaseController {
         return success(res);
     }
 
-    private TotalScore getTotalScore(List<ExpertBidMsg> expertBidMsg,ProjectScoreItem projectScoreItem){
-        TotalScore totalScore = new TotalScore();
-        totalScore.setNum(projectScoreItem.getNum());
-        totalScore.setType(projectScoreItem.getValueType());
-        totalScore.setItemType(projectScoreItem.getItemType());
-        List<CompletionStatus> completionStatuses = new ArrayList<>();
-        expertBidMsg.forEach(e->{
-            CompletionStatus completionStatus = new CompletionStatus();
-            completionStatus.setName(e.getName());
-            completionStatus.setUserId(e.getId());
-            completionStatus.setNum(e.getReviewStatus().size());
-            if (projectScoreItem.getValueType()==1){
-                completionStatus.setPass(e.getPass());
-            }else {
-                completionStatus.setValue(e.getValue());
-            }
-            completionStatuses.add(completionStatus);
-        });
-        totalScore.setCompletionStatuses(completionStatuses);
-        return totalScore;
-    }
+//    private TotalScore getTotalScore(List<ExpertBidMsg> expertBidMsg,ProjectScoreItem projectScoreItem){
+//        TotalScore totalScore = new TotalScore();
+//        totalScore.setNum(projectScoreItem.getNum());
+//        totalScore.setType(projectScoreItem.getValueType());
+//        totalScore.setItemType(projectScoreItem.getItemType());
+//        List<CompletionStatus> completionStatuses = new ArrayList<>();
+//        expertBidMsg.forEach(e->{
+//            CompletionStatus completionStatus = new CompletionStatus();
+//            completionStatus.setName(e.getName());
+//            completionStatus.setUserId(e.getId());
+//            completionStatus.setNum(e.getReviewStatus().size());
+//            if (projectScoreItem.getValueType()==1){
+//                completionStatus.setPass(e.getPass());
+//            }else {
+//                completionStatus.setValue(e.getValue());
+//            }
+//            completionStatuses.add(completionStatus);
+//        });
+//        totalScore.setCompletionStatuses(completionStatuses);
+//        return totalScore;
+//    }
 }

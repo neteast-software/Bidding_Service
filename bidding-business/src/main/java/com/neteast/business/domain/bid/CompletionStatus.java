@@ -15,6 +15,9 @@ public class CompletionStatus{
     /** 专家id */
     Integer userId;
 
+    /** 供应商id */
+    Integer supplierId;
+
     /** 完成题目数 */
     Integer num;
 

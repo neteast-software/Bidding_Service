@@ -2,6 +2,7 @@ package com.neteast.business.domain.bid;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,19 +21,19 @@ public class TotalScore {
     private String itemType;
 
     /**专家完成情况*/
-    private List<CompletionStatus> completionStatuses;
-
-    /**题目总数*/
-    private Integer num;
+    private List<CompletionStatus> completionStatuses = new ArrayList<>();
 
     public void setCompletionStatus(CompletionStatus completionStatus){
 
         for (CompletionStatus c:completionStatuses){
             if (completionStatus.getUserId().compareTo(c.getUserId())==0){
                 c.setName(completionStatus.getName());
-                c.setPass(completionStatus.isPass());
                 c.setNum(completionStatus.getNum());
-                c.setValue(completionStatus.getValue());
+                if (type==1){
+                    c.setPass(completionStatus.isPass());
+                }else {
+                    c.setValue(completionStatus.getValue());
+                }
                 return;
             }
         }

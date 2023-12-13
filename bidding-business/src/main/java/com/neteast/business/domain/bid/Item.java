@@ -13,7 +13,7 @@ public class Item{
     private Integer id;
 
     /** 选择值 */
-    private Boolean choose;
+    private boolean choose;
 
     /** 分数值 */
     private Double value;

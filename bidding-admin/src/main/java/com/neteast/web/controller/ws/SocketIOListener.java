@@ -57,6 +57,7 @@ public class SocketIOListener implements DataListener<String> {
                     CompletionStatus completionStatus = getCompletionStatus(score);
                     completionStatus.setUserId(operaRecord.getUserId());
                     completionStatus.setName(operaRecord.getUserName());
+                    completionStatus.setSupplierId(operaRecord.getSupplierId());
                     temp = JSONObject.toJSONString(completionStatus);
                     setSupplierBidRecord(operaRecord,completionStatus);
                     break;
@@ -106,6 +107,7 @@ public class SocketIOListener implements DataListener<String> {
             for (SupplierBidMsg supplierBidMsg:list){
                 if (supplierBidMsg.getSupplierId()==operaRecord.getSupplierId()){
                     setSupplierBidMsg(supplierBidMsg,operaRecord,completionStatus);
+                    return;
                 }
             }
         }else {
@@ -122,10 +124,8 @@ public class SocketIOListener implements DataListener<String> {
         supplierBidMsg.setSupplierName(operaRecord.getSupplierName());
         supplierBidMsg.setPackageId(operaRecord.getPackageId());
         List<TotalScore> list = supplierBidMsg.getTotalScores();
-        String opera = operaRecord.getRecord();
-        JSONObject jsonObject = JSON.parseObject(opera);
-        String itemType = jsonObject.getString("itemType");
-        Integer inputType  = jsonObject.getInteger("type");
+        String itemType = operaRecord.getItemType();
+        Integer inputType  = operaRecord.getType();
         for (TotalScore t:list){
             if (itemType.equals(t.getItemType())){
                 t.setCompletionStatus(completionStatus);
@@ -145,18 +145,15 @@ public class SocketIOListener implements DataListener<String> {
         expertBidMsg.setName(operaRecord.getUserName());
         expertBidMsg.setSupplierId(operaRecord.getSupplierId());
         expertBidMsg.setPackageId(operaRecord.getPackageId());
-        String type = operaRecord.getOperaType();
         String opera = operaRecord.getRecord();
         log.info("操作记录的值为-{}",opera);
-        JSONObject jsonObject = JSON.parseObject(opera);
-        String itemType = jsonObject.getString("itemType");
-        Integer inputType  = jsonObject.getInteger("type");
-        String body  = jsonObject.getString("data");
+        String itemType = operaRecord.getItemType();
+        Integer inputType  = operaRecord.getType();
+        Item item = JSONObject.parseObject(opera,Item.class);
         List<Score> scores = expertBidMsg.getReviewStatus();
         for (Score s:scores) {
             if (itemType.equals(s.getItemType())){
                 s.setType(inputType);
-                Item item = JSONObject.parseObject(body,Item.class);
                 s.setList(item);
                 return s;
             }
@@ -164,7 +161,6 @@ public class SocketIOListener implements DataListener<String> {
         Score score = new Score();
         score.setType(inputType);
         score.setItemType(itemType);
-        Item item = JSONObject.parseObject(body,Item.class);
         score.setList(item);
         expertBidMsg.setReviewStatus(score);
         return score;
@@ -173,8 +169,11 @@ public class SocketIOListener implements DataListener<String> {
     private static CompletionStatus getCompletionStatus(Score score){
         CompletionStatus completionStatus = new CompletionStatus();
         completionStatus.setNum(score.getList().size());
-        completionStatus.setPass(score.getPass());
-        completionStatus.setValue(score.getValue());
+        if (score.getType()==1){
+            completionStatus.setPass(score.getPass());
+        }else {
+            completionStatus.setValue(score.getValue());
+        }
         return completionStatus;
     }
 

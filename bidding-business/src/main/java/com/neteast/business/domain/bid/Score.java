@@ -26,7 +26,7 @@ public class Score {
     public void setList(Item item){
         for (Item temp:list) {
             if (temp.getId().compareTo(item.getId())==0){
-                temp.setChoose(item.getChoose());
+                temp.setChoose(item.isChoose());
                 temp.setValue(item.getValue());
                 return;
             }
@@ -45,9 +45,9 @@ public class Score {
     }
 
     /** 一致性判断 */
-    public boolean getPass(){
+    public Boolean getPass(){
         for (Item item:list) {
-            if (!item.getChoose()){
+            if (!item.isChoose()){
                 return false;
             }
         }
