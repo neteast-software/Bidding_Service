@@ -85,6 +85,7 @@ public class SocketIOListener implements DataListener<String> {
 
     private static ExpertBidMsg setExpertBidMsg(ExpertBidMsg expertBidMsg,OperaRecord operaRecord){
 
+
         expertBidMsg.setId(operaRecord.getUserId());
         expertBidMsg.setName(operaRecord.getUserName());
         expertBidMsg.setSupplierId(operaRecord.getSupplierId());
@@ -92,20 +93,25 @@ public class SocketIOListener implements DataListener<String> {
         String type = operaRecord.getOperaType();
         String opera = operaRecord.getRecord();
         log.info("操作记录的值为-{}",opera);
-        Score score = JSONObject.parseObject(opera, Score.class);
-        switch (type){
-            case "commercial":
-                expertBidMsg.setCommercials(score);
-                break;
-            case "price":
-                expertBidMsg.setPrices(score);
-                break;
-            case "qualification":
-                expertBidMsg.setQualifications(score);
-                break;
-            case "technical":
-                expertBidMsg.setTechnicals(score);
+        JSONObject jsonObject = JSON.parseObject(opera);
+        String itemType = jsonObject.getString("itemType");
+        Integer inputType  = jsonObject.getInteger("type");
+        String body  = jsonObject.getString("data");
+        List<Score> scores = expertBidMsg.getReviewStatus();
+        for (Score s:scores) {
+            if (itemType.equals(s.getItemType())){
+                s.setType(inputType);
+                Item item = JSONObject.parseObject(body,Item.class);
+                s.setList(item);
+                return expertBidMsg;
+            }
         }
+        Score score = new Score();
+        score.setType(inputType);
+        score.setItemType(itemType);
+        Item item = JSONObject.parseObject(body,Item.class);
+        score.setList(item);
+        expertBidMsg.setReviewStatus(score);
         return expertBidMsg;
     }
 }

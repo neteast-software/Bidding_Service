@@ -26,64 +26,27 @@ public class ExpertBidMsg {
     /** 分包id */
     private Integer packageId;
 
-    /** 技术评审 */
-    private List<Score> technicals = new ArrayList<>();
+    /** 评审情况 */
+    private List<Score> reviewStatus = new ArrayList<>();
 
-    /** 商务评审 */
-    private List<Score> commercials = new ArrayList<>();
-
-    /** 资格评审 */
-    private List<Score> qualifications = new ArrayList<>();
-
-    /** 价格评审 */
-    private List<Score> prices = new ArrayList<>();
-
-    public void setTechnicals(Score score) {
-        for (Score temp : technicals) {
-            if (setScore(temp,score)){
-                return;
-            }
-        }
-        technicals.add(score);
+    public void setReviewStatus(Score score){
+        reviewStatus.add(score);
     }
 
-    public void setCommercials(Score score){
-        for (Score temp:commercials) {
-            if (setScore(temp,score)){
-                return;
+    public boolean getPass(){
+        for (Score score:reviewStatus){
+            if (!score.getPass()){
+                return false;
             }
         }
-        commercials.add(score);
+        return true;
     }
 
-    public void setQualifications(Score score){
-        for (Score temp:qualifications){
-            if (setScore(temp,score)){
-                return;
-            }
+    public Double getValue(){
+        double total = 0.0D;
+        for (Score score:reviewStatus){
+            total = total + score.getValue();
         }
-        qualifications.add(score);
-    }
-
-    public void setPrices(Score score){
-        for (Score temp:prices){
-            if (setScore(temp,score)){
-                return;
-            }
-        }
-        prices.add(score);
-    }
-
-    private boolean setScore(Score temp,Score score){
-        if (temp.getId().equals(score.getId())){
-            temp.setType(score.getType());
-            if (score.getType()==1){
-                temp.setChoose(score.getChoose());
-            }else {
-                temp.setValue(score.getValue());
-            }
-            return true;
-        }
-        return false;
+        return total;
     }
 }

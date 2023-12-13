@@ -1,6 +1,8 @@
 package com.neteast.business.domain.bid;
 
 import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +24,10 @@ public class SupplierBidMsg {
     /** 项目id */
     private Integer projectId;
 
-    /** 评审专家的评审信息 */
-    private List<ExpertBidMsg> expertBidMsg;
+    /** 供应商得分情况 */
+    private List<TotalScore> totalScores = new ArrayList<>();
+
+    public void setTotalScores(TotalScore totalScore){
+        totalScores.add(totalScore);
+    }
 }

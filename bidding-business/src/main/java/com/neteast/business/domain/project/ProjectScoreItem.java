@@ -38,13 +38,17 @@ public class ProjectScoreItem {
     @TableField("item_type")
     private String itemType;
 
-    /** 值类型(单选,分数) */
+    /** 值类型(1单选,2分数) */
     @TableField("value_type")
     private Integer valueType;
 
     /** 该项总分值 */
     @TableField("value")
     private Double value;
+
+    /** 子项数量 */
+    @TableField("num")
+    private Integer num;
 
     /** 该评分的评分项*/
     @TableField(exist = false)

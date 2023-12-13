@@ -12,4 +12,6 @@ import java.util.List;
 public interface IScoreItemService extends IService<ScoreItem> {
 
     List<ScoreItem> getListByExtId(Integer id);
+
+    boolean addScoreItem(ScoreItem scoreItem);
 }

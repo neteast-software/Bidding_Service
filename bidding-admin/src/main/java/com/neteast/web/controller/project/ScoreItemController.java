@@ -25,7 +25,8 @@ public class ScoreItemController extends BaseController{
 
     @PostMapping("/add")
     public AjaxResult addScoreItem(@RequestBody ScoreItem scoreItem){
-       return success(scoreItemService.save(scoreItem));
+        boolean res = scoreItemService.addScoreItem(scoreItem);
+        return success(res);
     }
 
     @PostMapping("/update")

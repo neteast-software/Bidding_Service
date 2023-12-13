@@ -33,6 +33,11 @@ public class ProjectScoreItemServiceImpl extends ServiceImpl<ProjectScoreItemMap
     }
 
     @Override
+    public List<ProjectScoreItem> getProjectScoreItemList(Integer projectId, Integer packageId) {
+        return this.lambdaQuery().eq(ProjectScoreItem::getProjectId,projectId).eq(ProjectScoreItem::getPackageId,packageId).list();
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean removeProjectScoreItem(Integer id) {
         scoreItemService.remove(scoreItemService.lambdaQuery().eq(ScoreItem::getExtId,id));
