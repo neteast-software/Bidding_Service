@@ -33,12 +33,6 @@ public class WebSocketController extends BaseController {
     @Resource
     SocketIOServer socketIOServer;
 
-    @Resource
-    ISupplierInformationService supplierInformationService;
-
-    @Resource
-    IProjectScoreItemService projectScoreItemService;
-
     @GetMapping("/channel")
     public AjaxResult getWsOneChannel(String channelName) {
         logger.info("创建通道-{}",channelName);
