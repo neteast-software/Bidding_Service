@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.AttachMessageMapper">
 
-    <select id="getList" resultMap="com.neteast.business.domain.project.vo.AttachMessageVO" parameterType="com.neteast.business.domain.project.vo.AttachMessageVO" >
+    <select id="getList" resultType="com.neteast.business.domain.project.vo.AttachMessageVO" parameterType="com.neteast.business.domain.project.vo.AttachMessageVO" >
         select m.id,m.name,m.address,m.project_id,m.package_id,m.file_type,m.type,m.size,m.num,project_code,filings_number,project_name,contract_package,package_num,bidding_subject,m.create_by,m.create_time,m.update_by,m.update_time from attach_message m
             LEFT JOIN project_message on project_id = project_message.id LEFT JOIN package_information on package_id = package_information.id
         <where>

@@ -4,17 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.ProjectInformationMapper">
 
-    <select id="getList" resultMap="com.neteast.business.domain.project.ProjectInformation" parameterType="com.neteast.business.domain.project.ProjectInformation" >
+    <select id="getList" resultType="com.neteast.business.domain.project.ProjectInformation" parameterType="com.neteast.business.domain.project.ProjectInformation" >
         select
-            id,partya_id,project_code,filings_number,project_type,project_name,procure_type,project_status,invite_bidding,open_bidding,budget_money,max_money,
-            trade_money,fail_bidding_count,agent_mony,project_del,create_by,create_time,update_by,update_time
-        from project_message
+            *
+        from project_information
         <where>
             <if test="id != null and id != ''">
                 and id = #{id}
-            </if>
-            <if test="projectaId != null and projectaId != ''">
-                and partya_id = #{projectaId}
             </if>
             <if test="projectCode != null and projectCode != ''">
                 and project_code = #{projectCode}
@@ -40,11 +36,8 @@
             <if test="openBidding != null and openBidding != ''">
                 and open_bidding = #{openBidding}
             </if>
-            <if test="budgetMoney != null and budgetMoney != ''">
-                and budget_money = #{budgetMoney}
-            </if>
-            <if test="maxMoney != null and maxMoney != ''">
-                and max_money = #{maxMoney}
+            <if test="maxAmount != null and maxAmount != ''">
+                and max_amount = #{maxAmount}
             </if>
             <if test="tradeMoney != null and tradeMoney != ''">
                 and trade_money = #{tradeMoney}
@@ -52,8 +45,8 @@
             <if test="failBiddingCount != null and failBiddingCount != ''">
                 and fail_bidding_count = #{failBiddingCount}
             </if>
-            <if test="agentMony != null and agentMony != ''">
-                and agent_mony = #{agentMony}
+            <if test="agentMoney != null and agentMoney != ''">
+                and agent_money = #{agentMoney}
             </if>
             <if test="projectDel != null and projectDel != ''">
                 and project_del = #{projectDel}
@@ -61,8 +54,8 @@
         </where>
     </select>
 
-    <select id="getListByType" resultMap="com.neteast.business.domain.project.vo.ProjectTypeInformationVO" parameterType="com.neteast.business.domain.project.ProjectInformation" >
-        select m.id project_id,w.id partya_id,project_name,project_type,project_code,procure_type,name,address from project_message m inner JOIN work_place_name w on m.partya_id = w.id
+    <select id="getListByType" resultType="com.neteast.business.domain.project.vo.ProjectTypeInformationVO" parameterType="com.neteast.business.domain.project.ProjectInformation" >
+        select m.id project_id,w.id partya_id,project_name,project_type,project_code,procure_type,name,address from project_information m inner JOIN work_place_name w on m.partya_id = w.id
         <where>
             <if test="projectId != null">
                 and project_id = #{projectId}

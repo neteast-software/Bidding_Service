@@ -43,7 +43,7 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
 
         List<ProjectInformation> list = lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
         if (list.size()==0){
-            save(projectInformation);
+            return save(projectInformation);
         }
         throw new BaseBusException("项目编号重复");
     }

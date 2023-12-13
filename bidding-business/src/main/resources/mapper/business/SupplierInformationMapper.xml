@@ -7,7 +7,7 @@
     <select id="getList" resultType="com.neteast.business.domain.project.SupplierInformation" parameterType="com.neteast.business.domain.project.SupplierInformation">
         select
         id,project_id,package_id,name,contract_person,phone,email,address,pay_method,register_time,suc_bid,in_scene,create_by,create_time,update_by,update_time,bank_name,bank_address,card_number,account_number
-        from SupplierInformation
+        from supplier_information
         <where>
             <if test="id != null and id != ''">
                 and id = #{id}

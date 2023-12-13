@@ -47,7 +47,7 @@ public class ProjectInformationController extends BaseController {
     public AjaxResult getProjectInformationOne(ProjectInformation projectInformation){
         ProjectInformation data = projectInformationService.getById(projectInformation);
         ProjectInformationVO projectInformationVO = ProjectInformationVO.convert(data);
-        List<PackageInformation> temp = packageInformationService.lambdaQuery().eq(PackageInformation::getProjectaId,projectInformation.getId()).list();
+        List<PackageInformation> temp = packageInformationService.lambdaQuery().eq(PackageInformation::getProjectId,projectInformation.getId()).list();
         projectInformationVO.setPackageInformationList(temp);
         return success(projectInformationVO);
     }

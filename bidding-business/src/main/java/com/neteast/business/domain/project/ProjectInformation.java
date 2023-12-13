@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.neteast.business.domain.dict.PlusesCondition;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.common.core.domain.BaseEntity;
@@ -59,10 +60,12 @@ public class ProjectInformation extends BaseEntity {
 
     /** 招标时间 */
     @TableField("invite_bidding")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date inviteBidding;
 
     /** 开标时间 */
     @TableField("open_bidding")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date openBidding;
 
     /** 项目预算金额 */

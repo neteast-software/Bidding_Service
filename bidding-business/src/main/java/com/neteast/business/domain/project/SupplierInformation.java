@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
@@ -69,10 +70,11 @@ public class SupplierInformation extends BaseEntity{
 
     /** 银行卡账户名称 */
     @TableField("account_number")
-    private String accountName;
+    private String accountNumber;
 
     /** 报名时间 */
     @TableField("register_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date registerTime;
 
     /** 是否中标 */

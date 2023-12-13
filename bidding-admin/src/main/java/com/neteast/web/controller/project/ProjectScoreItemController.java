@@ -36,13 +36,11 @@ public class ProjectScoreItemController extends BaseController {
     @GetMapping("/getOne")
     public AjaxResult getProjectScoreItem(ProjectScoreItem projectScoreItem){
         List<ProjectScoreItem> list = projectScoreItemService.getProjectScoreItemList(projectScoreItem);
-        if (list.size()!=0){
-            ProjectScoreItem item = list.get(0);
-            List<ScoreItem> scoreItems = scoreItemService.getListByExtId(item.getId());
-            item.setScoreItems(scoreItems);
-            return success(scoreItems);
-        }
-        return success();
+        list.forEach(l->{
+            List<ScoreItem> scoreItems = scoreItemService.getListByExtId(l.getId());
+            l.setScoreItems(scoreItems);
+        });
+        return success(list);
     }
 
     @PostMapping("/del/{id}")

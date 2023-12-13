@@ -38,13 +38,13 @@ public class SupplierInformationController extends BaseController {
     }
 
     @PostMapping("/add")
-    public AjaxResult addSupplierInformation(SupplierInformation supplierInformation){
+    public AjaxResult addSupplierInformation(@RequestBody SupplierInformation supplierInformation){
         supplierInformationService.save(supplierInformation);
         return success();
     }
 
     @PostMapping("/update")
-    public AjaxResult updateSupplierInformation(SupplierInformation supplierInformation){
+    public AjaxResult updateSupplierInformation(@RequestBody SupplierInformation supplierInformation){
         supplierInformationService.updateById(supplierInformation);
         return success();
     }

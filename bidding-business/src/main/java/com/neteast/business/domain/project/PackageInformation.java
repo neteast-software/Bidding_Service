@@ -22,8 +22,8 @@ public class PackageInformation extends BaseEntity {
     private Integer id;
 
     /** 对应甲方项目id */
-    @TableField("partya_id")
-    private Integer projectaId;
+    @TableField("project_id")
+    private Integer projectId;
 
     /** 分包预算金额 */
     @TableField("budget_amount")
@@ -43,7 +43,7 @@ public class PackageInformation extends BaseEntity {
 
     /** 包单位;包需要完成内容的数量,如项,个等单位等 */
     @TableField("package_unit")
-    private Integer packageUnit;
+    private String packageUnit;
 
     /** 流标次数 */
     @TableField("fail_bidding_count")

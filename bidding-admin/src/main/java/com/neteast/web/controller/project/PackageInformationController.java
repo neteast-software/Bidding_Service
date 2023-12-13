@@ -29,7 +29,7 @@ public class PackageInformationController extends BaseController {
     public AjaxResult getPackageInformationList(PackageInformation packageInformation){
         startPage();
         PageDomain pageDomain = new PageDomain();
-        List<PackageInformation> list = packageInformationService.lambdaQuery().eq(PackageInformation::getProjectaId,packageInformation.getId()).list();
+        List<PackageInformation> list = packageInformationService.lambdaQuery().eq(PackageInformation::getProjectId,packageInformation.getProjectId()).list();
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
