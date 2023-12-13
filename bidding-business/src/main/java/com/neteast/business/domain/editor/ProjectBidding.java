@@ -1,4 +1,4 @@
-package com.neteast.business.domain.project;
+package com.neteast.business.domain.editor;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -8,7 +8,7 @@ import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
- * 项目文件
+ * 项目标书文件
  * @author lzp
  * @date 2023年11月17 14:38
  */
@@ -24,14 +24,6 @@ public class ProjectBidding extends BaseEntity {
     /** 项目id */
     @TableField("project_id")
     private Integer projectId;
-
-    /** 模板id */
-    @TableField("template_id")
-    private Integer templateId;
-
-    /** 分包id */
-    @TableField("package_id")
-    private Integer packageId;
 
     /** 项目文件类型(如招标文件) */
     @TableField("type")
@@ -49,7 +41,7 @@ public class ProjectBidding extends BaseEntity {
     @TableField("file_type")
     private String fileType;
 
-    /** 下载地址 */
-    @TableField("download_url")
-    private String downloadUrl;
+    /** 文件地址 */
+    @TableField("file_path")
+    private String filePath;
 }

@@ -1,7 +1,7 @@
 package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neteast.business.domain.project.ProjectBidding;
+import com.neteast.business.domain.editor.ProjectBidding;
 import com.neteast.business.domain.project.vo.ProjectBiddingVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,5 +15,5 @@ import java.util.List;
 @Mapper
 public interface ProjectBiddingMapper extends BaseMapper<ProjectBidding> {
 
-    List<ProjectBiddingVO> getList(ProjectBiddingVO projectBiddingVO);
+    List<ProjectBidding> getList(ProjectBidding projectBidding);
 }

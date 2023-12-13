@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
+ * 项目附加项内容
  * @author lzp
  * @date 2023年12月12 10:53
  */
