@@ -16,7 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.*;
 import java.nio.file.Files;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 甲方项目下的所需文件
@@ -35,7 +38,8 @@ public class ProjectBiddingController extends BaseController {
     public AjaxResult getProjectBiddingList(ProjectBidding projectBidding){
 
         List<ProjectBidding> list = projectBiddingService.getProjectBiddingList(projectBidding);
-        return success(list);
+        Map<Integer,List<ProjectBidding>> res = list.stream().collect(Collectors.groupingBy(ProjectBidding::getStage));
+        return success(res);
     }
 
     @PostMapping("/add")
