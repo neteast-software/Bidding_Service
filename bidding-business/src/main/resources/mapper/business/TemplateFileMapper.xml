@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.TemplateFileMapper">
+
+    <select id="getList" resultType="com.neteast.business.domain.template.TemplateFile" parameterType="com.neteast.business.domain.template.TemplateFile">
+        select
+        id,extId,unit,use_count,name,open,belong,file_path,create_by,create_time,update_by,update_time
+        from template_file
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="extid != null and extid != ''">
+                and extId = #{extid}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="useCount != null and useCount != ''">
+                and use_count = #{useCount}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="open != null and open != ''">
+                and open = #{open}
+            </if>
+            <if test="belong != null and belong != ''">
+                and belong = #{belong}
+            </if>
+            <if test="filePath != null and filePath != ''">
+                and file_path = #{filePath}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
@@ -14,7 +15,7 @@ import lombok.Data;
 
 @Data
 @TableName("template_file")
-public class TemplateFile {
+public class TemplateFile extends BaseEntity {
 
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
@@ -22,7 +23,7 @@ public class TemplateFile {
     /** 模板类型信息id */
     private Integer extId;
 
-    /** 文件内容名称 */
+    /** 文件内容分类名称 */
     private String unit;
 
     /** 模板的使用次数 */
