@@ -7,6 +7,7 @@ import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
+import com.neteast.common.core.page.TableSupport;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ public class AttachMessageController extends BaseController {
     public AjaxResult gatAttachMessageList(AttachMessageVO attachMessageVO){
 
         startPage();
-        PageDomain pageDomain = new PageDomain();
+        PageDomain pageDomain = TableSupport.getPageDomain();
         List<AttachMessageVO> list = attachMessageService.getAttachMessageList(attachMessageVO);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());

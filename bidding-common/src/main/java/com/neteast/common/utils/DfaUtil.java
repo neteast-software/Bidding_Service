@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 
 /**
- * 敏感词过滤
+ * 敏感词过滤 不同项目有不同的敏感词
  * @author lzp
  * @date 2023年12月11 10:41
  */
@@ -15,16 +15,16 @@ import java.util.*;
 @Slf4j
 public class DfaUtil {
 
-    private static HashMap<Object,Object> dfaMap = null;
+    private HashMap<Object,Object> dfaMap = null;
 
-    private static final String isEnd = "isEnd";
+    private final String isEnd = "isEnd";
 
     /**
      * @Description 初始化敏感词库
      * @author lzp
      * @Date 2023/12/11
      */
-    public static void initWordMap(Collection<String> collection){
+    public void initWordMap(Collection<String> collection){
 
         if (MapUtil.isNotEmpty(dfaMap)){
             return;
@@ -63,7 +63,7 @@ public class DfaUtil {
      * @author lzp
      * @Date 2023/12/11
      */
-    public static void refreshMap(Collection<String> collection){
+    public void refreshMap(Collection<String> collection){
         dfaMap = null;
         initWordMap(collection);
     }
@@ -73,7 +73,7 @@ public class DfaUtil {
      * @author lzp
      * @Date 2023/12/11
      */
-    public static List<String> checkSensitiveWord(String content){
+    public List<String> checkSensitiveWord(String content){
 
         char[] chars = content.toCharArray();
         List<String> words = new ArrayList<>();

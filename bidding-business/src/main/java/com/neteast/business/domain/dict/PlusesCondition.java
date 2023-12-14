@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 项目加分项,条件等
+ * 项目加分项,条件等 如环保加分等
  * @author lzp
  * @date 2023年12月12 10:40
  */

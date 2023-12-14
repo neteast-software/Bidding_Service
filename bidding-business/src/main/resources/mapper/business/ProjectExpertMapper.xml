@@ -5,17 +5,19 @@
 <mapper namespace="com.neteast.business.mapper.ProjectExpertMapper">
 
     <select id="getList" resultType="com.neteast.business.domain.project.vo.ProjectExpertVO" parameterType="com.neteast.business.domain.project.vo.ProjectExpertVO">
-        select e.id,project_id,expert_id,name,identity_number,work_addr,contract_phone,project_code,filings_number,project_name,e.create_by,e.create_time,e.update_by,e.update_time from project_expert e
-            INNER JOIN project_message on project_id = project_message.id INNER JOIN expert_message on expert_id = expert_message.id
+        select p.project_id,p.expert_id,p.package_id,e.contract_phone,e.work_addr,e.name,e.identity_number from project_expert p INNER JOIN expert_message e on p.expert_id = e.id
         <where>
-            <if test="id != null and id != ''">
-                and id = #{id}
-            </if>
             <if test="projectId != null and projectId != ''">
                 and project_id = #{projectId}
             </if>
+            <if test="packageId != null and packageId != ''">
+                and expert_id = #{expertId}
+            </if>
             <if test="expertId != null and expertId != ''">
                 and expert_id = #{expertId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
             </if>
         </where>
     </select>

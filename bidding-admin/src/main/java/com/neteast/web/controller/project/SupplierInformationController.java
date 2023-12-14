@@ -26,7 +26,7 @@ public class SupplierInformationController extends BaseController {
     @Resource
     ISupplierInformationService supplierInformationService;
 
-    @GetMapping("/getList")
+    @GetMapping("/list")
     public AjaxResult getSupplierInformation(SupplierInformation supplierInformation){
 
         startPage();

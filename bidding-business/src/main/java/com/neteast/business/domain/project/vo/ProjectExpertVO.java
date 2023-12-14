@@ -10,11 +10,11 @@ import lombok.Data;
 @Data
 public class ProjectExpertVO {
 
-    /** 主键id */
-    private Integer id ;
-
     /** 项目id */
     private Integer projectId ;
+
+    /** 分包id */
+    private Integer packageId;
 
     /** 专家id */
     private Integer expertId ;
@@ -30,13 +30,4 @@ public class ProjectExpertVO {
 
     /** 联系方式 */
     private String contractPhone;
-
-    /** 项目编号 */
-    private String projectCode ;
-
-    /** 备案编号 **/
-    private String filingsNumber;
-
-    /** 项目名称 */
-    private String projectName ;
 }
