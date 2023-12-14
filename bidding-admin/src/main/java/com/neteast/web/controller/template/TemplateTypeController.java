@@ -2,6 +2,7 @@ package com.neteast.web.controller.template;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.template.TemplateType;
+import com.neteast.business.domain.template.vo.TemplateTypeVO;
 import com.neteast.business.mapper.TemplateTypeMapper;
 import com.neteast.business.service.ITemplateTypeService;
 import com.neteast.common.core.controller.BaseController;
@@ -28,30 +29,32 @@ public class TemplateTypeController extends BaseController {
     ITemplateTypeService templateTypeService;
 
     @GetMapping("/listByPage")
-    public AjaxResult getTemplateTypeListByPage(TemplateType templateType){
+    public AjaxResult getTemplateTypeListByPage(TemplateTypeVO templateType){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<TemplateType> list = templateTypeService.getTemplateTypeList(templateType);
+        List<TemplateTypeVO> list = templateTypeService.getTemplateTypeList(templateType);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
     }
 
     @GetMapping("/list")
-    public AjaxResult getTemplateTypeList(TemplateType templateType){
-        List<TemplateType> templateTypes = templateTypeService.getTemplateTypeList(templateType);
+    public AjaxResult getTemplateTypeList(TemplateTypeVO templateType){
+        List<TemplateTypeVO> templateTypes = templateTypeService.getTemplateTypeList(templateType);
         return success(templateTypes);
     }
 
     @PostMapping("/add")
-    public AjaxResult addTemplateType(@RequestBody TemplateType templateType){
+    public AjaxResult addTemplateType(@RequestBody TemplateTypeVO templateTypeVO){
+        TemplateType templateType = TemplateTypeVO.convert(templateTypeVO);
         templateTypeService.save(templateType);
         return success();
     }
 
     @PostMapping("/update")
-    public AjaxResult updateTemplateType(@RequestBody TemplateType templateType){
+    public AjaxResult updateTemplateType(@RequestBody TemplateTypeVO templateTypeVO){
+        TemplateType templateType = TemplateTypeVO.convert(templateTypeVO);
         templateTypeService.updateById(templateType);
         return success();
     }

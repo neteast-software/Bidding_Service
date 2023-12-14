@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.template.TemplateType;
+import com.neteast.business.domain.template.vo.TemplateTypeVO;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ import java.util.List;
  */
 public interface ITemplateTypeService extends IService<TemplateType> {
 
-    List<TemplateType> getTemplateTypeList(TemplateType templateType);
+    List<TemplateTypeVO> getTemplateTypeList(TemplateTypeVO templateType);
 }

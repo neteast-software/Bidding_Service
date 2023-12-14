@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.template.TemplateFile;
+import com.neteast.business.domain.template.vo.TemplateContent;
 import com.neteast.business.domain.template.vo.TemplateFileVO;
 import com.neteast.business.mapper.TemplateFileMapper;
 
@@ -29,7 +30,7 @@ public interface ITemplateFileService extends IService<TemplateFile> {
      * @author lzp
      * @Date 2023/12/14
      */
-    boolean saveTemplateFile(TemplateFileVO templateFileVO);
+    boolean saveTemplateFile(TemplateContent templateContent);
     
     /**
      * @Description 删除模板文件

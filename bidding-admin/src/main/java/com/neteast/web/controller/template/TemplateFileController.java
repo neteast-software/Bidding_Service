@@ -3,6 +3,7 @@ package com.neteast.web.controller.template;
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.template.TemplateFile;
+import com.neteast.business.domain.template.vo.TemplateContent;
 import com.neteast.business.domain.template.vo.TemplateFileVO;
 import com.neteast.business.service.ITemplateFileService;
 import com.neteast.common.core.controller.BaseController;
@@ -66,7 +67,14 @@ public class TemplateFileController extends BaseController {
     @PostMapping("/update")
     public AjaxResult updateTemplateFile(@RequestBody TemplateFileVO templateFileVO){
 
-        templateFileService.saveTemplateFile(templateFileVO);
+        TemplateFile templateFile = TemplateFileVO.convert(templateFileVO);
+        templateFileService.updateById(templateFile);
+        return success();
+    }
+
+    @PostMapping("/save")
+    public AjaxResult saveTemplateFile(@RequestBody TemplateContent templateContent){
+        templateFileService.saveTemplateFile(templateContent);
         return success();
     }
 
@@ -77,9 +85,9 @@ public class TemplateFileController extends BaseController {
         String filePath = templateFile.getFilePath();
         File file = new File(filePath);
         String content = FileUtil.readUtf8String(file);
-        JSONObject body = new JSONObject();
-        body.put("content",content);
-        return success(body);
+        TemplateContent templateContent = new TemplateContent();
+        templateContent.setId(id);
+        templateContent.setContent(content);
+        return success(templateContent);
     }
-
 }

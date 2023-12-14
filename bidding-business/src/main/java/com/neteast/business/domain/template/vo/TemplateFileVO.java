@@ -31,8 +31,6 @@ public class TemplateFileVO {
     /** 归属 1-公司库 2-个人库 */
     private Integer belong;
 
-    private String content;
-
     public static TemplateFile convert(TemplateFileVO templateFileVO){
         TemplateFile templateFile = new TemplateFile();
         templateFile.setId(templateFile.getId());

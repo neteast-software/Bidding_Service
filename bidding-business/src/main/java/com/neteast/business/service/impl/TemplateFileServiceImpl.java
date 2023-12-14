@@ -3,6 +3,7 @@ package com.neteast.business.service.impl;
 import cn.hutool.core.io.FileUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.template.TemplateFile;
+import com.neteast.business.domain.template.vo.TemplateContent;
 import com.neteast.business.domain.template.vo.TemplateFileVO;
 import com.neteast.business.mapper.TemplateFileMapper;
 import com.neteast.business.service.ITemplateFileService;
@@ -56,12 +57,10 @@ public class TemplateFileServiceImpl extends ServiceImpl<TemplateFileMapper, Tem
     }
 
     @Override
-    public boolean saveTemplateFile(TemplateFileVO templateFileVO) {
+    public boolean saveTemplateFile(TemplateContent templateContent) {
 
-        TemplateFile templateFile = TemplateFileVO.convert(templateFileVO);
-        TemplateFile temp = getById(templateFileVO.getId());
-        templateFile.setFilePath(temp.getFilePath());
-        String content = templateFileVO.getContent();
+        TemplateFile templateFile = getById(templateContent.getId());
+        String content = templateContent.getContent();
         if (content==null){
             content = "";
         }
