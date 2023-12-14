@@ -51,25 +51,34 @@ public class SocketIOListener implements DataListener<String> {
             //记录操作
             SocketIOMessageEventHandler.setOperaRecord(operaRecord.getChannel(),operaRecord);
 
-            String temp = "";
-            switch (receiver){
-                case "client":
-                    CompletionStatus completionStatus = getCompletionStatus(score);
-                    completionStatus.setUserId(operaRecord.getUserId());
-                    completionStatus.setName(operaRecord.getUserName());
-                    completionStatus.setSupplierId(operaRecord.getSupplierId());
-                    temp = JSONObject.toJSONString(completionStatus);
-                    setSupplierBidRecord(operaRecord,completionStatus);
-                    break;
-            }
-
-            String body = temp;
+            String body = messageHandler(receiver,operaRecord,score);
             customs.forEach(o->{
                 //实时操作状态
                 SocketIOClient socketIOClient = socketIOServer.getClient(o.getUuid());
                 SocketIOService.sendMsg(o, body,socketIOClient);
             });
         }
+    }
+
+    private String messageHandler(String receiver,OperaRecord operaRecord,Score score){
+
+        String temp = "";
+        switch (receiver){
+            //发送主持人端信息
+            case "client":
+                CompletionStatus completionStatus = getCompletionStatus(score);
+                completionStatus.setUserId(operaRecord.getUserId());
+                completionStatus.setName(operaRecord.getUserName());
+                completionStatus.setSupplierId(operaRecord.getSupplierId());
+                temp = JSONObject.toJSONString(completionStatus);
+                setSupplierBidRecord(operaRecord,completionStatus);
+                break;
+            //发送专家端
+            case "user":
+                temp = operaRecord.getRecord();
+        }
+
+        return temp;
     }
 
     /**
@@ -128,7 +137,10 @@ public class SocketIOListener implements DataListener<String> {
         Integer inputType  = operaRecord.getType();
         for (TotalScore t:list){
             if (itemType.equals(t.getItemType())){
+                Integer temp = t.getNum();
                 t.setCompletionStatus(completionStatus);
+                temp = supplierBidMsg.getNum() - temp + t.getNum();
+                supplierBidMsg.setNum(temp);
                 return;
             }
         }

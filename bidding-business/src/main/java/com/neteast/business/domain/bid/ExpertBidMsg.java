@@ -32,21 +32,4 @@ public class ExpertBidMsg {
     public void setReviewStatus(Score score){
         reviewStatus.add(score);
     }
-
-//    public boolean getPass(){
-//        for (Score score:reviewStatus){
-//            if (!score.getPass()){
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
-//    public Double getValue(){
-//        double total = 0.0D;
-//        for (Score score:reviewStatus){
-//            total = total + score.getValue();
-//        }
-//        return total;
-//    }
 }

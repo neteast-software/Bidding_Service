@@ -27,10 +27,14 @@ public class SupplierBidMsg {
     /** 专家总数 */
     private Integer expertNum;
 
-    /** 供应商得分情况 */
+    /** 做题情况 */
+    private Integer num;
+
+    /** 供应商得分情况 按照如(价格性评审) */
     private List<TotalScore> totalScores = new ArrayList<>();
 
     public void setTotalScores(TotalScore totalScore){
         totalScores.add(totalScore);
+        num = num + totalScore.getNum();
     }
 }

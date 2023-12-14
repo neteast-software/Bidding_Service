@@ -65,25 +65,16 @@ public class WebSocketController extends BaseController {
         return success(res);
     }
 
-//    private TotalScore getTotalScore(List<ExpertBidMsg> expertBidMsg,ProjectScoreItem projectScoreItem){
-//        TotalScore totalScore = new TotalScore();
-//        totalScore.setNum(projectScoreItem.getNum());
-//        totalScore.setType(projectScoreItem.getValueType());
-//        totalScore.setItemType(projectScoreItem.getItemType());
-//        List<CompletionStatus> completionStatuses = new ArrayList<>();
-//        expertBidMsg.forEach(e->{
-//            CompletionStatus completionStatus = new CompletionStatus();
-//            completionStatus.setName(e.getName());
-//            completionStatus.setUserId(e.getId());
-//            completionStatus.setNum(e.getReviewStatus().size());
-//            if (projectScoreItem.getValueType()==1){
-//                completionStatus.setPass(e.getPass());
-//            }else {
-//                completionStatus.setValue(e.getValue());
-//            }
-//            completionStatuses.add(completionStatus);
-//        });
-//        totalScore.setCompletionStatuses(completionStatuses);
-//        return totalScore;
-//    }
+    /**
+     * @Description 查看做题情况
+     * @author lzp
+     * @Date 2023/12/14
+     */
+    @GetMapping("/getWholeCompletionStatus")
+    public AjaxResult getWholeCompletionStatus(String channel,Integer packageId){
+        List<SupplierBidMsg> list = SocketIOListener.supplierMap.get(channel);
+        List<SupplierBidMsg> temp = list.stream().filter(u->u.getPackageId().intValue()==packageId).collect(Collectors.toList());
+        Long res = temp.stream().collect(Collectors.summarizingInt(SupplierBidMsg::getNum)).getSum();
+        return success(res);
+    }
 }

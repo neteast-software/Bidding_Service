@@ -3,6 +3,7 @@ package com.neteast.business.domain.bid;
 import lombok.Data;
 
 /**
+ * 专家的如(商务性评审)的整体完成情况
  * @author lzp
  * @date 2023年12月13 11:52
  */
@@ -25,5 +26,5 @@ public class CompletionStatus{
     Double value;
 
     /** 该项是否一致通过 */
-    boolean pass;
+    Boolean pass;
 }

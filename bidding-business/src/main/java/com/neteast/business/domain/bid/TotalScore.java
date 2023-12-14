@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 供应商总得分计算
+ * 供应商评审的总情况
  * @author lzp
  * @date 2023年12月13 9:38
  */
@@ -23,14 +23,17 @@ public class TotalScore {
     /**专家完成情况*/
     private List<CompletionStatus> completionStatuses = new ArrayList<>();
 
+    private Integer num;
+
     public void setCompletionStatus(CompletionStatus completionStatus){
 
         for (CompletionStatus c:completionStatuses){
             if (completionStatus.getUserId().compareTo(c.getUserId())==0){
                 c.setName(completionStatus.getName());
+                num = num - c.getNum() + completionStatus.getNum();
                 c.setNum(completionStatus.getNum());
                 if (type==1){
-                    c.setPass(completionStatus.isPass());
+                    c.setPass(completionStatus.getPass());
                 }else {
                     c.setValue(completionStatus.getValue());
                 }
@@ -38,5 +41,6 @@ public class TotalScore {
             }
         }
         completionStatuses.add(completionStatus);
+        num = num + completionStatus.getNum();
     }
 }
