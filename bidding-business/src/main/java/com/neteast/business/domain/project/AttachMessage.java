@@ -53,4 +53,8 @@ public class AttachMessage extends BaseEntity{
     @TableField("num")
     private Integer num;
 
+    /** 文件的存储路径 */
+    @TableField("file_path")
+    private String filePath;
+
 }

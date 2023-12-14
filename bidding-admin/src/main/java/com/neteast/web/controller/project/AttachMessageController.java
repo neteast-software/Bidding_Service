@@ -28,9 +28,6 @@ public class AttachMessageController extends BaseController {
     @Resource
     IAttachMessageService attachMessageService;
 
-    @Value("${ruoyi.profile}")
-    String filePath;
-
     @GetMapping("/list")
     public AjaxResult gatAttachMessageList(AttachMessageVO attachMessageVO){
 
@@ -56,15 +53,14 @@ public class AttachMessageController extends BaseController {
             @RequestParam(value = "fileType",required = false) String fileType,
             @RequestParam(value = "file")MultipartFile file) throws IOException {
 
-        String filename = attachMessageService.saveAttachMessage(projectId,packageId,fileType,file);
-        file.transferTo(new File(filePath+filename));
+        attachMessageService.saveAttachMessage(projectId,packageId,fileType,file);
         return success();
     }
 
     @PostMapping("/del/{id}")
     public AjaxResult delAttachMessage(@PathVariable Integer id){
 
-        attachMessageService.removeById(id);
+        attachMessageService.delAttachMessage(id);
         return success();
     }
 }
