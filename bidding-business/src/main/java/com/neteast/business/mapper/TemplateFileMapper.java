@@ -2,6 +2,7 @@ package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.neteast.business.domain.template.TemplateFile;
+import com.neteast.business.domain.template.vo.TemplateFileVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,5 +15,5 @@ import java.util.List;
 @Mapper
 public interface TemplateFileMapper extends BaseMapper<TemplateFile> {
 
-    List<TemplateFile> getList(TemplateFile templateFile);
+    List<TemplateFileVO> getList(TemplateFileVO templateFile);
 }
