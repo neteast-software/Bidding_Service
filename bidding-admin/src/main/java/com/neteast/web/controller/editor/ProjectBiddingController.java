@@ -12,6 +12,7 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
+import com.neteast.common.exception.BaseBusException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -51,7 +52,8 @@ public class ProjectBiddingController extends BaseController {
     }
 
     @PostMapping("/add")
-    public AjaxResult addProjectBiddingData(@RequestBody ProjectBidding projectBidding) throws IOException {
+    public AjaxResult addProjectBiddingData(@RequestBody ProjectBiddingVO projectBiddingVO) throws IOException {
+        ProjectBidding projectBidding = ProjectBiddingVO.convert(projectBiddingVO);
         projectBiddingService.creatProjectBiddingFile(projectBidding);
         return success();
     }
@@ -73,6 +75,9 @@ public class ProjectBiddingController extends BaseController {
     public AjaxResult saveProjectBiddingFile(@RequestBody ProjectFileContent fileContent) throws IOException {
         //项目文件保存
         ProjectBidding projectBidding = projectBiddingService.getById(fileContent.getId());
+        if (projectBidding==null){
+            throw new BaseBusException(500,"该项目文件不存在");
+        }
         String path = projectBidding.getFilePath();
         String content = fileContent.getContent();
         FileUtil.writeUtf8String(content,new File(path));
@@ -84,6 +89,9 @@ public class ProjectBiddingController extends BaseController {
     public AjaxResult getProjectBiddingContent(@PathVariable("id")Integer id) throws IOException {
 
         ProjectBidding projectBidding = projectBiddingService.getById(id);
+        if (projectBidding==null){
+            throw new BaseBusException(500,"该项目文件不存在");
+        }
         String path = projectBidding.getFilePath();
         File file = new File(path);
         String content = FileUtil.readUtf8String(file);
