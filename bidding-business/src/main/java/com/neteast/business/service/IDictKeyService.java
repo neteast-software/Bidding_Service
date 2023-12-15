@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.dict.DictKey;
+import com.neteast.business.domain.dict.vo.DictKeyVO;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface IDictKeyService extends IService<DictKey> {
 
-    List<DictKey> getDictKeyList(DictKey dictKey);
+    List<DictKeyVO> getDictKeyList(DictKeyVO dictKeyVO);
 
     boolean delDictKey(Integer keyId);
 }

@@ -16,7 +16,7 @@ public interface IDictValueService extends IService<DictValue> {
 
     List<DictValue> getDictValueList(DictValue dictValue);
 
-    boolean delDictValueData(Integer valueId);
+    boolean delDictValueData(Integer id);
 
     boolean delDictValueByKeyId(Integer keyId);
 

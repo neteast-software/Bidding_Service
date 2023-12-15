@@ -25,6 +25,10 @@ public class TemplateType extends BaseEntity {
     @TableField("type")
     private String type;
 
+    /** 模板数量 */
+    @TableField("num")
+    private Integer num;
+
     /** 模板招标类型 */
     @TableField("bidding_type")
     private String biddingType;
@@ -32,4 +36,8 @@ public class TemplateType extends BaseEntity {
     /** 模板的所属项目类型 */
     @TableField("project_type")
     private String projectType;
+
+    public void changeNum(int change){
+        this.num = this.num + change;
+    }
 }

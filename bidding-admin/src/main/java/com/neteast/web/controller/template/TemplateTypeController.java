@@ -63,7 +63,7 @@ public class TemplateTypeController extends BaseController {
 
     @PostMapping("/del/{id}")
     public AjaxResult delTemplateType(@PathVariable("id")Integer id){
-        templateTypeService.removeById(id);
+        templateTypeService.delTemplateType(id);
         return success();
     }
 }

@@ -8,6 +8,7 @@ import com.neteast.common.core.domain.BaseEntity;
 import com.neteast.common.utils.SecurityUtils;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +20,7 @@ import java.util.Date;
  */
 
 @Data
+@Slf4j
 @TableName("dict_history")
 public class DictHistory implements Serializable {
 
@@ -55,7 +57,11 @@ public class DictHistory implements Serializable {
         dictHistory.setKeyId(dictValue.getKeyId());
         dictHistory.setValueId(dictValue.getId());
         dictHistory.setHistoryValue(dictValue.getValue());
-        dictHistory.setHistoryValueName(dictValue.getValueName());
+        try {
+            dictHistory.setHistoryValueName(dictValue.getValueName());
+        }catch (Exception e){
+            log.info("保存历史字典信息错误-{}",e.getMessage());
+        }
         dictHistory.setDoBy(SecurityUtils.getUsername());
         dictHistory.setHistoryTime(new Date());
         return dictHistory;

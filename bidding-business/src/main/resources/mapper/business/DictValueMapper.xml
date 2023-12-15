@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.DictValueMapper">
+
+    <select id="getList" resultType="com.neteast.business.domain.dict.DictValue" parameterType="com.neteast.business.domain.dict.DictValue">
+        select
+        id,key_id,value,create_by,create_time,update_by,update_time,value_name,use
+        from dict_value
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="keyId != null and keyId != ''">
+                and key_id = #{keyId}
+            </if>
+            <if test="value != null and value != ''">
+                and value = #{value}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                and update_time = #{updateTime}
+            </if>
+            <if test="valueName != null and valueName != ''">
+                and value_name = #{valueName}
+            </if>
+            <if test="use != null and use != ''">
+                and use = #{use}
+            </if>
+        </where>
+    </select>
+
+</mapper>

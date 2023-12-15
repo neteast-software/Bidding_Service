@@ -38,7 +38,7 @@ public class TemplateFileVO {
         templateFile.setOpen(templateFileVO.isOpen());
         templateFile.setBelong(templateFileVO.getBelong());
         templateFile.setUnit(templateFileVO.getUnit());
-        templateFile.setExtId(templateFile.getExtId());
+        templateFile.setExtId(templateFileVO.getExtId());
         return templateFile;
     }
 }

@@ -1,5 +1,6 @@
 package com.neteast.business.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.dict.DictHistory;
 import com.neteast.business.mapper.DictHistoryMapper;
@@ -22,12 +23,16 @@ public class IDictHistoryServiceImpl extends ServiceImpl<DictHistoryMapper, Dict
 
     @Override
     public boolean delByKeyId(Integer keyId) {
-        return remove(lambdaQuery().eq(DictHistory::getKeyId,keyId));
+        QueryWrapper<DictHistory> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("key_id",keyId);
+        return remove(queryWrapper);
     }
 
     @Override
     public boolean delByValueId(Integer valueId) {
-        return remove(lambdaQuery().eq(DictHistory::getValueId,valueId));
+        QueryWrapper<DictHistory> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("value_id",valueId);
+        return remove(queryWrapper);
     }
 
     @Override

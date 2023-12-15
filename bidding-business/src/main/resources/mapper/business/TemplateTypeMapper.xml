@@ -6,7 +6,7 @@
 
     <select id="getList" parameterType="com.neteast.business.domain.template.vo.TemplateTypeVO" resultType="com.neteast.business.domain.template.vo.TemplateTypeVO" >
         select
-        id,type,bidding_type,project_type,create_by,create_time,update_by,update_time
+        id,type,num,bidding_type,project_type,create_by,create_time,update_by,update_time
         from template_type
         <where>
             <if test="id != null and id != ''">

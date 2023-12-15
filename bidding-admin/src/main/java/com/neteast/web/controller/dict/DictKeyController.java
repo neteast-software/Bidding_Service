@@ -11,6 +11,7 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
+import com.neteast.common.exception.BaseBusException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,37 +33,38 @@ public class DictKeyController extends BaseController {
     @Resource
     IDictValueService dictValueService;
 
-    @GetMapping("/list")
-    public AjaxResult getDictKeyList(DictKey dictKey){
+    @GetMapping("/listByPage")
+    public AjaxResult getDictKeyList(DictKeyVO dictKeyVO){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<DictKey> list = dictKeyService.getDictKeyList(dictKey);
+        List<DictKeyVO> list = dictKeyService.getDictKeyList(dictKeyVO);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
     }
 
     @GetMapping("/one")
-    public AjaxResult getDictKeyOne(DictKey dictKey){
+    public AjaxResult getDictKeyOne(DictKeyVO dictKey){
 
-        DictKey temp = dictKeyService.getById(dictKey);
+        DictKey temp = dictKeyService.getById(dictKey.getId());
         List<DictValue> values = dictValueService.getKeyValue(temp.getId());
-        DictKeyVO dictKeyVO = DictKeyVO.convert(temp);
-        dictKeyVO.setValues(values);
-        return success(dictKeyVO);
+        temp.setValues(values);
+        return success(temp);
     }
 
     @PostMapping("/update")
-    public AjaxResult updateDictKeyData(@RequestBody DictKey dictKey){
+    public AjaxResult updateDictKeyData(@RequestBody DictKeyVO dictKeyVO){
 
-        dictKeyService.save(dictKey);
+        DictKey dictKey = DictKeyVO.convert(dictKeyVO);
+        dictKeyService.updateById(dictKey);
         return success();
     }
 
     @PostMapping("/add")
-    public AjaxResult addDictKeyData(@RequestBody DictKey dictKey){
+    public AjaxResult addDictKeyData(@RequestBody DictKeyVO dictKeyVO){
 
+        DictKey dictKey = DictKeyVO.convert(dictKeyVO);
         dictKeyService.save(dictKey);
         return success();
     }

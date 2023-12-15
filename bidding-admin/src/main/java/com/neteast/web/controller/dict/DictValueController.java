@@ -25,8 +25,8 @@ public class DictValueController extends BaseController {
     @Resource
     IDictValueService dictValueService;
 
-    @GetMapping("/list")
-    public AjaxResult getDictValueList(DictValue dictValue){
+    @GetMapping("/listByPage")
+    public AjaxResult getDictValueListByPage(DictValue dictValue){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
@@ -36,17 +36,24 @@ public class DictValueController extends BaseController {
         return success(body);
     }
 
+    @GetMapping("/list")
+    public AjaxResult getDictValueList(DictValue dictValue){
+
+        List<DictValue> list = dictValueService.getDictValueList(dictValue);
+        return success(list);
+    }
+
     @PostMapping("/add")
-    public AjaxResult addDictValueData(DictValue dictValue){
+    public AjaxResult addDictValueData(@RequestBody DictValue dictValue){
 
         dictValueService.save(dictValue);
         return success();
     }
 
-    @PostMapping("/del/{valueId}")
-    public AjaxResult delDictValueData(@PathVariable Integer valueId){
+    @PostMapping("/del/{id}")
+    public AjaxResult delDictValueData(@PathVariable Integer id){
 
-        dictValueService.delDictValueData(valueId);
+        dictValueService.delDictValueData(id);
         return success();
     }
 

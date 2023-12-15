@@ -25,8 +25,8 @@ public class DictHistoryController extends BaseController {
     @Resource
     IDictHistoryService dictHistoryService;
 
-    @GetMapping("/list")
-    public AjaxResult getDictHistoryList(DictHistory dictHistory){
+    @GetMapping("/listByPage")
+    public AjaxResult getDictHistoryListByPage(DictHistory dictHistory){
 
         startPage();
         PageDomain pageDomain = new PageDomain();
@@ -34,6 +34,12 @@ public class DictHistoryController extends BaseController {
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
+    }
+
+    @GetMapping("/list")
+    public AjaxResult getDictHistoryList(DictHistory dictHistory){
+        List<DictHistory> list = dictHistoryService.getDictHistoryList(dictHistory);
+        return success(list);
     }
 
     @PostMapping("/del/{id}")

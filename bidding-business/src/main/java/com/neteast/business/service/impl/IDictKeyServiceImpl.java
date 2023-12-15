@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.dict.DictHistory;
 import com.neteast.business.domain.dict.DictKey;
 import com.neteast.business.domain.dict.DictValue;
+import com.neteast.business.domain.dict.vo.DictKeyVO;
 import com.neteast.business.mapper.DictKeyMapper;
 import com.neteast.business.service.IDictHistoryService;
 import com.neteast.business.service.IDictKeyService;
@@ -33,7 +34,7 @@ public class IDictKeyServiceImpl extends ServiceImpl<DictKeyMapper, DictKey> imp
     IDictHistoryService dictHistoryService;
 
     @Override
-    public List<DictKey> getDictKeyList(DictKey dictKey) {
+    public List<DictKeyVO> getDictKeyList(DictKeyVO dictKey) {
         return dictKeyMapper.getList(dictKey);
     }
 

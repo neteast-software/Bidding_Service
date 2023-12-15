@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * 变量的Key
  * @author lzp
@@ -27,7 +29,7 @@ public class DictKey extends BaseEntity {
 
     /** 是否通用 */
     @TableField("common")
-    private String common;
+    private Boolean common;
 
     /** 项目类型 */
     @TableField("project_type")
@@ -44,4 +46,7 @@ public class DictKey extends BaseEntity {
     /** 字典类型 单选 多选 填值等 */
     @TableField("dict_type")
     private String dictType;
+
+    @TableField(exist = false)
+    private List<DictValue> values;
 }

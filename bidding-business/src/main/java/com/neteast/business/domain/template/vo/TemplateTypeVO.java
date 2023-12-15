@@ -17,6 +17,8 @@ public class TemplateTypeVO {
     /** 模板类型 */
     private String type;
 
+    private Integer num;
+
     public static TemplateType convert(TemplateTypeVO templateTypeVO){
         TemplateType templateType = new TemplateType();
         templateType.setId(templateTypeVO.getId());

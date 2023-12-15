@@ -13,4 +13,6 @@ import java.util.List;
 public interface ITemplateTypeService extends IService<TemplateType> {
 
     List<TemplateTypeVO> getTemplateTypeList(TemplateTypeVO templateType);
+
+    boolean delTemplateType(Integer id);
 }

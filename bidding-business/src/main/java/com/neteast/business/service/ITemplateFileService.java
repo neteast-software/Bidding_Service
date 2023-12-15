@@ -39,4 +39,6 @@ public interface ITemplateFileService extends IService<TemplateFile> {
      */
     boolean delTemplateFile(Integer id);
 
+    boolean delTemplateFileByExtId(Integer extId);
+
 }

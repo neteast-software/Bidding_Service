@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.DictKeyMapper">
 
-    <select id="getList" resultType="com.neteast.business.domain.dict.DictKey" parameterType="com.neteast.business.domain.dict.DictKey" >
+    <select id="getList" resultType="com.neteast.business.domain.dict.vo.DictKeyVO" parameterType="com.neteast.business.domain.dict.vo.DictKeyVO" >
         select
             id,key,common,project_type,bidding_type,file_type,dict_type,create_by,create_time,update_by,update_time
         from dict_key
@@ -17,15 +17,6 @@
             </if>
             <if test="common != null and common != ''">
                 and common = #{common}
-            </if>
-            <if test="projectType != null and projectType != ''">
-                and project_type = #{projectType}
-            </if>
-            <if test="biddingType != null and biddingType != ''">
-                and bidding_type = #{biddingType}
-            </if>
-            <if test="fileType != null and fileType != ''">
-                and file_type = #{fileType}
             </if>
             <if test="dictType != null and dictType != ''">
                 and dict_type = #{dictType}
