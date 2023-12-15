@@ -3,6 +3,7 @@ package com.neteast.business.domain.editor.vo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.neteast.business.domain.editor.ProjectBidding;
 import lombok.Data;
 
 /**
@@ -28,4 +29,14 @@ public class ProjectBiddingVO {
 
     /** 文件类型(excel,word) */
     private String fileType;
+
+    public static ProjectBidding convert(ProjectBiddingVO projectBiddingVO){
+        ProjectBidding bidding = new ProjectBidding();
+        bidding.setId(projectBiddingVO.getId());
+        bidding.setProjectId(projectBiddingVO.getProjectId());
+        bidding.setName(projectBiddingVO.getName());
+        bidding.setType(projectBiddingVO.getType());
+        bidding.setFileType(projectBiddingVO.getFileType());
+        return bidding;
+    }
 }

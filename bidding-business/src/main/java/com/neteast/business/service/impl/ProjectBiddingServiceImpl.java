@@ -2,6 +2,7 @@ package com.neteast.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.editor.ProjectBidding;
+import com.neteast.business.domain.editor.vo.ProjectBiddingVO;
 import com.neteast.business.mapper.ProjectBiddingMapper;
 import com.neteast.business.service.IProjectBiddingService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ public class ProjectBiddingServiceImpl extends ServiceImpl<ProjectBiddingMapper,
     String biddingFilePath;
 
     @Override
-    public List<ProjectBidding> getProjectBiddingList(ProjectBidding projectBidding) {
+    public List<ProjectBiddingVO> getProjectBiddingList(ProjectBiddingVO projectBidding) {
         return projectBiddingMapper.getList(projectBidding);
     }
 

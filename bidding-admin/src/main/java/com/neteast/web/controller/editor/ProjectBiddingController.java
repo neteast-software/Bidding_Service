@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.editor.ProjectBidding;
 import com.neteast.business.domain.editor.ProjectFileContent;
+import com.neteast.business.domain.editor.vo.ProjectBiddingVO;
 import com.neteast.business.domain.project.vo.ProjectFileMsgVO;
 import com.neteast.business.service.IProjectBiddingService;
 import com.neteast.common.core.controller.BaseController;
@@ -31,19 +32,19 @@ public class ProjectBiddingController extends BaseController {
     IProjectBiddingService projectBiddingService;
 
     @GetMapping("/getList")
-    public AjaxResult getProjectBiddingList(ProjectFileMsgVO projectBidding){
+    public AjaxResult getProjectBiddingList(ProjectBiddingVO projectBidding){
 
-        List<ProjectFileMsgVO> res = projectBiddingService.getProjectBiddingList(projectBidding);
+        List<ProjectBiddingVO> res = projectBiddingService.getProjectBiddingList(projectBidding);
         //Map<Integer,List<ProjectBidding>> res = list.stream().collect(Collectors.groupingBy(ProjectBidding::getStage));
         return success(res);
     }
 
     @GetMapping("/getListByPage")
-    public AjaxResult getProjectBiddingListByPage(Pro projectBidding){
+    public AjaxResult getProjectBiddingListByPage(ProjectBiddingVO projectBidding){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<ProjectBidding> list = projectBiddingService.getProjectBiddingList(projectBidding);
+        List<ProjectBiddingVO> list = projectBiddingService.getProjectBiddingList(projectBidding);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
@@ -62,7 +63,8 @@ public class ProjectBiddingController extends BaseController {
     }
 
     @PostMapping("/update")
-    public AjaxResult updateProjectBiddingData(@RequestBody ProjectBidding projectBidding){
+    public AjaxResult updateProjectBiddingData(@RequestBody ProjectBiddingVO projectBiddingVO){
+        ProjectBidding projectBidding = ProjectBiddingVO.convert(projectBiddingVO);
         projectBiddingService.updateById(projectBidding);
         return success();
     }

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.ProjectBiddingMapper">
 
-    <select id="getList" resultType="com.neteast.business.domain.editor.ProjectBidding" parameterType="com.neteast.business.domain.editor.ProjectBidding" >
+    <select id="getList" resultType="com.neteast.business.domain.editor.vo.ProjectBiddingVO" parameterType="com.neteast.business.domain.editor.vo.ProjectBiddingVO" >
         select * from project_bidding
         <where>
             <if test="id != null and id != ''">
