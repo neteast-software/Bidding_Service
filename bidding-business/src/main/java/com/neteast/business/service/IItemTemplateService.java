@@ -8,4 +8,5 @@ import com.neteast.business.domain.template.ItemTemplate;
  * @date 2023年12月15 18:39
  */
 public interface IItemTemplateService extends IService<ItemTemplate> {
+
 }
