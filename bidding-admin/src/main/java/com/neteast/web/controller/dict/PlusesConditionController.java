@@ -61,7 +61,7 @@ public class PlusesConditionController extends BaseController {
     @PostMapping("/del/{id}")
     public AjaxResult delPlusesCondition(@PathVariable("id") Integer id){
 
-        plusesConditionService.removeById(id);
+        plusesConditionService.delPlusesCondition(id);
         return success();
     }
 

@@ -9,6 +9,7 @@
         id,name,create_by,create_time,update_by,update_time
         from pluses_condition
         <where>
+            del = 1
             <if test="id != null and id != ''">
                 and id = #{id}
             </if>

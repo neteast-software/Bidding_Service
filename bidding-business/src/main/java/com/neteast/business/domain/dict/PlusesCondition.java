@@ -10,18 +10,24 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 项目加分项,条件等 如环保加分等
+ * 项目附加项,条件等 如环保加分等
  * @author lzp
  * @date 2023年12月12 10:40
  */
 
 @Data
-@TableName("project_condition")
+@TableName("pluses_condition")
 public class PlusesCondition extends BaseEntity{
 
+    /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
+    /** 附件项名称 */
     @TableField("name")
     private String name;
+
+    /** 是否删除附加项 */
+    @TableField("del")
+    private Integer del;
 }

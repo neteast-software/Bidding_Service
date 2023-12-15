@@ -13,4 +13,6 @@ import java.util.List;
 public interface IPlusesConditionService extends IService<PlusesCondition>{
 
     List<PlusesCondition> getPlusesConditionList(PlusesCondition plusesCondition);
+
+    boolean delPlusesCondition(Integer id);
 }

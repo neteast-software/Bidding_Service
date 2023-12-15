@@ -24,4 +24,13 @@ public class PlusesConditionServiceImpl extends ServiceImpl<PlusesConditionMappe
     public List<PlusesCondition> getPlusesConditionList(PlusesCondition plusesCondition) {
         return plusesConditionMapper.getList(plusesCondition);
     }
+
+    @Override
+    public boolean delPlusesCondition(Integer id) {
+
+        PlusesCondition plusesCondition = getById(id);
+        plusesCondition.setDel(0);
+        updateById(plusesCondition);
+        return true;
+    }
 }
