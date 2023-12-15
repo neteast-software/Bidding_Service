@@ -8,6 +8,8 @@ import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
+import com.neteast.common.core.page.TableSupport;
+import com.neteast.common.utils.PageUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,7 +32,7 @@ public class ProjectExpertController extends BaseController {
     public AjaxResult getProjectExpertList(ProjectExpertVO projectExpertVO){
 
         startPage();
-        PageDomain pageDomain = new PageDomain();
+        PageDomain pageDomain = TableSupport.getPageDomain();
         List<ProjectExpertVO> list = projectExpertService.getProjectExpertList(projectExpertVO);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());

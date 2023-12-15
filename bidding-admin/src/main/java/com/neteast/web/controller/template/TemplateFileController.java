@@ -37,9 +37,9 @@ public class TemplateFileController extends BaseController {
     @GetMapping("/listByPage")
     public AjaxResult getTemplateFileListByPage(TemplateFileVO templateFileVO){
 
-        //startPage();
+        startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        PageUtils.startPage(pageDomain.getPageNum(),pageDomain.getPageSize());
+        //PageUtils.startPage(pageDomain.getPageNum(),pageDomain.getPageSize());
         List<TemplateFileVO> list = templateFileService.getTemplateFileList(templateFileVO);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
