@@ -3,24 +3,19 @@ package com.neteast.web.controller.editor;
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.editor.ProjectBidding;
-import com.neteast.business.domain.project.vo.ProjectBiddingVO;
+import com.neteast.business.domain.editor.ProjectFileContent;
+import com.neteast.business.domain.project.vo.ProjectFileMsgVO;
 import com.neteast.business.service.IProjectBiddingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
-import com.neteast.common.utils.file.FileUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.*;
-import java.nio.file.Files;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 甲方项目下的所需文件
@@ -36,15 +31,15 @@ public class ProjectBiddingController extends BaseController {
     IProjectBiddingService projectBiddingService;
 
     @GetMapping("/getList")
-    public AjaxResult getProjectBiddingList(ProjectBidding projectBidding){
+    public AjaxResult getProjectBiddingList(ProjectFileMsgVO projectBidding){
 
-        List<ProjectBidding> res = projectBiddingService.getProjectBiddingList(projectBidding);
+        List<ProjectFileMsgVO> res = projectBiddingService.getProjectBiddingList(projectBidding);
         //Map<Integer,List<ProjectBidding>> res = list.stream().collect(Collectors.groupingBy(ProjectBidding::getStage));
         return success(res);
     }
 
     @GetMapping("/getListByPage")
-    public AjaxResult getProjectBiddingListByPage(ProjectBidding projectBidding){
+    public AjaxResult getProjectBiddingListByPage(Pro projectBidding){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
@@ -73,21 +68,25 @@ public class ProjectBiddingController extends BaseController {
     }
 
     @PostMapping("/save")
-    public AjaxResult saveProjectBiddingFile(@RequestParam("file") MultipartFile file,@RequestParam("id") Integer id) throws IOException {
+    public AjaxResult saveProjectBiddingFile(@RequestBody ProjectFileContent fileContent) throws IOException {
         //项目文件保存
-        ProjectBidding projectBidding = projectBiddingService.getById(id);
+        ProjectBidding projectBidding = projectBiddingService.getById(fileContent.getId());
         String path = projectBidding.getFilePath();
-        file.transferTo(new File(path));
+        String content = fileContent.getContent();
+        FileUtil.writeUtf8String(content,new File(path));
         //todo 敏感词判断
         return success();
     }
 
     @GetMapping("/content/{id}")
     public AjaxResult getProjectBiddingContent(@PathVariable("id")Integer id) throws IOException {
+
         ProjectBidding projectBidding = projectBiddingService.getById(id);
         String path = projectBidding.getFilePath();
         File file = new File(path);
         String content = FileUtil.readUtf8String(file);
-        return success(content);
+        ProjectFileContent fileContent = ProjectFileContent.convert(projectBidding);
+        fileContent.setContent(content);
+        return success(fileContent);
     }
 }

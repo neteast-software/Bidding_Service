@@ -19,7 +19,7 @@ public class ProjectBidding extends BaseEntity {
 
     /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
-    private String id;
+    private Integer id;
 
     /** 项目id */
     @TableField("project_id")

@@ -2,7 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.editor.ProjectBidding;
-import com.neteast.business.domain.project.vo.ProjectBiddingVO;
+import com.neteast.business.domain.project.vo.ProjectFileMsgVO;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface IProjectBiddingService extends IService<ProjectBidding> {
 
-    List<ProjectBidding> getProjectBiddingList(ProjectBidding projectBiddingVO);
+    List<ProjectFileMsgVO> getProjectBiddingList(ProjectFileMsgVO projectFileMsgVO);
 
     /**
      * @Description 创建项目招标文件

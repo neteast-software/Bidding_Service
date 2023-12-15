@@ -1,15 +1,15 @@
 package com.neteast.business.domain.project.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 /**
+ * 项目文件所有信息
  * @author lzp
  * @date 2023年11月20 18:06
  */
 
 @Data
-public class ProjectBiddingVO{
+public class ProjectFileMsgVO {
 
     /** 主键id */
     private String id;
@@ -26,17 +26,11 @@ public class ProjectBiddingVO{
     /** 项目文件类型(如招标文件) */
     private String type;
 
-    /** 阶段(如开标前，开标等) */
-    private Integer stage;
-
     /** 文件名称 */
     private String name;
 
     /** 文件类型(excel,word) */
     private String fileType;
-
-    /** 下载地址 */
-    private String downloadUrl;
 
     /** 项目编号 */
     private String projectCode ;

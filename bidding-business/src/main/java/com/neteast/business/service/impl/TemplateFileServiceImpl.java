@@ -86,7 +86,7 @@ public class TemplateFileServiceImpl extends ServiceImpl<TemplateFileMapper, Tem
         }
         String path = templateFile.getFilePath();
         FileUtil.writeUtf8String(content,new File(path));
-        return this.updateById(templateFile);
+        return true;
     }
 
     @Override
