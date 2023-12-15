@@ -9,6 +9,7 @@ import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
+import com.neteast.common.core.page.TableSupport;
 import com.neteast.common.utils.file.FileUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,9 +38,20 @@ public class ProjectBiddingController extends BaseController {
     @GetMapping("/getList")
     public AjaxResult getProjectBiddingList(ProjectBidding projectBidding){
 
-        List<ProjectBidding> list = projectBiddingService.getProjectBiddingList(projectBidding);
-        Map<Integer,List<ProjectBidding>> res = list.stream().collect(Collectors.groupingBy(ProjectBidding::getStage));
+        List<ProjectBidding> res = projectBiddingService.getProjectBiddingList(projectBidding);
+        //Map<Integer,List<ProjectBidding>> res = list.stream().collect(Collectors.groupingBy(ProjectBidding::getStage));
         return success(res);
+    }
+
+    @GetMapping("/getListByPage")
+    public AjaxResult getProjectBiddingListByPage(ProjectBidding projectBidding){
+
+        startPage();
+        PageDomain pageDomain = TableSupport.getPageDomain();
+        List<ProjectBidding> list = projectBiddingService.getProjectBiddingList(projectBidding);
+        TableDataInfo info = getDataTable(list);
+        JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
+        return success(body);
     }
 
     @PostMapping("/add")
