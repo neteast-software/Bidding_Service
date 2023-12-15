@@ -1,5 +1,6 @@
 package com.neteast.business.domain.dict.vo;
 
+import com.neteast.business.domain.dict.Sensitive;
 import lombok.Data;
 
 /**
@@ -16,4 +17,11 @@ public class SensitiveVO {
 
     /** 敏感词 */
     private String word;
+
+    public static Sensitive convert(SensitiveVO sensitiveVO){
+        Sensitive sensitive = new Sensitive();
+        sensitive.setId(sensitiveVO.getId());
+        sensitive.setWord(sensitiveVO.getWord());
+        return sensitive;
+    }
 }

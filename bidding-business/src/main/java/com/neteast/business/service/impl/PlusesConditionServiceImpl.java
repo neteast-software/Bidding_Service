@@ -1,6 +1,13 @@
 package com.neteast.business.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neteast.business.domain.dict.PlusesCondition;
+import com.neteast.business.mapper.PlusesConditionMapper;
+import com.neteast.business.service.IPlusesConditionService;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author lzp
@@ -8,5 +15,13 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class PlusesConditionServiceImpl {
+public class PlusesConditionServiceImpl extends ServiceImpl<PlusesConditionMapper, PlusesCondition> implements IPlusesConditionService {
+
+    @Resource
+    PlusesConditionMapper plusesConditionMapper;
+
+    @Override
+    public List<PlusesCondition> getPlusesConditionList(PlusesCondition plusesCondition) {
+        return plusesConditionMapper.getList(plusesCondition);
+    }
 }

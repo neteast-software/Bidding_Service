@@ -39,7 +39,6 @@ public class TemplateFileController extends BaseController {
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        //PageUtils.startPage(pageDomain.getPageNum(),pageDomain.getPageSize());
         List<TemplateFileVO> list = templateFileService.getTemplateFileList(templateFileVO);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
@@ -93,6 +92,10 @@ public class TemplateFileController extends BaseController {
         String content = FileUtil.readUtf8String(file);
         TemplateContent templateContent = new TemplateContent();
         templateContent.setId(id);
+        templateContent.setExtId(templateFile.getExtId());
+        templateContent.setName(templateFile.getName());
+        templateContent.setBelong(templateFile.getBelong());
+        templateContent.setUseCount(templateFile.getUseCount());
         templateContent.setContent(content);
         return success(templateContent);
     }
