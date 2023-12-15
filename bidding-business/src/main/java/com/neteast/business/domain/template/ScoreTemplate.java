@@ -1,26 +1,26 @@
-package com.neteast.business.domain.project;
+package com.neteast.business.domain.template;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
- * 项目评分项的子项
+ * 评分项子项模板
  * @author lzp
- * @date 2023年12月12 11:44
+ * @date 2023年12月14 10:44
  */
 
 @Data
-@TableName("score_item")
-public class ScoreItem {
+@TableName("score_template")
+public class ScoreTemplate extends BaseEntity {
 
-    /** 选项id */
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    /** 项目的评分项id */
+    /**  */
     @TableField("ext_id")
     private Integer extId;
 

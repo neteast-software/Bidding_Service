@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.Date;
 
 @Data
 @TableName("sensitive")
-public class Sensitive {
+public class Sensitive extends BaseEntity {
 
     /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
@@ -33,8 +34,4 @@ public class Sensitive {
     /** 敏感词 */
     @TableField("word")
     private String word;
-
-    /** 创建时间 */
-    @TableField("create_time")
-    private Date createTime;
 }

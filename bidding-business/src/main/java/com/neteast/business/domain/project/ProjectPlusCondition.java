@@ -1,5 +1,6 @@
 package com.neteast.business.domain.project;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -14,9 +15,10 @@ import lombok.Data;
 public class ProjectPlusCondition {
 
     /** 项目id */
+    @TableField("project_id")
     private Integer projectId;
 
     /** 条件id */
+    @TableField("condition_id")
     private Integer conditionId;
-
 }

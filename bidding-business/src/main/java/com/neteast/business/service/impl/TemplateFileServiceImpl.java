@@ -7,6 +7,7 @@ import com.neteast.business.domain.template.vo.TemplateContent;
 import com.neteast.business.domain.template.vo.TemplateFileVO;
 import com.neteast.business.mapper.TemplateFileMapper;
 import com.neteast.business.service.ITemplateFileService;
+import com.neteast.common.exception.BaseBusException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,9 @@ public class TemplateFileServiceImpl extends ServiceImpl<TemplateFileMapper, Tem
     public boolean saveTemplateFile(TemplateContent templateContent) {
 
         TemplateFile templateFile = getById(templateContent.getId());
+        if (templateFile==null){
+            throw new BaseBusException(500,"该模板文件不存在");
+        }
         String content = templateContent.getContent();
         if (content==null){
             content = "";

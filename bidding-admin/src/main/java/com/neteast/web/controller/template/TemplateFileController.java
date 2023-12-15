@@ -11,6 +11,7 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
+import com.neteast.common.exception.BaseBusException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -82,6 +83,9 @@ public class TemplateFileController extends BaseController {
     public AjaxResult getTemplateFileContent(@PathVariable("id") Integer id){
 
         TemplateFile templateFile = templateFileService.getById(id);
+        if (templateFile==null){
+            throw new BaseBusException(500,"该模板文件不存在");
+        }
         String filePath = templateFile.getFilePath();
         File file = new File(filePath);
         String content = FileUtil.readUtf8String(file);
