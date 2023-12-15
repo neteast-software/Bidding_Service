@@ -10,6 +10,7 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
+import com.neteast.common.utils.PageUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -31,8 +32,9 @@ public class TemplateTypeController extends BaseController {
     @GetMapping("/listByPage")
     public AjaxResult getTemplateTypeListByPage(TemplateTypeVO templateType){
 
-        startPage();
+        //startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
+        PageUtils.startPage(pageDomain.getPageNum(),pageDomain.getPageSize());
         List<TemplateTypeVO> list = templateTypeService.getTemplateTypeList(templateType);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());

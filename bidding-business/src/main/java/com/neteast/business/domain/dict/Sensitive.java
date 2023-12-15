@@ -7,8 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * 敏感词 不同的行业不同的敏感词
  * @author lzp

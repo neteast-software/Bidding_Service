@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -16,14 +17,11 @@ import java.util.Date;
 
 @Data
 @TableName("project_condition")
-public class PlusesCondition {
+public class PlusesCondition extends BaseEntity{
 
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
     @TableField("name")
     private String name;
-
-    @TableField("create_time")
-    private Date createTime;
 }

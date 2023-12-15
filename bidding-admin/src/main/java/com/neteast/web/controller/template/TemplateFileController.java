@@ -12,6 +12,7 @@ import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
 import com.neteast.common.exception.BaseBusException;
+import com.neteast.common.utils.PageUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,8 +37,9 @@ public class TemplateFileController extends BaseController {
     @GetMapping("/listByPage")
     public AjaxResult getTemplateFileListByPage(TemplateFileVO templateFileVO){
 
-        startPage();
+        //startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
+        PageUtils.startPage(pageDomain.getPageNum(),pageDomain.getPageSize());
         List<TemplateFileVO> list = templateFileService.getTemplateFileList(templateFileVO);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());

@@ -1,7 +1,7 @@
 package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neteast.business.domain.project.ProjectPlusCondition;
+import com.neteast.business.domain.project.ProjectCondition;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface ProjectPlusConditionMapper extends BaseMapper<ProjectPlusCondition> {
+public interface ProjectPlusConditionMapper extends BaseMapper<ProjectCondition> {
 }
