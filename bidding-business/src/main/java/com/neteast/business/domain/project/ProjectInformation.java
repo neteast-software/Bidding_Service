@@ -44,7 +44,7 @@ public class ProjectInformation extends BaseEntity {
 
     /** 项目行业 */
     @TableField("project_type")
-    private String projectType ;
+    private Integer projectType ;
 
     /** 项目名称 */
     @TableField("project_name")

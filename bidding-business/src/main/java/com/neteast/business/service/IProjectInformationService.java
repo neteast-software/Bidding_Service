@@ -17,4 +17,6 @@ public interface IProjectInformationService extends IService<ProjectInformation>
     boolean updateProjectInformation(ProjectInformationVO projectInformationVO);
 
     boolean addProjectInformation(ProjectInformationVO projectInformationVO);
+
+    boolean delProjectInformation(Integer id);
 }

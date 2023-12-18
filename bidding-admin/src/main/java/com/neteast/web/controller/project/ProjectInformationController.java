@@ -67,9 +67,8 @@ public class ProjectInformationController extends BaseController {
 
     @PostMapping("/del/{id}")
     public AjaxResult delProjectInformationData(@PathVariable Integer id){
-        ProjectInformation projectInformation = projectInformationService.getById(id);
-        projectInformation.setProjectDel(0);
-        projectInformationService.updateById(projectInformation);
+
+        projectInformationService.delProjectInformation(id);
         return success();
     }
 

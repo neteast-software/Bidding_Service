@@ -3,10 +3,12 @@ package com.neteast.business.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
+import com.neteast.business.domain.project.ProjectType;
 import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.business.mapper.ProjectInformationMapper;
 import com.neteast.business.service.IPackageInformationService;
+import com.neteast.business.service.IProjectTypeService;
 import com.neteast.common.exception.BaseBusException;
 import org.springframework.stereotype.Service;
 import com.neteast.business.service.IProjectInformationService;
@@ -28,6 +30,9 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
 
     @Resource
     IPackageInformationService packageInformationService;
+
+    @Resource
+    IProjectTypeService projectTypeService;
 
     @Override
     public List<ProjectInformation> getProjectInformationList(ProjectInformation projectInformation) {
@@ -51,12 +56,30 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         List<ProjectInformation> list = lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
         if (list.size()==0){
             save(projectInformation);
+            //该项目类型num添加
+            ProjectType projectType = projectTypeService.getById(projectInformation.getProjectType());
+            projectType.changeNum(1);
+            projectTypeService.updateById(projectType);
             List<PackageInformationVO> packageInformationList = projectInformationVO.getPackageInformationList();
             packageInformationList.forEach(p->{
                 packageInformationService.savePackageInformation(p);
             });
         }
         throw new BaseBusException("项目编号重复");
+    }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean delProjectInformation(Integer id) {
+
+        //项目删除
+        ProjectInformation projectInformation = this.getById(id);
+        projectInformation.setProjectDel(0);
+        this.updateById(projectInformation);
+        //更新项目类型
+        ProjectType projectType = projectTypeService.getById(projectInformation.getProjectType());
+        projectType.changeNum(-1);
+        projectTypeService.updateById(projectType);
+        return true;
     }
 }
