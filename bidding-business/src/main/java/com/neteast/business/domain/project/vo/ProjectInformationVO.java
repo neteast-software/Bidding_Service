@@ -68,13 +68,17 @@ public class ProjectInformationVO {
     /** 保证金额 */
     private Double earnest;
 
-    private List<PackageInformation> packageInformationList;
-
-    private List<PlusesCondition> conditions;
+    private List<PackageInformationVO> packageInformationList;
 
     public static ProjectInformationVO convert(ProjectInformation projectInformation){
         ProjectInformationVO projectInformationVO = new ProjectInformationVO();
         BeanUtil.copyProperties(projectInformation,projectInformationVO);
         return projectInformationVO;
+    }
+
+    public static ProjectInformation convert(ProjectInformationVO projectInformationVO){
+        ProjectInformation projectInformation = new ProjectInformation();
+        BeanUtil.copyProperties(projectInformationVO,projectInformation);
+        return projectInformation;
     }
 }

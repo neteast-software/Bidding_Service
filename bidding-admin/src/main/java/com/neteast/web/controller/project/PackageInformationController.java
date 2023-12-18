@@ -2,7 +2,10 @@ package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.PackageInformation;
+import com.neteast.business.domain.project.ProjectCondition;
+import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.service.IPackageInformationService;
+import com.neteast.business.service.IProjectPlusConditionService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -27,6 +30,9 @@ public class PackageInformationController extends BaseController {
     @Resource
     IPackageInformationService packageInformationService;
 
+    @Resource
+    IProjectPlusConditionService projectPlusConditionService;
+
     @GetMapping("/list")
     public AjaxResult getPackageInformationList(PackageInformation packageInformation){
 
@@ -38,21 +44,31 @@ public class PackageInformationController extends BaseController {
         return success(body);
     }
 
+    @GetMapping("/getOne/{id}")
+    public AjaxResult getPackageInformationOne(@PathVariable("id")Integer id){
+
+        PackageInformation information = packageInformationService.getById(id);
+        PackageInformationVO informationVO = PackageInformationVO.convert(information);
+        List<ProjectCondition> conditions = projectPlusConditionService.lambdaQuery().eq(ProjectCondition::getPackageId,id).eq(ProjectCondition::getProjectId,information.getProjectId()).list();
+        informationVO.setConditions(conditions);
+        return success(informationVO);
+    }
+
     @PostMapping("/add")
-    public AjaxResult addPackageInformationData(@RequestBody PackageInformation packageInformation){
-        packageInformationService.save(packageInformation);
+    public AjaxResult addPackageInformationData(@RequestBody PackageInformationVO packageInformationVO){
+        packageInformationService.savePackageInformation(packageInformationVO);
         return success();
     }
 
     @PostMapping("/del/{id}")
     public AjaxResult delPackageInformationData(@PathVariable Integer id){
-        packageInformationService.removeById(id);
+        packageInformationService.delPackageInformation(id);
         return success();
     }
 
     @PostMapping("/update")
-    public AjaxResult updatePackageInformationData(@RequestBody PackageInformation packageInformation){
-        packageInformationService.updateById(packageInformation);
+    public AjaxResult updatePackageInformationData(@RequestBody PackageInformationVO packageInformationVO){
+        packageInformationService.updatePackageInformation(packageInformationVO);
         return success();
     }
 

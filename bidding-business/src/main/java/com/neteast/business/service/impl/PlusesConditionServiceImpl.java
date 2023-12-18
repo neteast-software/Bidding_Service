@@ -2,6 +2,7 @@ package com.neteast.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.dict.PlusesCondition;
+import com.neteast.business.domain.dict.vo.PlusesConditionVO;
 import com.neteast.business.mapper.PlusesConditionMapper;
 import com.neteast.business.service.IPlusesConditionService;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,8 @@ public class PlusesConditionServiceImpl extends ServiceImpl<PlusesConditionMappe
     PlusesConditionMapper plusesConditionMapper;
 
     @Override
-    public List<PlusesCondition> getPlusesConditionList(PlusesCondition plusesCondition) {
-        return plusesConditionMapper.getList(plusesCondition);
+    public List<PlusesConditionVO> getPlusesConditionList(PlusesConditionVO plusesConditionVO) {
+        return plusesConditionMapper.getList(plusesConditionVO);
     }
 
     @Override

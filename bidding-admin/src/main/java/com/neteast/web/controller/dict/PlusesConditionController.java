@@ -2,6 +2,7 @@ package com.neteast.web.controller.dict;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.dict.PlusesCondition;
+import com.neteast.business.domain.dict.vo.PlusesConditionVO;
 import com.neteast.business.service.IPlusesConditionService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -27,34 +28,37 @@ public class PlusesConditionController extends BaseController {
     IPlusesConditionService plusesConditionService;
 
     @GetMapping("/listByPage")
-    public AjaxResult getPlusesConditionListByPage(PlusesCondition plusesCondition){
+    public AjaxResult getPlusesConditionListByPage(PlusesConditionVO plusesConditionVO){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<PlusesCondition> list = plusesConditionService.getPlusesConditionList(plusesCondition);
+        List<PlusesConditionVO> list = plusesConditionService.getPlusesConditionList(plusesConditionVO);
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info, pageDomain.getPageSize(), pageDomain.getPageNum());
         return success(body);
     }
 
     @GetMapping("/list")
-    public AjaxResult getPlusesConditionList(PlusesCondition plusesCondition){
+    public AjaxResult getPlusesConditionList(PlusesConditionVO plusesConditionVO){
 
-        List<PlusesCondition> list = plusesConditionService.getPlusesConditionList(plusesCondition);
+        List<PlusesConditionVO> list = plusesConditionService.getPlusesConditionList(plusesConditionVO);
         return success(list);
     }
 
     @PostMapping("/add")
-    public AjaxResult addPlusesCondition(@RequestBody PlusesCondition plusesCondition){
+    public AjaxResult addPlusesCondition(@RequestBody PlusesConditionVO plusesConditionVO){
 
-        plusesConditionService.save(plusesCondition);
+        PlusesCondition conditions = PlusesConditionVO.convert(plusesConditionVO);
+        conditions.setDel(1);
+        plusesConditionService.save(conditions);
         return success();
     }
 
     @PostMapping("/update")
-    public AjaxResult updatePlusesCondition(@RequestBody PlusesCondition plusesCondition){
+    public AjaxResult updatePlusesCondition(@RequestBody PlusesConditionVO plusesConditionVO){
 
-        plusesConditionService.updateById(plusesCondition);
+        PlusesCondition condition = PlusesConditionVO.convert(plusesConditionVO);
+        plusesConditionService.updateById(condition);
         return success();
     }
 

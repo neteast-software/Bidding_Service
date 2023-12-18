@@ -27,7 +27,7 @@ public class PlusesCondition extends BaseEntity{
     @TableField("name")
     private String name;
 
-    /** 是否删除附加项 */
+    /** 是否删除附加项 0-删除 1-不删除 */
     @TableField("del")
     private Integer del;
 }

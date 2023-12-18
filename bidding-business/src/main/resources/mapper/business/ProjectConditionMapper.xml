@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.PlusesConditionMapper">
+
+    <select id="getList" parameterType="com.neteast.business.domain.project.ProjectCondition" resultType="com.neteast.business.domain.project.ProjectCondition" >
+        select pro.id,pro.project_id,pro.condition_id,pro.package_id,plu.name from project_condition pro left join pluses_condition plu on pro.condition_id = plu.id
+        <where>
+            <if test="projectId != null and projectId != ''">
+                and project_id = #{projectId}
+            </if>
+            <if test="packageId != null and packageId != ''">
+                and package_id = #{packageId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

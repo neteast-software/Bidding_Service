@@ -3,6 +3,7 @@ package com.neteast.web.controller.project;
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
+import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.business.service.IPackageInformationService;
 import com.neteast.business.service.IProjectInformationService;
@@ -47,14 +48,14 @@ public class ProjectInformationController extends BaseController {
     public AjaxResult getProjectInformationOne(ProjectInformation projectInformation){
         ProjectInformation data = projectInformationService.getById(projectInformation);
         ProjectInformationVO projectInformationVO = ProjectInformationVO.convert(data);
-        List<PackageInformation> temp = packageInformationService.lambdaQuery().eq(PackageInformation::getProjectId,projectInformation.getId()).list();
+        List<PackageInformationVO> temp = packageInformationService.getPackageInformationVOList(projectInformation.getId());
         projectInformationVO.setPackageInformationList(temp);
         return success(projectInformationVO);
     }
 
     @PostMapping("/add")
-    public AjaxResult addProjectInformationData(@RequestBody ProjectInformation projectInformation){
-        projectInformationService.addProjectInformation(projectInformation);
+    public AjaxResult addProjectInformationData(@RequestBody ProjectInformationVO projectInformationVO){
+        projectInformationService.addProjectInformation(projectInformationVO);
         return success();
     }
 

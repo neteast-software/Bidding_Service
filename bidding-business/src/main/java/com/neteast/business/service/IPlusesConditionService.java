@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.dict.PlusesCondition;
+import com.neteast.business.domain.dict.vo.PlusesConditionVO;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface IPlusesConditionService extends IService<PlusesCondition>{
 
-    List<PlusesCondition> getPlusesConditionList(PlusesCondition plusesCondition);
+    List<PlusesConditionVO> getPlusesConditionList(PlusesConditionVO plusesCondition);
 
     boolean delPlusesCondition(Integer id);
 }

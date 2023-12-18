@@ -1,9 +1,12 @@
 package com.neteast.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
+import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.business.mapper.ProjectInformationMapper;
+import com.neteast.business.service.IPackageInformationService;
 import com.neteast.common.exception.BaseBusException;
 import org.springframework.stereotype.Service;
 import com.neteast.business.service.IProjectInformationService;
@@ -23,6 +26,9 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
     @Resource
     ProjectInformationMapper projectInformationMapper;
 
+    @Resource
+    IPackageInformationService packageInformationService;
+
     @Override
     public List<ProjectInformation> getProjectInformationList(ProjectInformation projectInformation) {
         projectInformation.setProjectDel(1);
@@ -39,12 +45,18 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean addProjectInformation(ProjectInformation projectInformation) {
+    public boolean addProjectInformation(ProjectInformationVO projectInformationVO) {
 
+        ProjectInformation projectInformation = ProjectInformationVO.convert(projectInformationVO);
         List<ProjectInformation> list = lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
         if (list.size()==0){
-            return save(projectInformation);
+            save(projectInformation);
+            List<PackageInformationVO> packageInformationList = projectInformationVO.getPackageInformationList();
+            packageInformationList.forEach(p->{
+                packageInformationService.savePackageInformation(p);
+            });
         }
         throw new BaseBusException("项目编号重复");
+
     }
 }

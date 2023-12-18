@@ -2,6 +2,7 @@ package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.neteast.business.domain.dict.PlusesCondition;
+import com.neteast.business.domain.dict.vo.PlusesConditionVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,6 +16,6 @@ import java.util.List;
 @Mapper
 public interface PlusesConditionMapper extends BaseMapper<PlusesCondition> {
 
-    List<PlusesCondition> getList(PlusesCondition plusesCondition);
+    List<PlusesConditionVO> getList(PlusesConditionVO plusesCondition);
 
 }
