@@ -6,7 +6,7 @@
 
     <select id="getList" resultType="com.neteast.business.domain.custom.ExpertMessage" parameterType="com.neteast.business.domain.custom.ExpertMessage" >
         select
-            id,contract_phone,industry,work_addr,name,identity_number,age,address,create_by,create_time,update_by,update_time
+            id,contract_phone,industry,work_addr,name,identity_number,age,address,occupation,titles,create_by,create_time,update_by,update_time
         from expert_message
         <where>
             <if test="contractPhone != null and contractPhone != ''">

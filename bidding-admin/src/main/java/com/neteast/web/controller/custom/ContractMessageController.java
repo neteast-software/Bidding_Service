@@ -28,8 +28,8 @@ public class ContractMessageController extends BaseController {
     @Resource
     IContractMessageService contractMessageService;
 
-    @PostMapping("/list")
-    public AjaxResult getContractMessageData(ContractMessageVO contractMessageVO){
+    @GetMapping("/listByPage")
+    public AjaxResult getContractMessageListByPage(ContractMessageVO contractMessageVO){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
@@ -37,6 +37,12 @@ public class ContractMessageController extends BaseController {
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
+    }
+
+    @GetMapping("/list")
+    public AjaxResult getContractMessageList(ContractMessageVO contractMessageVO){
+        List<ContractMessageVO> list = contractMessageService.getContractMessageList(contractMessageVO);
+        return success(list);
     }
 
     @PostMapping("/add")

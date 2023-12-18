@@ -5,7 +5,7 @@
 <mapper namespace="com.neteast.business.mapper.BankMessageMapper">
 
     <select id="getList" resultType="com.neteast.business.domain.custom.vo.BankMessageVO" parameterType="com.neteast.business.domain.custom.vo.BankMessageVO" >
-        select b.id,b.name,b.address,number,card_name,use,w.name work_name,w.address work_address,w.legal_person,w.net,w.place_type,w.postcode,b.create_by,b.create_time,b.update_by,b.update_time
+        select b.id,b.name,b.address,number,card_name,use,w.name work_name,w.address work_space,w.legal_person,w.net,w.place_type,w.postcode,b.create_by,b.create_time,b.update_by,b.update_time
         from work_place_name w INNER JOIN bank_message b on b.ext_id = w.id
         <where>
             <if test="name != null and name != ''">
@@ -24,16 +24,16 @@
                 and use = #{use}
             </if>
             <if test="legalPerson != null and legalPerson != ''">
-                and legal_person like concat('%',#{legal_person},'%')
+                and legal_person like concat('%',#{legalPerson},'%')
             </if>
             <if test="workName != null and workName != ''">
-                and work_name like concat('%',#{work_name},'%')
+                and work_name like concat('%',#{workName},'%')
             </if>
-            <if test="workPlace != null and workPlace != ''">
-                and work_place like concat('%',#{work_place},'%')
+            <if test="workSpace != null and workSpace != ''">
+                and work_spapce like concat('%',#{workSpace},'%')
             </if>
             <if test="placeType != null">
-                and place_type = #{place_type}
+                and place_type = #{placeType}
             </if>
         </where>
     </select>

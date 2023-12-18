@@ -35,7 +35,7 @@ public class BankMessageVO {
     private String workName;
 
     /** 单位地址 */
-    private String workPlace;
+    private String workSpace;
 
     /** 法人 */
     private String legalPerson;

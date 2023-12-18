@@ -26,8 +26,8 @@ public class ExpertMessageController extends BaseController {
     @Resource
     IExpertMessageService expertMessageService;
 
-    @GetMapping("/list")
-    public AjaxResult getExpertMessageList(ExpertMessage expertMessage){
+    @GetMapping("/listByPage")
+    public AjaxResult getExpertMessageListByPage(ExpertMessage expertMessage){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
@@ -35,6 +35,13 @@ public class ExpertMessageController extends BaseController {
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
+    }
+
+    @GetMapping("/list")
+    public AjaxResult getExpertMessageList(ExpertMessage expertMessage){
+
+        List<ExpertMessage> list =  expertMessageService.getExpertMessageList(expertMessage);
+        return success(list);
     }
 
     @PostMapping("/add")

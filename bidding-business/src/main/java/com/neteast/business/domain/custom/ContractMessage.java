@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.neteast.common.core.domain.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 联系人方式
@@ -17,6 +19,8 @@ import lombok.Data;
 @Data
 @Builder
 @TableName("contract_message")
+@NoArgsConstructor
+@AllArgsConstructor
 public class ContractMessage extends BaseEntity {
 
     /** 主键id */

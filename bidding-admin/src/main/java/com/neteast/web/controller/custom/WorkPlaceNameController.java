@@ -37,24 +37,37 @@ public class WorkPlaceNameController extends BaseController {
     @Resource
     IBankMessageService bankMessageService;
 
-    @GetMapping("/list")
-    public AjaxResult getWorkPlaceNameList(WorkPlaceName workPlaceName){
+    @GetMapping("/getOne/{id}")
+    public AjaxResult getWorkPlaceNameOne(@PathVariable("id")Integer id){
+
+        WorkPlaceName  workPlaceName = workPlaceNameService.getById(id);
+        if (workPlaceName!=null){
+            WorkPlaceNameVO temp = WorkPlaceNameVO.convert(workPlaceName);
+            BankMessage bankMessage = BankMessage.builder().extId(temp.getId()).build();
+            ContractMessage contractMessage = ContractMessage.builder().extId(temp.getId()).build();
+            temp.setBankMessages(bankMessageService.getBankMessageByExId(bankMessage));
+            temp.setContractMessages(contractMessageService.getContractMessageByExId(contractMessage));
+            return success(temp);
+        }
+        return error("该单位信息不存在");
+    }
+
+    @GetMapping("/listByPage")
+    public AjaxResult getWorkPlaceNameListByPage(WorkPlaceName workPlaceName){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<WorkPlaceName> list = workPlaceNameService.getWorkPlaceNameList(workPlaceName);
-        List<WorkPlaceNameVO> voList = new ArrayList<>();
-        list.forEach(one->{
-            WorkPlaceNameVO temp = WorkPlaceNameVO.convert(one);
-            BankMessage bankMessage = BankMessage.builder().extId(one.getId()).build();
-            ContractMessage contractMessage = ContractMessage.builder().extId(one.getId()).build();
-            temp.setBankMessages(bankMessageService.getBankMessageByExId(bankMessage));
-            temp.setContractMessages(contractMessageService.getContractMessageByExId(contractMessage));
-            voList.add(temp);
-        });
-        TableDataInfo info = getDataTable(voList);
+        TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
+    }
+
+    @GetMapping("/list")
+    public AjaxResult getWorkPlaceNameList(WorkPlaceName workPlaceName){
+
+        List<WorkPlaceName> list = workPlaceNameService.getWorkPlaceNameList(workPlaceName);
+        return success(list);
     }
 
     @PostMapping("/add")

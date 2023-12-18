@@ -29,6 +29,14 @@ public class ExpertMessage extends BaseEntity {
     @TableField("industry")
     private String industry;
 
+    /** 职业 */
+    @TableField("occupation")
+    private String occupation;
+
+    /** 职称 */
+    @TableField("titles")
+    private String titles;
+
     /** 所属单位 */
     @TableField("work_addr")
     private String workAddr;

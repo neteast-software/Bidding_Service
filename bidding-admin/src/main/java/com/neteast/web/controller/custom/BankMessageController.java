@@ -27,8 +27,8 @@ public class BankMessageController extends BaseController {
     @Resource
     IBankMessageService bankMessageService;
 
-    @GetMapping("/list")
-    public AjaxResult getBankMessageList(BankMessageVO bankMessageVO){
+    @GetMapping("/listByPage")
+    public AjaxResult getBankMessageListByPage(BankMessageVO bankMessageVO){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
@@ -36,6 +36,13 @@ public class BankMessageController extends BaseController {
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
+    }
+
+    @GetMapping("/list")
+    public AjaxResult getBankMessageList(BankMessageVO bankMessageVO){
+
+        List<BankMessageVO> list = bankMessageService.getBankMessageList(bankMessageVO);
+        return success(list);
     }
 
     @PostMapping("/add")
