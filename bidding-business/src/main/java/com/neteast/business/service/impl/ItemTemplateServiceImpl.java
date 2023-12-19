@@ -6,6 +6,9 @@ import com.neteast.business.mapper.ItemTemplateMapper;
 import com.neteast.business.service.IItemTemplateService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * @author lzp
  * @date 2023年12月15 18:40
@@ -13,4 +16,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ItemTemplateServiceImpl extends ServiceImpl<ItemTemplateMapper, ItemTemplate> implements IItemTemplateService {
+
+    @Resource
+    ItemTemplateMapper templateMapper;
+
+    @Override
+    public List<ItemTemplate> getItemTemplateList(ItemTemplate itemTemplate) {
+        return templateMapper.getList(itemTemplate);
+    }
 }

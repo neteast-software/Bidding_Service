@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.neteast.common.core.domain.BaseEntity;
+import lombok.Data;
 
 /**
  * 评分项模板
  * @author lzp
  * @date 2023年12月15 10:05
  */
+
+@Data
 @TableName("item_template")
 public class ItemTemplate extends BaseEntity {
 

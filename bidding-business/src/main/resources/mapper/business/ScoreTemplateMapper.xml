@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ScoreTemplateMapper">
+
+    <select id="getList" resultType="com.neteast.business.domain.template.ScoreTemplate" parameterType="com.neteast.business.domain.template.ScoreTemplate">
+        select
+        id,ext_id,content,value,choose,create_by,create_time,update_by,update_time
+        from score_template
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="extId != null and extId != ''">
+                and ext_id = #{extId}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="value != null and value != ''">
+                and value = #{value}
+            </if>
+            <if test="choose != null and choose != ''">
+                and choose = #{choose}
+            </if>
+        </where>
+    </select>
+</mapper>

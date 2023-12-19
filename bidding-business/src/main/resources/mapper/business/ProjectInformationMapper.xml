@@ -22,7 +22,7 @@
                 and project_type = #{projectType}
             </if>
             <if test="projectName != null and projectName != ''">
-                and project_name = #{projectName}
+                and project_name like '%'||#{projectName}||'%'
             </if>
             <if test="procureType != null and procureType != ''">
                 and procure_type = #{procureType}

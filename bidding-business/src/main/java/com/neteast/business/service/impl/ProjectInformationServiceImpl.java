@@ -81,13 +81,16 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
             setPurchaserMessage(purchaserMessage,projectInformation);
             ProjectType projectType = projectTypeService.getById(projectInformation.getProcureId());
             projectInformation.setProcureType(projectType.getName());
-            save(projectInformation);
+            //save(projectInformation);
+            projectInformationMapper.insert(projectInformation);
+            Integer projectId = projectInformation.getId();
             //该项目类型num添加
             projectType.changeNum(1);
             projectTypeService.updateById(projectType);
             List<PackageInformationVO> packageInformationList = projectInformationVO.getPackageInformationList();
             if (packageInformationList!=null){
                 packageInformationList.forEach(p->{
+                    p.setProjectId(projectId);
                     packageInformationService.savePackageInformation(p);
                 });
             }

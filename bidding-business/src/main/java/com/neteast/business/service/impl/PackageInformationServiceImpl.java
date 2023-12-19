@@ -26,12 +26,22 @@ public class PackageInformationServiceImpl extends ServiceImpl<PackageInformatio
     @Resource
     IProjectPlusConditionService conditionService;
 
+    @Resource
+    PackageInformationMapper packageInformationMapper;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean savePackageInformation(PackageInformationVO packageInformationVO) {
         PackageInformation information = PackageInformationVO.convert(packageInformationVO);
         List<ProjectCondition> conditions = packageInformationVO.getConditions();
-        this.save(information);
+        //this.save(information);
+        packageInformationMapper.insert(information);
+        Integer packageId = information.getId();
+        Integer projectId = information.getProjectId();
+        conditions.forEach(c->{
+            c.setProjectId(projectId);
+            c.setPackageId(packageId);
+        });
         conditionService.saveBatch(conditions);
         return true;
     }
