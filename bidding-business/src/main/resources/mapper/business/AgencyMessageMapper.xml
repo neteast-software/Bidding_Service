@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.AgencyMessageMapper">
+
+    <select id="getList" resultType="com.neteast.business.domain.custom.AgencyMessage" parameterType="com.neteast.business.domain.custom.AgencyMessage">
+        select
+        id,name,address,contract_person,phone,bank_name,bank_account,create_time,create_by,update_time,update_by
+        from purchaser_message
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = '%'||#{name}||'%'
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="contractPerson != null and contractPerson != ''">
+                and contract_person = #{contractPerson}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="bankName != null and bankName != ''">
+                and bank_name = #{bankName}
+            </if>
+            <if test="bankAccount != null and bankAccount != ''">
+                and bank_account = #{bankAccount}
+            </if>
+        </where>
+    </select>
+</mapper>
