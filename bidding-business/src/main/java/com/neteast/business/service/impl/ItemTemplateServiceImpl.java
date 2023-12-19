@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.template.ItemTemplate;
 import com.neteast.business.mapper.ItemTemplateMapper;
 import com.neteast.business.service.IItemTemplateService;
+import com.neteast.business.service.IScoreTemplateService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,8 +21,19 @@ public class ItemTemplateServiceImpl extends ServiceImpl<ItemTemplateMapper, Ite
     @Resource
     ItemTemplateMapper templateMapper;
 
+    @Resource
+    IScoreTemplateService scoreTemplateService;
+
     @Override
     public List<ItemTemplate> getItemTemplateList(ItemTemplate itemTemplate) {
         return templateMapper.getList(itemTemplate);
+    }
+
+    @Override
+    public boolean removeItemTemplate(Integer id) {
+
+        this.removeById(id);
+        scoreTemplateService.removeByExtId(id);
+        return true;
     }
 }

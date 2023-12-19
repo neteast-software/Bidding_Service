@@ -1,5 +1,6 @@
 package com.neteast.business.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.template.ScoreTemplate;
 import com.neteast.business.mapper.ScoreTemplateMapper;
@@ -23,5 +24,12 @@ public class ScoreTemplateServiceImpl extends ServiceImpl<ScoreTemplateMapper, S
     @Override
     public List<ScoreTemplate> getScoreTemplateList(ScoreTemplate scoreTemplate) {
         return scoreTemplateMapper.getList(scoreTemplate);
+    }
+
+    @Override
+    public boolean removeByExtId(Integer id) {
+        QueryWrapper<ScoreTemplate> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("ext_id",id);
+        return remove(queryWrapper);
     }
 }

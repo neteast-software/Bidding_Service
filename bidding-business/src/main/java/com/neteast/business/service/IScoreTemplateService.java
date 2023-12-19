@@ -12,4 +12,6 @@ import java.util.List;
 public interface IScoreTemplateService extends IService<ScoreTemplate> {
 
     List<ScoreTemplate> getScoreTemplateList(ScoreTemplate scoreTemplate);
+
+    boolean removeByExtId(Integer id);
 }

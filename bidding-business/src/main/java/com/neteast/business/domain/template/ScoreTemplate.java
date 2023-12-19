@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.neteast.common.core.domain.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 评分项子项模板
@@ -14,13 +17,16 @@ import lombok.Data;
  */
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("score_template")
 public class ScoreTemplate extends BaseEntity {
 
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    /**  */
+    /** 评分项模板id */
     @TableField("ext_id")
     private Integer extId;
 

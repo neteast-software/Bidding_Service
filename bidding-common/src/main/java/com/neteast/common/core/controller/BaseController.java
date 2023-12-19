@@ -131,6 +131,11 @@ public class BaseController
     public AjaxResult updateSuccess() {return AjaxResult.success("保存成功");}
 
     /**
+     * 添加成功
+     */
+    public AjaxResult addSuccess() {return AjaxResult.success("添加成功");}
+
+    /**
      * 返回失败消息
      */
     public AjaxResult error()

@@ -2,15 +2,16 @@ package com.neteast.web.controller.template;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.template.ItemTemplate;
+import com.neteast.business.domain.template.ScoreTemplate;
+import com.neteast.business.domain.template.vo.ItemTemplateVO;
 import com.neteast.business.service.IItemTemplateService;
+import com.neteast.business.service.IScoreTemplateService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,6 +28,9 @@ public class ItemTemplateController extends BaseController {
 
     @Resource
     IItemTemplateService itemTemplateService;
+
+    @Resource
+    IScoreTemplateService scoreTemplateService;
 
     @GetMapping("/list")
     public AjaxResult getItemTemplateList(ItemTemplate itemTemplate){
@@ -46,6 +50,36 @@ public class ItemTemplateController extends BaseController {
         return success(body);
     }
 
+    @GetMapping("/getOne/{id}")
+    public AjaxResult getItemTemplateOne(@PathVariable("id")Integer id){
 
+        ItemTemplate itemTemplate = itemTemplateService.getById(id);
+        ScoreTemplate scoreTemplate = ScoreTemplate.builder().extId(id).build();
+        List<ScoreTemplate> scoreTemplates = scoreTemplateService.getScoreTemplateList(scoreTemplate);
+        ItemTemplateVO vo = ItemTemplateVO.convert(itemTemplate);
+        vo.setTemplates(scoreTemplates);
+        return success(vo);
+    }
+
+    @PostMapping("/add")
+    public AjaxResult addItemTemplate(@RequestBody ItemTemplate itemTemplate){
+
+        itemTemplateService.save(itemTemplate);
+        return addSuccess();
+    }
+
+    @PostMapping("/update")
+    public AjaxResult updateItemTemplate(@RequestBody ItemTemplate itemTemplate){
+
+        itemTemplateService.updateById(itemTemplate);
+        return updateSuccess();
+    }
+
+    @PostMapping("/del/{id}")
+    public AjaxResult delItemTemplate(@PathVariable("id")Integer id){
+
+        itemTemplateService.removeItemTemplate(id);
+        return delSuccess();
+    }
 
 }

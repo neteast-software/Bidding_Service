@@ -12,4 +12,6 @@ import java.util.List;
 public interface IItemTemplateService extends IService<ItemTemplate> {
 
     List<ItemTemplate> getItemTemplateList(ItemTemplate itemTemplate);
+
+    boolean removeItemTemplate(Integer id);
 }

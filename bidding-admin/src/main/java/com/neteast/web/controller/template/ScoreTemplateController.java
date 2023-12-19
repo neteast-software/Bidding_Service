@@ -8,9 +8,7 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -46,6 +44,24 @@ public class ScoreTemplateController extends BaseController {
         return success(body);
     }
 
+    @PostMapping("/add")
+    public AjaxResult addScoreTemplate(@RequestBody ScoreTemplate scoreTemplate){
 
+        scoreTemplateService.save(scoreTemplate);
+        return addSuccess();
+    }
 
+    @PostMapping("/update")
+    public AjaxResult updateScoreTemplate(@RequestBody ScoreTemplate scoreTemplate){
+
+        scoreTemplateService.updateById(scoreTemplate);
+        return updateSuccess();
+    }
+
+    @PostMapping("/del/{id}")
+    public AjaxResult delScoreTemplate(@PathVariable("id")Integer id){
+
+        scoreTemplateService.removeById(id);
+        return delSuccess();
+    }
 }
