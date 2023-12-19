@@ -47,8 +47,8 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         ProjectInformation after = ProjectInformation.convert(projectInformationVO);
         ProjectInformation before = getById(after.getId());
         if (before.getProcureType().compareTo(after.getProcureType())!=0){
-            ProjectType typeAfter = projectTypeService.getById(before.getProcureType());
-            ProjectType typeBefore = projectTypeService.getById(after.getProcureType());
+            ProjectType typeAfter = projectTypeService.getById(after.getProcureType());
+            ProjectType typeBefore = projectTypeService.getById(before.getProcureType());
             typeAfter.changeNum(1);
             typeBefore.changeNum(-1);
             projectTypeService.updateById(typeBefore);

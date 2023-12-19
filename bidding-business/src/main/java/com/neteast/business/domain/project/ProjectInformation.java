@@ -34,7 +34,9 @@ public class ProjectInformation extends BaseEntity {
     @TableField("partya_id")
     private Integer partyaId;
 
-
+    /** 对应代理商id */
+    @TableField("agency_id")
+    private Integer agencyId;
 
     /** 项目编号 */
     @TableField("project_code")

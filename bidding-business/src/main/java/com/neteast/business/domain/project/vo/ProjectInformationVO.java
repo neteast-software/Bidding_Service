@@ -57,7 +57,6 @@ public class ProjectInformationVO {
     private Date openBidding;
 
     /** 项目预算金额 */
-
     private Double budgetAmount ;
 
     /** 项目最大金额 **/
