@@ -49,10 +49,6 @@ public class BaseEntity implements Serializable
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    /** 备注 */
-    @TableField(exist = false)
-    private String remark;
-
     /** 请求参数 */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @TableField(exist = false)
@@ -106,16 +102,6 @@ public class BaseEntity implements Serializable
     public void setUpdateTime(Date updateTime)
     {
         this.updateTime = updateTime;
-    }
-
-    public String getRemark()
-    {
-        return remark;
-    }
-
-    public void setRemark(String remark)
-    {
-        this.remark = remark;
     }
 
     public Map<String, Object> getParams()
