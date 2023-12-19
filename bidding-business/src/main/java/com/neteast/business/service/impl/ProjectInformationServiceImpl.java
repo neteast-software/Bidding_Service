@@ -1,17 +1,19 @@
 package com.neteast.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.neteast.business.domain.custom.AgencyMessage;
+import com.neteast.business.domain.custom.PurchaserMessage;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
 import com.neteast.business.domain.project.ProjectType;
 import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
+import com.neteast.business.mapper.AgencyMessageMapper;
 import com.neteast.business.mapper.ProjectInformationMapper;
-import com.neteast.business.service.IPackageInformationService;
-import com.neteast.business.service.IProjectTypeService;
+import com.neteast.business.mapper.PurchaserMessageMapper;
+import com.neteast.business.service.*;
 import com.neteast.common.exception.BaseBusException;
 import org.springframework.stereotype.Service;
-import com.neteast.business.service.IProjectInformationService;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -34,6 +36,12 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
     @Resource
     IProjectTypeService projectTypeService;
 
+    @Resource
+    AgencyMessageMapper agencyMessageMapper;
+
+    @Resource
+    PurchaserMessageMapper purchaserMessageMapper;
+
     @Override
     public List<ProjectInformation> getProjectInformationList(ProjectInformation projectInformation) {
         projectInformation.setProjectDel(1);
@@ -46,13 +54,14 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
 
         ProjectInformation after = ProjectInformation.convert(projectInformationVO);
         ProjectInformation before = getById(after.getId());
-        if (before.getProcureType().compareTo(after.getProcureType())!=0){
-            ProjectType typeAfter = projectTypeService.getById(after.getProcureType());
-            ProjectType typeBefore = projectTypeService.getById(before.getProcureType());
+        if (before.getProcureId().compareTo(after.getProcureId())!=0){
+            ProjectType typeAfter = projectTypeService.getById(after.getProcureId());
+            ProjectType typeBefore = projectTypeService.getById(before.getProcureId());
             typeAfter.changeNum(1);
             typeBefore.changeNum(-1);
             projectTypeService.updateById(typeBefore);
             projectTypeService.updateById(typeAfter);
+            after.setProcureType(typeAfter.getName());
         }
         return this.updateById(after);
     }
@@ -64,9 +73,16 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         ProjectInformation projectInformation = ProjectInformationVO.convert(projectInformationVO);
         List<ProjectInformation> list = lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
         if (list.size()==0){
+            //代理商信息
+            AgencyMessage agencyMessage = projectInformationVO.getAgencyMessage();
+            setAgencyMessage(agencyMessage,projectInformation);
+            //甲方信息
+            PurchaserMessage purchaserMessage = projectInformationVO.getPurchaserMessage();
+            setPurchaserMessage(purchaserMessage,projectInformation);
+            ProjectType projectType = projectTypeService.getById(projectInformation.getProcureId());
+            projectInformation.setProcureType(projectType.getName());
             save(projectInformation);
             //该项目类型num添加
-            ProjectType projectType = projectTypeService.getById(projectInformation.getProcureType());
             projectType.changeNum(1);
             projectTypeService.updateById(projectType);
             List<PackageInformationVO> packageInformationList = projectInformationVO.getPackageInformationList();
@@ -89,9 +105,47 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         projectInformation.setProjectDel(0);
         this.updateById(projectInformation);
         //更新项目类型
-        ProjectType projectType = projectTypeService.getById(projectInformation.getProjectType());
+        ProjectType projectType = projectTypeService.getById(projectInformation.getProcureId());
         projectType.changeNum(-1);
         projectTypeService.updateById(projectType);
         return true;
+    }
+
+    private void setPurchaserMessage(PurchaserMessage purchaserMessage,ProjectInformation projectInformation){
+
+        if (purchaserMessage==null){
+            return;
+        }
+        if (purchaserMessage.getId()!=null){
+            projectInformation.setPartyaId(purchaserMessage.getId());
+            PurchaserMessage before = purchaserMessageMapper.selectById(purchaserMessage.getId());
+            if (purchaserMessage.compare(before)){
+                purchaserMessageMapper.updateById(purchaserMessage);
+            }
+        }else {
+            //添加甲方信息
+            purchaserMessageMapper.insert(purchaserMessage);
+            Integer id = purchaserMessage.getId();
+            projectInformation.setPartyaId(id);
+        }
+    }
+
+    private void setAgencyMessage(AgencyMessage agencyMessage,ProjectInformation projectInformation){
+
+        if (agencyMessage==null){
+            return;
+        }
+        if (agencyMessage.getId()!=null){
+            projectInformation.setAgencyId(agencyMessage.getId());
+            AgencyMessage before = agencyMessageMapper.selectById(agencyMessage.getId());
+            if (agencyMessage.compare(before)){
+                agencyMessageMapper.updateById(agencyMessage);
+            }
+        }else {
+            //添加代理商信息返回id
+            agencyMessageMapper.insert(agencyMessage);
+            Integer id = agencyMessage.getId();
+            projectInformation.setAgencyId(id);
+        }
     }
 }

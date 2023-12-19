@@ -31,4 +31,19 @@ public class PurchaserMessage extends BaseEntity {
 
     @TableField("contract_person")
     private String contractPerson;
+
+    @Override
+    public String toString() {
+        return "PurchaserMessage{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", contractPerson='" + contractPerson + '\'' +
+                '}';
+    }
+
+    public boolean compare(PurchaserMessage message){
+        return this.toString().equals(message.toString());
+    }
 }

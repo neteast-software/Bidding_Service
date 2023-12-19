@@ -58,12 +58,12 @@ public class TemplateTypeController extends BaseController {
     public AjaxResult updateTemplateType(@RequestBody TemplateTypeVO templateTypeVO){
         TemplateType templateType = TemplateTypeVO.convert(templateTypeVO);
         templateTypeService.updateById(templateType);
-        return success();
+        return updateSuccess();
     }
 
     @PostMapping("/del/{id}")
     public AjaxResult delTemplateType(@PathVariable("id")Integer id){
         templateTypeService.delTemplateType(id);
-        return success();
+        return delSuccess();
     }
 }

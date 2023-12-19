@@ -121,6 +121,16 @@ public class BaseController
     }
 
     /**
+     * 删除成功
+     */
+    public AjaxResult delSuccess() {return AjaxResult.success("删除成功");}
+
+    /**
+     * 保存成功
+     */
+    public AjaxResult updateSuccess() {return AjaxResult.success("保存成功");}
+
+    /**
      * 返回失败消息
      */
     public AjaxResult error()

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.neteast.business.domain.custom.AgencyMessage;
+import com.neteast.business.domain.custom.PurchaserMessage;
 import com.neteast.business.domain.dict.PlusesCondition;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
@@ -24,11 +26,11 @@ public class ProjectInformationVO {
     /** 主键id */
     private Integer id ;
 
-    /** 对应甲方id */
-    private Integer partyaId;
+    /** 对应甲方信息 */
+    private PurchaserMessage purchaserMessage;
 
-    /** 对应代理商id */
-    private Integer agencyId;
+    /** 对应代理商信息 */
+    private AgencyMessage agencyMessage;
 
     /** 项目编号 */
     private String projectCode ;
@@ -41,6 +43,8 @@ public class ProjectInformationVO {
 
     /** 项目名称 */
     private String projectName ;
+
+    private Integer procureId;
 
     /** 采购类型(项目类型) */
     private String procureType ;

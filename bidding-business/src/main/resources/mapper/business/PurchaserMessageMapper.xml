@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.PurchaserMessageMapper">
 
-    <select id="getList" resultType="com.neteast.business.domain.custom.ExpertMessage" parameterType="com.neteast.business.domain.custom.ExpertMessage">
+    <select id="getList" resultType="com.neteast.business.domain.custom.PurchaserMessage" parameterType="com.neteast.business.domain.custom.PurchaserMessage">
         select
         id,name,address,contract_person,phone,create_time,create_by,update_time,update_by
         from purchaser_message

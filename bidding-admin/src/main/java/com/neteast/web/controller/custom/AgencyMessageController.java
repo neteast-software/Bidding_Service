@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2023年12月19 11:03
  */
 
-@Controller
+@RestController
 @RequestMapping("/agencyMessage")
 public class AgencyMessageController extends BaseController{
 

@@ -7,7 +7,7 @@
     <select id="getList" resultType="com.neteast.business.domain.custom.AgencyMessage" parameterType="com.neteast.business.domain.custom.AgencyMessage">
         select
         id,name,address,contract_person,phone,bank_name,bank_account,create_time,create_by,update_time,update_by
-        from purchaser_message
+        from agency_message
         <where>
             <if test="id != null and id != ''">
                 and id = #{id}

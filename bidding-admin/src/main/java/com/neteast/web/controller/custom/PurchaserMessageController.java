@@ -19,7 +19,7 @@ import java.util.List;
  * @date 2023年12月19 11:02
  */
 
-@Controller
+@RestController
 @RequestMapping("/purchaserMessage")
 public class PurchaserMessageController extends BaseController {
 

@@ -63,20 +63,20 @@ public class TemplateFileController extends BaseController {
     public AjaxResult delTemplateFile(@PathVariable("id")Integer id){
 
         templateFileService.delTemplateFile(id);
-        return success();
+        return delSuccess();
     }
 
     @PostMapping("/update")
     public AjaxResult updateTemplateFile(@RequestBody TemplateFileVO templateFileVO){
 
         templateFileService.updateTemplateFile(templateFileVO);
-        return success();
+        return updateSuccess();
     }
 
     @PostMapping("/save")
     public AjaxResult saveTemplateFile(@RequestBody TemplateContent templateContent){
         templateFileService.saveTemplateFile(templateContent);
-        return success();
+        return updateSuccess();
     }
 
     @GetMapping("/content/{id}")

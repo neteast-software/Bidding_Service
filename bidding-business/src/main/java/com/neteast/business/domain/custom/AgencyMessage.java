@@ -44,4 +44,21 @@ public class AgencyMessage extends BaseEntity {
     /** 银行账号 */
     @TableField("bank_account")
     private String bankAccount;
+
+    @Override
+    public String toString() {
+        return "AgencyMessage{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", contractPerson='" + contractPerson + '\'' +
+                ", phone='" + phone + '\'' +
+                ", bankName='" + bankName + '\'' +
+                ", bankAccount='" + bankAccount + '\'' +
+                '}';
+    }
+
+    public boolean compare(AgencyMessage message){
+        return this.toString().equals(message.toString());
+    }
 }
