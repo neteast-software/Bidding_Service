@@ -15,4 +15,6 @@ public interface IDictKeyService extends IService<DictKey> {
     List<DictKeyVO> getDictKeyList(DictKeyVO dictKeyVO);
 
     boolean delDictKey(Integer keyId);
+
+    boolean delDictKeyByDictType(Integer typeId);
 }

@@ -47,5 +47,16 @@ public class IDictKeyServiceImpl extends ServiceImpl<DictKeyMapper, DictKey> imp
         return true;
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean delDictKeyByDictType(Integer typeId) {
 
+        List<DictKey> keys = this.lambdaQuery().eq(DictKey::getTypeId,typeId).list();
+        keys.forEach(k->{
+            removeById(k.getId());
+            dictHistoryService.delByKeyId(k.getId());
+            dictValueService.delDictValueByKeyId(k.getId());
+        });
+        return true;
+    }
 }

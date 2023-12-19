@@ -18,14 +18,20 @@ public class DictKeyVO {
     /** 主键id */
     private Integer id;
 
-    /** key值 */
+    /** key名称 */
     private String key;
+
+    /** key的类型 */
+    private Integer typeId;
 
     /** 是否通用 */
     private Boolean common;
 
-    /** 字典类型 单选/多选 */
-    private String dictType;
+    /** key的值 */
+    private String label;
+
+    /** 字典类型 1-单选 2-多选 3-填值等 */
+    private Integer dictType;
 
     public static DictKeyVO convert(DictKey dictKey){
         DictKeyVO dictKeyVO = new DictKeyVO();
@@ -36,9 +42,11 @@ public class DictKeyVO {
     public static DictKey convert(DictKeyVO dictKeyVO){
         DictKey dictKey = new DictKey();
         dictKey.setId(dictKeyVO.getId());
+        dictKey.setTypeId(dictKeyVO.getTypeId());
         dictKey.setDictType(dictKeyVO.getDictType());
         dictKey.setCommon(dictKeyVO.getCommon());
         dictKey.setKey(dictKeyVO.getKey());
+        dictKey.setLabel(dictKeyVO.getLabel());
         return dictKey;
     }
 }

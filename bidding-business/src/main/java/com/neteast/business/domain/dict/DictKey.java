@@ -31,6 +31,14 @@ public class DictKey extends BaseEntity {
     @TableField("common")
     private Boolean common;
 
+    /** key的值 */
+    @TableField("label")
+    private String label;
+
+    /** Key的类型 */
+    @TableField("type_id")
+    private Integer typeId;
+
     /** 项目类型 */
     @TableField("project_type")
     private String projectType;
@@ -43,9 +51,9 @@ public class DictKey extends BaseEntity {
     @TableField("file_type")
     private String fileType;
 
-    /** 字典类型 单选 多选 填值等 */
+    /** 字典类型 1-单选 2-多选 3-填值等 */
     @TableField("dict_type")
-    private String dictType;
+    private Integer dictType;
 
     @TableField(exist = false)
     private List<DictValue> values;

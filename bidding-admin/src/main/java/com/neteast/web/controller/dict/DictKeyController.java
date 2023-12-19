@@ -34,7 +34,7 @@ public class DictKeyController extends BaseController {
     IDictValueService dictValueService;
 
     @GetMapping("/listByPage")
-    public AjaxResult getDictKeyList(DictKeyVO dictKeyVO){
+    public AjaxResult getDictKeyListByPage(DictKeyVO dictKeyVO){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
@@ -42,6 +42,13 @@ public class DictKeyController extends BaseController {
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
+    }
+
+    @GetMapping("/list")
+    public AjaxResult getDictKeyList(DictKeyVO dictKeyVO){
+
+        List<DictKeyVO> list = dictKeyService.getDictKeyList(dictKeyVO);
+        return success(list);
     }
 
     @GetMapping("/one")
