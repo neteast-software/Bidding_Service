@@ -1,6 +1,7 @@
 package com.neteast.business.domain.template.vo;
 
 import com.neteast.business.domain.template.TemplateFile;
+import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 /**
@@ -9,7 +10,7 @@ import lombok.Data;
  */
 
 @Data
-public class TemplateFileVO {
+public class TemplateFileVO extends BaseEntity {
 
     private Integer id;
 

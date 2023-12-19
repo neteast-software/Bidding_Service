@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ProjectTypeMapper">
+
+    <select id="getList" resultType="com.neteast.business.domain.project.vo.ProjectTypeVO" parameterType="com.neteast.business.domain.project.vo.ProjectTypeVO">
+        select
+        id,name,num,del
+        from project_type
+        <where>
+            del = 1
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+</mapper>

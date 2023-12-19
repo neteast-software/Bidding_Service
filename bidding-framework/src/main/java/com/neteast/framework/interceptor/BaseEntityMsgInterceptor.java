@@ -41,24 +41,34 @@ public class BaseEntityMsgInterceptor implements Interceptor {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
         SqlCommandType sqlCommandType = mappedStatement.getSqlCommandType();
         //插入或者更新进行处理
-//        if (SqlCommandType.INSERT.equals(sqlCommandType)||SqlCommandType.UPDATE.equals(sqlCommandType)){
-//            Object parameter = invocation.getArgs()[1];
-//            if (SysUser.class.isAssignableFrom(parameter.getClass())|| SysLogininfor.class.isAssignableFrom(parameter.getClass())){
-//                return invocation.proceed();
-//            }
-//            if (parameter instanceof MapperMethod.ParamMap){
-//                MapperMethod.ParamMap map = (MapperMethod.ParamMap)parameter;
-//                Object obj = map.get("list");
-//                List<?> list = (List<?>) obj;
-//                if (list!=null){
-//                    for (Object o:list){
-//                        setParameter(o,sqlCommandType);
-//                    }
-//                }
-//            }else {
-//                setParameter(parameter,sqlCommandType);
-//            }
-//        }
+        if (SqlCommandType.INSERT.equals(sqlCommandType)||SqlCommandType.UPDATE.equals(sqlCommandType)){
+            Object parameter = invocation.getArgs()[1];
+            if (SysUser.class.isAssignableFrom(parameter.getClass())|| SysLogininfor.class.isAssignableFrom(parameter.getClass())){
+                return invocation.proceed();
+            }
+            if (parameter instanceof MapperMethod.ParamMap){
+                MapperMethod.ParamMap map = (MapperMethod.ParamMap)parameter;
+                if (map.containsKey("list")){
+                    Object obj = map.get("list");
+                    List<?> list = (List<?>) obj;
+                    if (list!=null){
+                        for (Object o:list){
+                            setParameter(o,sqlCommandType);
+                        }
+                    }
+                }else {
+                    map.forEach((k,v)->{
+                        try {
+                            setParameter(v,sqlCommandType);
+                        } catch (Throwable e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                }
+            }else {
+                setParameter(parameter,sqlCommandType);
+            }
+        }
         return invocation.proceed();
     }
 
@@ -70,19 +80,19 @@ public class BaseEntityMsgInterceptor implements Interceptor {
             Field[] declaredFields = aClass.getSuperclass().getDeclaredFields();
             for (Field field : declaredFields) {
                 if (SqlCommandType.INSERT.equals(sqlCommandType)){
-                    if (field.getAnnotation(CreateBy.class)!=null){
-                        field.setAccessible(true);
-                        field.set(parameter, SecurityUtils.getUsername());
-                    }
+//                    if (field.getAnnotation(CreateBy.class)!=null){
+//                        field.setAccessible(true);
+//                        field.set(parameter, SecurityUtils.getUsername());
+//                    }
                     if (field.getAnnotation(CreateTime.class)!=null){
                         field.setAccessible(true);
                         field.set(parameter,new Date());
                     }
                 }else {
-                    if (field.getAnnotation(UpdateBy.class)!=null){
-                        field.setAccessible(true);
-                        field.set(parameter,SecurityUtils.getUsername());
-                    }
+//                    if (field.getAnnotation(UpdateBy.class)!=null){
+//                        field.setAccessible(true);
+//                        field.set(parameter,SecurityUtils.getUsername());
+//                    }
                     if (field.getAnnotation(UpdateTime.class)!=null){
                         field.setAccessible(true);
                         field.set(parameter,new Date());

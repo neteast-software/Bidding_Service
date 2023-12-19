@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.template.TemplateFile;
 import com.neteast.business.domain.template.vo.TemplateContent;
 import com.neteast.business.domain.template.vo.TemplateFileVO;
+import com.neteast.business.domain.template.vo.TemplateTypeVO;
 import com.neteast.business.mapper.TemplateFileMapper;
 
 import javax.annotation.Resource;
@@ -40,5 +41,7 @@ public interface ITemplateFileService extends IService<TemplateFile> {
     boolean delTemplateFile(Integer id);
 
     boolean delTemplateFileByExtId(Integer extId);
+
+    boolean updateTemplateFile(TemplateFileVO templateFileVO);
 
 }

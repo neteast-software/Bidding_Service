@@ -2,6 +2,7 @@ package com.neteast.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.project.ProjectType;
+import com.neteast.business.domain.project.vo.ProjectTypeVO;
 import com.neteast.business.mapper.ProjectTypeMapper;
 import com.neteast.business.service.IProjectTypeService;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ProjectTypeServiceImpl extends ServiceImpl<ProjectTypeMapper, Proje
     ProjectTypeMapper projectTypeMapper;
 
     @Override
-    public List<ProjectType> getProjectTypeList(ProjectType projectType) {
-        return projectTypeMapper.getList(projectType);
+    public List<ProjectTypeVO> getProjectTypeList(ProjectTypeVO projectTypeVO) {
+        return projectTypeMapper.getList(projectTypeVO);
     }
 }

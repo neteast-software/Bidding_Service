@@ -44,8 +44,17 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
     @Transactional(rollbackFor = Exception.class)
     public boolean updateProjectInformation(ProjectInformationVO projectInformationVO) {
 
-        ProjectInformation projectInformation = ProjectInformation.convert(projectInformationVO);
-        return this.updateById(projectInformation);
+        ProjectInformation after = ProjectInformation.convert(projectInformationVO);
+        ProjectInformation before = getById(after.getId());
+        if (before.getProcureType().compareTo(after.getProcureType())!=0){
+            ProjectType typeAfter = projectTypeService.getById(before.getProcureType());
+            ProjectType typeBefore = projectTypeService.getById(after.getProcureType());
+            typeAfter.changeNum(1);
+            typeBefore.changeNum(-1);
+            projectTypeService.updateById(typeBefore);
+            projectTypeService.updateById(typeAfter);
+        }
+        return this.updateById(after);
     }
 
     @Override
@@ -57,13 +66,16 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         if (list.size()==0){
             save(projectInformation);
             //该项目类型num添加
-            ProjectType projectType = projectTypeService.getById(projectInformation.getProjectType());
+            ProjectType projectType = projectTypeService.getById(projectInformation.getProcureType());
             projectType.changeNum(1);
             projectTypeService.updateById(projectType);
             List<PackageInformationVO> packageInformationList = projectInformationVO.getPackageInformationList();
-            packageInformationList.forEach(p->{
-                packageInformationService.savePackageInformation(p);
-            });
+            if (packageInformationList!=null){
+                packageInformationList.forEach(p->{
+                    packageInformationService.savePackageInformation(p);
+                });
+            }
+            return true;
         }
         throw new BaseBusException("项目编号重复");
     }

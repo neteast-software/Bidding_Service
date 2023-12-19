@@ -69,8 +69,7 @@ public class TemplateFileController extends BaseController {
     @PostMapping("/update")
     public AjaxResult updateTemplateFile(@RequestBody TemplateFileVO templateFileVO){
 
-        TemplateFile templateFile = TemplateFileVO.convert(templateFileVO);
-        templateFileService.updateById(templateFile);
+        templateFileService.updateTemplateFile(templateFileVO);
         return success();
     }
 

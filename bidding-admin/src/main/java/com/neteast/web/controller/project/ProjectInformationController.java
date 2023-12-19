@@ -33,8 +33,8 @@ public class ProjectInformationController extends BaseController {
     @Resource
     IPackageInformationService packageInformationService;
 
-    @GetMapping("/list")
-    public AjaxResult getProjectInformationList(ProjectInformation projectInformation){
+    @GetMapping("/listByPage")
+    public AjaxResult getProjectInformationListByPage(ProjectInformation projectInformation){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();

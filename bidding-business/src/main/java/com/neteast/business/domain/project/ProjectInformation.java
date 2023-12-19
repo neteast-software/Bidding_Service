@@ -32,7 +32,9 @@ public class ProjectInformation extends BaseEntity {
 
     /** 对应甲方id */
     @TableField("partya_id")
-    private Integer partyaId ;
+    private Integer partyaId;
+
+
 
     /** 项目编号 */
     @TableField("project_code")
@@ -44,7 +46,7 @@ public class ProjectInformation extends BaseEntity {
 
     /** 项目行业 */
     @TableField("project_type")
-    private Integer projectType ;
+    private String projectType ;
 
     /** 项目名称 */
     @TableField("project_name")
@@ -52,7 +54,7 @@ public class ProjectInformation extends BaseEntity {
 
     /** 采购类型(项目类型) */
     @TableField("procure_type")
-    private String procureType ;
+    private Integer procureType ;
 
     /** 项目状态 1-招标 2-流标 3-结束 */
     @TableField("project_status")

@@ -54,16 +54,4 @@
         </where>
     </select>
 
-    <select id="getListByType" resultType="com.neteast.business.domain.project.vo.ProjectTypeInformationVO" parameterType="com.neteast.business.domain.project.ProjectInformation" >
-        select m.id project_id,w.id partya_id,project_name,project_type,project_code,procure_type,name,address from project_information m inner JOIN work_place_name w on m.partya_id = w.id
-        <where>
-            <if test="projectId != null">
-                and project_id = #{projectId}
-            </if>
-            <if test="partya_id != null">
-                and partya_id = #{partyaId}
-            </if>
-        </where>
-    </select>
-
 </mapper>

@@ -7,6 +7,7 @@ import com.neteast.business.domain.template.TemplateFile;
 import com.neteast.business.domain.template.TemplateType;
 import com.neteast.business.domain.template.vo.TemplateContent;
 import com.neteast.business.domain.template.vo.TemplateFileVO;
+import com.neteast.business.domain.template.vo.TemplateTypeVO;
 import com.neteast.business.mapper.TemplateFileMapper;
 import com.neteast.business.service.ITemplateFileService;
 import com.neteast.business.service.ITemplateTypeService;
@@ -14,6 +15,7 @@ import com.neteast.common.exception.BaseBusException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -46,6 +48,7 @@ public class TemplateFileServiceImpl extends ServiceImpl<TemplateFileMapper, Tem
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean createTemplateFile(TemplateFileVO templateFileVO) throws IOException {
 
         Integer extId = templateFileVO.getExtId();
@@ -77,6 +80,7 @@ public class TemplateFileServiceImpl extends ServiceImpl<TemplateFileMapper, Tem
     public boolean saveTemplateFile(TemplateContent templateContent) {
 
         TemplateFile templateFile = getById(templateContent.getId());
+        this.updateById(templateFile);
         if (templateFile==null){
             throw new BaseBusException(500,"该模板文件不存在");
         }
@@ -122,5 +126,23 @@ public class TemplateFileServiceImpl extends ServiceImpl<TemplateFileMapper, Tem
         QueryWrapper<TemplateFile> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("ext_id",extId);
         return remove(queryWrapper);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateTemplateFile(TemplateFileVO templateFileVO) {
+
+        TemplateFile after = TemplateFileVO.convert(templateFileVO);
+        TemplateFile before = getById(after.getId());
+        if (after.getExtId().compareTo(before.getExtId())!=0){
+            TemplateType typeAfter = templateTypeService.getById(after.getExtId());
+            TemplateType typeBefore = templateTypeService.getById(before.getExtId());
+            typeAfter.changeNum(1);
+            typeBefore.changeNum(-1);
+            templateTypeService.updateById(typeAfter);
+            templateTypeService.updateById(typeBefore);
+        }
+        this.updateById(after);
+        return true;
     }
 }

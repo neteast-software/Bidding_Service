@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.neteast.business.domain.dict.PlusesCondition;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
@@ -24,7 +25,10 @@ public class ProjectInformationVO {
     private Integer id ;
 
     /** 对应甲方id */
-    private Integer partyaId ;
+    private Integer partyaId;
+
+    /** 对应代理商id */
+    private Integer agencyId;
 
     /** 项目编号 */
     private String projectCode ;
@@ -45,12 +49,15 @@ public class ProjectInformationVO {
     private Integer projectStatus ;
 
     /** 招标时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date inviteBidding;
 
     /** 开标时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date openBidding;
 
     /** 项目预算金额 */
+
     private Double budgetAmount ;
 
     /** 项目最大金额 **/

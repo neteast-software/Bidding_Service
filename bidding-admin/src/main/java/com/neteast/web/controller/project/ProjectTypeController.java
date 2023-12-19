@@ -1,9 +1,14 @@
 package com.neteast.web.controller.project;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.ProjectType;
+import com.neteast.business.domain.project.vo.ProjectTypeVO;
 import com.neteast.business.service.IProjectTypeService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
+import com.neteast.common.core.page.PageDomain;
+import com.neteast.common.core.page.TableDataInfo;
+import com.neteast.common.core.page.TableSupport;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,14 +27,26 @@ public class ProjectTypeController extends BaseController {
     IProjectTypeService projectTypeService;
 
     @GetMapping("/list")
-    public AjaxResult getProjectTypeList(ProjectType projectType){
-        List<ProjectType> list = projectTypeService.getProjectTypeList(projectType);
+    public AjaxResult getProjectTypeList(ProjectTypeVO projectTypeVO){
+        List<ProjectTypeVO> list = projectTypeService.getProjectTypeList(projectTypeVO);
         return success(list);
     }
 
-    @PostMapping("/add")
-    public AjaxResult addProjectType(@RequestBody ProjectType projectType){
+    @GetMapping("/listByPage")
+    public AjaxResult getProjectTypeListByPage(ProjectTypeVO projectTypeVO){
 
+        startPage();
+        PageDomain pageDomain = TableSupport.getPageDomain();
+        List<ProjectTypeVO> list = projectTypeService.getProjectTypeList(projectTypeVO);
+        TableDataInfo info = getDataTable(list);
+        JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
+        return success(body);
+    }
+
+    @PostMapping("/add")
+    public AjaxResult addProjectType(@RequestBody ProjectTypeVO projectTypeVO){
+
+        ProjectType projectType = ProjectTypeVO.convert(projectTypeVO);
         projectTypeService.save(projectType);
         return success();
     }
@@ -40,12 +57,14 @@ public class ProjectTypeController extends BaseController {
         if (projectType!=null){
             projectType.setDel(0);
             projectTypeService.updateById(projectType);
+            return success();
         }
         return error("无该项目类型");
     }
 
     @PostMapping("/update")
-    public AjaxResult updateProjectType(@RequestBody ProjectType projectType){
+    public AjaxResult updateProjectType(@RequestBody ProjectTypeVO projectTypeVO){
+        ProjectType projectType = ProjectTypeVO.convert(projectTypeVO);
         projectTypeService.updateById(projectType);
         return success();
     }

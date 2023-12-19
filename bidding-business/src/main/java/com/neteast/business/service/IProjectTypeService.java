@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.project.ProjectType;
+import com.neteast.business.domain.project.vo.ProjectTypeVO;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ import java.util.List;
  */
 public interface IProjectTypeService extends IService<ProjectType> {
 
-    List<ProjectType> getProjectTypeList(ProjectType projectType);
+    List<ProjectTypeVO> getProjectTypeList(ProjectTypeVO projectTypeVO);
 }

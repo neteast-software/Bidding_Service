@@ -22,7 +22,7 @@
                 and use_count = #{useCount}
             </if>
             <if test="name != null and name != ''">
-                and name = #{name}
+                and name like '%'||#{name}||'%'
             </if>
             <if test="open != null and open != ''">
                 and open = #{open}
