@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.RoomStatusMapper">
+
+    <select id="getList" resultType="com.neteast.business.domain.programme.RoomStatus" parameterType="com.neteast.business.domain.programme.RoomStatus">
+        select
+        id,project_id,room_id,start_time,end_time,year,month,day,room_type,create_by,create_time,update_by,update_time,project_name,room_name
+        from room_status
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="projectId != null and projectId != ''">
+                and project_id = #{projectId}
+            </if>
+            <if test="roomId != null and roomId != ''">
+                and room_id = #{roomId}
+            </if>
+            <if test="year != null and year != ''">
+                and year = #{year}
+            </if>
+            <if test="month != null and month != ''">
+                and month = #{month}
+            </if>
+            <if test="day != null and day != ''">
+                and day = #{day}
+            </if>
+            <if test="roomType != null and roomType != ''">
+                and room_type = #{roomType}
+            </if>
+            order by start_time desc
+        </where>
+    </select>
+
+    <select id="getListByTime" resultType="com.neteast.business.domain.programme.RoomStatus" >
+        select
+            id,project_id,room_id,start_time,end_time,year,month,day,room_type,create_by,create_time,update_by,update_time,project_name,room_name
+        from room_status
+        <where>
+            ( start_time &gt;= #{startTime} and start_time &lt;= #{endTime}) or
+            ( end_time &gt;= #{startTime} and end_time &lt;= #{endTime}) or
+            ( start_time &gt;= #{startTime} and end_time &lt;= #{endTime})
+        </where>
+    </select>
+</mapper>

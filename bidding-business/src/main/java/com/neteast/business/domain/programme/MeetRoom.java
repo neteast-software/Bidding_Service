@@ -29,7 +29,7 @@ public class MeetRoom extends BaseEntity {
     @TableField("channel_name")
     private String channelName;
 
-    /** 会议室类型 1-开标室 2-评标室 */
+    /** 会议室类型 (1-开标室 2-评标室) */
     @TableField("type")
     private Integer type;
 }
