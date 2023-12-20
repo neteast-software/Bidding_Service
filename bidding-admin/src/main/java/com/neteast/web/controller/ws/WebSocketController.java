@@ -70,4 +70,20 @@ public class WebSocketController extends BaseController {
         Long res = temp.stream().collect(Collectors.summarizingInt(SupplierBidMsg::getNum)).getSum();
         return success(res);
     }
+
+    /**
+     * @Description 获取某个供应商的评分详情
+     * @author lzp
+     * @Date 2023/12/20
+     */
+    @GetMapping("/getSupplierDetail")
+    public AjaxResult getSupplierDetail(String channel,Integer packageId,Integer supplierId){
+        List<SupplierBidMsg> list = SocketIOListener.supplierMap.get(channel);
+        List<SupplierBidMsg> temp = list.stream().filter(u->u.getPackageId().intValue()==packageId).
+                filter(t->t.getSupplierId().intValue()==supplierId).collect(Collectors.toList());
+        if (temp.size()==1){
+            return success(temp);
+        }
+        return error("获取供应商详情信息出错");
+    }
 }
