@@ -6,23 +6,23 @@
 
     <select id="getList" resultType="com.neteast.business.domain.custom.PurchaserMessage" parameterType="com.neteast.business.domain.custom.PurchaserMessage">
         select
-        id,name,address,contract_person,phone,create_time,create_by,update_time,update_by
+        id,purchaser_name,purchaser_address,purchaser_person,purchaser_phone,create_time,create_by,update_time,update_by
         from purchaser_message
         <where>
             <if test="id != null and id != ''">
                 and id = #{id}
             </if>
-            <if test="name != null and name != ''">
-                and name = #{name}
+            <if test="purchaserName != null and purchaserName != ''">
+                and purchaser_name = #{purchaserName}
             </if>
-            <if test="address != null and address != ''">
-                and address = #{address}
+            <if test="purchaserAddress != null and purchaserAddress != ''">
+                and purchaser_address = #{purchaserAddress}
             </if>
-            <if test="contractPerson != null and contractPerson != ''">
-                and contract_person = #{contractPerson}
+            <if test="purchaserPerson != null and purchaserPerson != ''">
+                and purchaser_person = #{purchaserPerson}
             </if>
-            <if test="phone != null and phone != ''">
-                and phone = #{phone}
+            <if test="purchaserPhone != null and purchaserPhone != ''">
+                and purchaser_phone = #{purchaserPhone}
             </if>
         </where>
     </select>

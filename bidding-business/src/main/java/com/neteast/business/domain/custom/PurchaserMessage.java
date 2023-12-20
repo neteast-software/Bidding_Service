@@ -20,26 +20,26 @@ public class PurchaserMessage extends BaseEntity {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    @TableField("name")
-    private String name;
+    @TableField("purchaser_name")
+    private String purchaserName;
 
-    @TableField("address")
-    private String address;
+    @TableField("purchaser_address")
+    private String purchaserAddress;
 
-    @TableField("phone")
-    private String phone;
+    @TableField("purchaser_phone")
+    private String purchaserPhone;
 
-    @TableField("contract_person")
-    private String contractPerson;
+    @TableField("purchaser_person")
+    private String purchaserPerson;
 
     @Override
     public String toString() {
         return "PurchaserMessage{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", contractPerson='" + contractPerson + '\'' +
+                ", purchaserName='" + purchaserName + '\'' +
+                ", purchaserAddress='" + purchaserAddress + '\'' +
+                ", purchaserPhone='" + purchaserPhone + '\'' +
+                ", purchaserPerson='" + purchaserPerson + '\'' +
                 '}';
     }
 

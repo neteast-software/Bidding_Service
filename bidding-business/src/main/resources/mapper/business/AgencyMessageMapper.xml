@@ -6,23 +6,23 @@
 
     <select id="getList" resultType="com.neteast.business.domain.custom.AgencyMessage" parameterType="com.neteast.business.domain.custom.AgencyMessage">
         select
-        id,name,address,contract_person,phone,bank_name,bank_account,create_time,create_by,update_time,update_by
+        id,agency_name,agency_address,agency_person,agency_phone,bank_name,bank_account,create_time,create_by,update_time,update_by
         from agency_message
         <where>
             <if test="id != null and id != ''">
                 and id = #{id}
             </if>
-            <if test="name != null and name != ''">
-                and name = '%'||#{name}||'%'
+            <if test="agencyName != null and agencyName != ''">
+                and agency_name = '%'||#{agencyName}||'%'
             </if>
-            <if test="address != null and address != ''">
-                and address = #{address}
+            <if test="agencyAddress != null and agencyAddress != ''">
+                and agency_address = #{agencyAddress}
             </if>
-            <if test="contractPerson != null and contractPerson != ''">
-                and contract_person = #{contractPerson}
+            <if test="agencyPerson != null and agencyPerson != ''">
+                and agency_person = #{agencyPerson}
             </if>
-            <if test="phone != null and phone != ''">
-                and phone = #{phone}
+            <if test="agencyPhone != null and agencyPhone != ''">
+                and agency_phone = #{agencyPhone}
             </if>
             <if test="bankName != null and bankName != ''">
                 and bank_name = #{bankName}

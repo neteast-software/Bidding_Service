@@ -1,5 +1,6 @@
 package com.neteast.business.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.programme.RoomStatus;
 import com.neteast.business.mapper.RoomStatusMapper;
@@ -33,5 +34,12 @@ public class RoomStatusServiceImpl extends ServiceImpl<RoomStatusMapper, RoomSta
         Long start = startTime.getTime();
         Long end = endTime.getTime();
         return roomStatusMapper.getListByTime(start,end);
+    }
+
+    @Override
+    public boolean removeRoomStatusByProjectId(Integer projectId) {
+        QueryWrapper<RoomStatus> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("projectId",projectId);
+        return remove(queryWrapper);
     }
 }

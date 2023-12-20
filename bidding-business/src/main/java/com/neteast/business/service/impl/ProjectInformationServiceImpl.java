@@ -44,6 +44,9 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
     @Resource
     PurchaserMessageMapper purchaserMessageMapper;
 
+    @Resource
+    IRoomStatusService roomStatusService;
+
     @Override
     public List<ProjectInformation> getProjectInformationList(ProjectInformation projectInformation) {
         projectInformation.setProjectDel(1);
@@ -122,6 +125,8 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         ProjectType projectType = projectTypeService.getById(projectInformation.getProcureId());
         projectType.changeNum(-1);
         projectTypeService.updateById(projectType);
+        //删除项目会议室信息
+        roomStatusService.removeRoomStatusByProjectId(id);
         return true;
     }
 

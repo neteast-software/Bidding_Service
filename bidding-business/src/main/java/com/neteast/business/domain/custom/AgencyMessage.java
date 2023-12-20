@@ -22,20 +22,20 @@ public class AgencyMessage extends BaseEntity {
     private Integer id;
 
     /** 代理商名称 */
-    @TableField("name")
-    private String name;
+    @TableField("agency_name")
+    private String agencyName;
 
     /** 代理商地址 */
-    @TableField("address")
-    private String address;
+    @TableField("agency_address")
+    private String agencyAddress;
 
     /** 联系人 */
-    @TableField("contract_person")
-    private String contractPerson;
+    @TableField("agency_person")
+    private String agencyPerson;
 
     /** 电话 */
-    @TableField("phone")
-    private String phone;
+    @TableField("agency_phone")
+    private String agencyPhone;
 
     /** 开户银行 */
     @TableField("bank_name")
@@ -49,10 +49,10 @@ public class AgencyMessage extends BaseEntity {
     public String toString() {
         return "AgencyMessage{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", contractPerson='" + contractPerson + '\'' +
-                ", phone='" + phone + '\'' +
+                ", agencyName='" + agencyName + '\'' +
+                ", agencyAddress='" + agencyAddress + '\'' +
+                ", agencyPerson='" + agencyPerson + '\'' +
+                ", agencyPhone='" + agencyPhone + '\'' +
                 ", bankName='" + bankName + '\'' +
                 ", bankAccount='" + bankAccount + '\'' +
                 '}';

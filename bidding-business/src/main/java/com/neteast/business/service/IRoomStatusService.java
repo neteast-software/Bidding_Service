@@ -15,4 +15,6 @@ public interface IRoomStatusService extends IService<RoomStatus> {
     List<RoomStatus> getRoomStatusList(RoomStatus roomStatus);
 
     List<RoomStatus> getRoomStatusListByTime(Date startTime,Date endTime);
+
+    boolean removeRoomStatusByProjectId(Integer projectId);
 }
