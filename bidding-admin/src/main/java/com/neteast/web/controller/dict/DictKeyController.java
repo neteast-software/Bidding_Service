@@ -2,9 +2,11 @@ package com.neteast.web.controller.dict;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.dict.DictKey;
+import com.neteast.business.domain.dict.DictType;
 import com.neteast.business.domain.dict.DictValue;
 import com.neteast.business.domain.dict.vo.DictKeyVO;
 import com.neteast.business.service.IDictKeyService;
+import com.neteast.business.service.IDictTypeService;
 import com.neteast.business.service.IDictValueService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -31,6 +33,9 @@ public class DictKeyController extends BaseController {
     IDictKeyService dictKeyService;
 
     @Resource
+    IDictTypeService dictTypeService;
+
+    @Resource
     IDictValueService dictValueService;
 
     @GetMapping("/listByPage")
@@ -39,6 +44,10 @@ public class DictKeyController extends BaseController {
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<DictKeyVO> list = dictKeyService.getDictKeyList(dictKeyVO);
+        list.forEach(l->{
+            List<DictValue> values = dictValueService.getKeyValue(l.getId());
+            l.setValues(values);
+        });
         TableDataInfo info = getDataTable(list);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
@@ -48,14 +57,19 @@ public class DictKeyController extends BaseController {
     public AjaxResult getDictKeyList(DictKeyVO dictKeyVO){
 
         List<DictKeyVO> list = dictKeyService.getDictKeyList(dictKeyVO);
+        list.forEach(l->{
+            List<DictValue> values = dictValueService.getKeyValue(l.getId());
+            l.setValues(values);
+        });
         return success(list);
     }
 
     @GetMapping("/one")
-    public AjaxResult getDictKeyOne(DictKeyVO dictKey){
+    public AjaxResult getDictKeyOne(DictKeyVO dictKeyVO){
 
-        DictKey temp = dictKeyService.getById(dictKey.getId());
-        List<DictValue> values = dictValueService.getKeyValue(temp.getId());
+        DictKey dictKey = dictKeyService.getById(dictKeyVO.getId());
+        List<DictValue> values = dictValueService.getKeyValue(dictKey.getId());
+        DictKeyVO temp = DictKeyVO.convert(dictKey);
         temp.setValues(values);
         return success(temp);
     }
@@ -64,6 +78,10 @@ public class DictKeyController extends BaseController {
     public AjaxResult updateDictKeyData(@RequestBody DictKeyVO dictKeyVO){
 
         DictKey dictKey = DictKeyVO.convert(dictKeyVO);
+        DictType dictType = dictTypeService.getById(dictKey.getTypeId());
+        if (dictType!=null){
+            dictKey.setType(dictType.getType());
+        }
         dictKeyService.updateById(dictKey);
         return success();
     }
@@ -72,8 +90,13 @@ public class DictKeyController extends BaseController {
     public AjaxResult addDictKeyData(@RequestBody DictKeyVO dictKeyVO){
 
         DictKey dictKey = DictKeyVO.convert(dictKeyVO);
-        dictKeyService.save(dictKey);
-        return success();
+        DictType dictType = dictTypeService.getById(dictKey.getTypeId());
+        if (dictType!=null){
+            dictKey.setType(dictType.getType());
+            dictKeyService.save(dictKey);
+            return success();
+        }
+        return error("该字典类型不存在");
     }
 
     @PostMapping("/del/{id}")

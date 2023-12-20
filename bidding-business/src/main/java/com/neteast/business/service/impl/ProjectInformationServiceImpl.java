@@ -80,6 +80,9 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
             PurchaserMessage purchaserMessage = projectInformationVO.getPurchaserMessage();
             setPurchaserMessage(purchaserMessage,projectInformation);
             ProjectType projectType = projectTypeService.getById(projectInformation.getProcureId());
+            if (projectType==null){
+                throw new BaseBusException("无该招标类型");
+            }
             projectInformation.setProcureType(projectType.getName());
             //save(projectInformation);
             projectInformationMapper.insert(projectInformation);

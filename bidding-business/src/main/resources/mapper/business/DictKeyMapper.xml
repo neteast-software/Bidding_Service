@@ -6,7 +6,7 @@
 
     <select id="getList" resultType="com.neteast.business.domain.dict.vo.DictKeyVO" parameterType="com.neteast.business.domain.dict.vo.DictKeyVO" >
         select
-            id,key,common,project_type,bidding_type,file_type,dict_type,create_by,create_time,update_by,update_time
+            id,key,common,dict_type,type,type_id,label,create_by,create_time,update_by,update_time
         from dict_key
         <where>
             <if test="id != null and id != ''">
@@ -20,6 +20,12 @@
             </if>
             <if test="dictType != null and dictType != ''">
                 and dict_type = #{dictType}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="typeId != null and typeId != ''">
+                and type_id = #{typeId}
             </if>
         </where>
     </select>

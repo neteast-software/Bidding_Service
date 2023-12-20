@@ -35,26 +35,15 @@ public class DictKey extends BaseEntity {
     @TableField("label")
     private String label;
 
-    /** Key的类型 */
+    /** Key的类型的id */
     @TableField("type_id")
     private Integer typeId;
 
-    /** 项目类型 */
-    @TableField("project_type")
-    private String projectType;
-
-    /** 招标类型 */
-    @TableField("bidding_type")
-    private String biddingType;
-
-    /** 文件类型 */
-    @TableField("file_type")
-    private String fileType;
+    /** key的类型的值 */
+    @TableField("type")
+    private String type;
 
     /** 字典类型 1-单选 2-多选 3-填值等 */
     @TableField("dict_type")
     private Integer dictType;
-
-    @TableField(exist = false)
-    private List<DictValue> values;
 }

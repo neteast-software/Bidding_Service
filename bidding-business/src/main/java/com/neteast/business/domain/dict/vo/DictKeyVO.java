@@ -21,8 +21,11 @@ public class DictKeyVO {
     /** key名称 */
     private String key;
 
-    /** key的类型 */
+    /** key的类型id */
     private Integer typeId;
+
+    /** key的类型的值 */
+    private String type;
 
     /** 是否通用 */
     private Boolean common;
@@ -32,6 +35,8 @@ public class DictKeyVO {
 
     /** 字典类型 1-单选 2-多选 3-填值等 */
     private Integer dictType;
+
+    private List<DictValue> values;
 
     public static DictKeyVO convert(DictKey dictKey){
         DictKeyVO dictKeyVO = new DictKeyVO();
