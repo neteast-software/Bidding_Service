@@ -6,6 +6,7 @@ import com.neteast.business.domain.custom.PurchaserMessage;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
 import com.neteast.business.domain.project.ProjectType;
+import com.neteast.business.domain.project.enums.ProjectStatus;
 import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.business.mapper.AgencyMessageMapper;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,6 +65,9 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
             projectTypeService.updateById(typeAfter);
             after.setProcureType(typeAfter.getName());
         }
+        if (before.getProjectStatus().compareTo(after.getProjectStatus())!=0){
+            after.setStatusTime(new Date());
+        }
         return this.updateById(after);
     }
 
@@ -84,6 +89,9 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
                 throw new BaseBusException("无该招标类型");
             }
             projectInformation.setProcureType(projectType.getName());
+            ProjectStatus status = ProjectStatus.PRE_NOTICE;
+            projectInformation.setProjectStatus(status.getStatus());
+            projectInformation.setStatusTime(new Date());
             //save(projectInformation);
             projectInformationMapper.insert(projectInformation);
             Integer projectId = projectInformation.getId();

@@ -3,6 +3,8 @@ package com.neteast.business.domain.editor.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 /**
  * 标书的区分
  * @author lzp
