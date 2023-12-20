@@ -36,6 +36,12 @@ public class SocketIOListener implements DataListener<String> {
     /** channel作为key 供应商数据 */
     public static ConcurrentHashMap<String,List<SupplierBidMsg>> supplierMap = new ConcurrentHashMap<>();
 
+    /** 会议结束 清除通道数据 */
+    public static void clear(String channelName){
+        map.remove(channelName);
+        supplierMap.remove(channelName);
+    }
+
     @Override
     public void onData(SocketIOClient client, String s, AckRequest ackRequest){
         log.info("客户端-{},发送消息-{}",client.getRemoteAddress(),s);
