@@ -25,21 +25,17 @@ public class ProjectBidding extends BaseEntity {
     @TableField("project_id")
     private Integer projectId;
 
-    /** 项目文件类型(如招标文件) */
-    @TableField("type")
-    private String type;
+    /** 阶段id */
+    @TableField("stage_id")
+    private Integer stageId;
 
-    /** 阶段(如开标前，开标等) */
-    @TableField("stage")
-    private Integer stage;
+    /** 阶段名称 */
+    @TableField("stage_name")
+    private String stageName;
 
     /** 文件名称 */
-    @TableField("name")
-    private String name;
-
-    /** 文件类型(excel,word) */
-    @TableField("file_type")
-    private String fileType;
+    @TableField("file_name")
+    private String fileName;
 
     /** 文件地址 */
     @TableField("file_path")

@@ -29,6 +29,10 @@ public class ProjectType {
     @TableField("num")
     private Integer num;
 
+    /** 项目步骤数 */
+    @TableField("step_num")
+    private Integer stepNum;
+
     /** 是否删除 0-删除 1-未删除 */
     @TableField("del")
     private Integer del;

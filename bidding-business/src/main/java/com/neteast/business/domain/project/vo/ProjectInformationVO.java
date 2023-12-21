@@ -39,17 +39,18 @@ public class ProjectInformationVO {
     private String filingsNumber;
 
     /** 项目行业 */
-    private String projectType ;
+    private String projectIndustry ;
 
     /** 项目名称 */
     private String projectName ;
 
-    private Integer procureId;
+    /** 项目类型 */
+    private Integer projectTypeId;
 
-    /** 采购类型(项目类型) */
-    private String procureType ;
+    /** 项目类型名称 */
+    private String projectTypeName ;
 
-    /** 项目状态 1-招标 2-流标 3-结束 */
+    /** 项目状态(项目阶段管理状态) */
     private Integer projectStatus ;
 
     /** 招标时间 */

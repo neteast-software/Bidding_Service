@@ -5,9 +5,12 @@ import com.neteast.business.domain.editor.ProjectBidding;
 import com.neteast.business.domain.editor.vo.ProjectBiddingVO;
 import com.neteast.business.mapper.ProjectBiddingMapper;
 import com.neteast.business.service.IProjectBiddingService;
+import com.neteast.business.service.IProjectInformationService;
+import com.neteast.business.service.IProjectStatusService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -27,6 +30,12 @@ public class ProjectBiddingServiceImpl extends ServiceImpl<ProjectBiddingMapper,
     @Resource
     ProjectBiddingMapper projectBiddingMapper;
 
+    @Resource
+    IProjectInformationService informationService;
+
+    @Resource
+    IProjectStatusService statusService;
+
     @Value("${ruoyi.biddingFilePath}")
     String biddingFilePath;
 
@@ -36,6 +45,7 @@ public class ProjectBiddingServiceImpl extends ServiceImpl<ProjectBiddingMapper,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean creatProjectBiddingFile(ProjectBidding projectBidding) throws IOException {
 
         log.info("项目文件创建地址-{}",biddingFilePath);
@@ -46,7 +56,10 @@ public class ProjectBiddingServiceImpl extends ServiceImpl<ProjectBiddingMapper,
             file.createNewFile();
         }
         projectBidding.setFilePath(path);
+        //项目文件保存
         save(projectBidding);
+        //项目阶段状态更新
+
         return true;
     }
 

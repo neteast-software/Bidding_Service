@@ -6,7 +6,6 @@ import com.neteast.business.domain.custom.PurchaserMessage;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
 import com.neteast.business.domain.project.ProjectType;
-import com.neteast.business.domain.project.enums.ProjectStatus;
 import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.business.mapper.AgencyMessageMapper;
@@ -59,17 +58,14 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
 
         ProjectInformation after = ProjectInformation.convert(projectInformationVO);
         ProjectInformation before = getById(after.getId());
-        if (before.getProcureId().compareTo(after.getProcureId())!=0){
-            ProjectType typeAfter = projectTypeService.getById(after.getProcureId());
-            ProjectType typeBefore = projectTypeService.getById(before.getProcureId());
+        if (before.getProjectTypeId().compareTo(after.getProjectTypeId())!=0){
+            ProjectType typeAfter = projectTypeService.getById(after.getProjectTypeId());
+            ProjectType typeBefore = projectTypeService.getById(before.getProjectTypeId());
             typeAfter.changeNum(1);
             typeBefore.changeNum(-1);
             projectTypeService.updateById(typeBefore);
             projectTypeService.updateById(typeAfter);
-            after.setProcureType(typeAfter.getName());
-        }
-        if (before.getProjectStatus().compareTo(after.getProjectStatus())!=0){
-            after.setStatusTime(new Date());
+            after.setProjectTypeName(typeAfter.getName());
         }
         return this.updateById(after);
     }
@@ -87,13 +83,11 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
             //甲方信息
             PurchaserMessage purchaserMessage = projectInformationVO.getPurchaserMessage();
             setPurchaserMessage(purchaserMessage,projectInformation);
-            ProjectType projectType = projectTypeService.getById(projectInformation.getProcureId());
+            ProjectType projectType = projectTypeService.getById(projectInformation.getProjectTypeId());
             if (projectType==null){
                 throw new BaseBusException("无该招标类型");
             }
-            projectInformation.setProcureType(projectType.getName());
-            ProjectStatus status = ProjectStatus.PRE_NOTICE;
-            projectInformation.setProjectStatus(status.getStatus());
+            projectInformation.setProjectTypeName(projectType.getName());
             projectInformation.setStatusTime(new Date());
             //save(projectInformation);
             projectInformationMapper.insert(projectInformation);
@@ -122,7 +116,7 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
         projectInformation.setProjectDel(0);
         this.updateById(projectInformation);
         //更新项目类型
-        ProjectType projectType = projectTypeService.getById(projectInformation.getProcureId());
+        ProjectType projectType = projectTypeService.getById(projectInformation.getProjectTypeId());
         projectType.changeNum(-1);
         projectTypeService.updateById(projectType);
         //删除项目会议室信息

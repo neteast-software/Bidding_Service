@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ProjectStageMapper">
+
+    <select id="getList" resultType="com.neteast.business.domain.project.ProjectStage" parameterType="com.neteast.business.domain.project.ProjectStage">
+        select
+        id,step_num,step_name,template_id,template_name,create_by,create_time,update_by,update_time
+        from project_stage
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="stepNum != null and stepNum != ''">
+                and step_num = #{stepNum}
+            </if>
+            <if test="stepName != null and stepName != ''">
+                and step_name = #{stepName}
+            </if>
+            <if test="templateId != null and templateId != ''">
+                and template_id = #{templateId}
+            </if>
+            <if test="templateName != null and templateName != ''">
+                and template_name = #{templateName}
+            </if>
+        </where>
+    </select>
+
+</mapper>

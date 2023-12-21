@@ -1,13 +1,16 @@
 package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectInformation;
-import com.neteast.business.domain.project.enums.ProjectStatus;
+import com.neteast.business.domain.project.ProjectStage;
+import com.neteast.business.domain.project.ProjectStatus;
 import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
+import com.neteast.business.domain.project.vo.ProjectStepStatusVO;
 import com.neteast.business.service.IPackageInformationService;
 import com.neteast.business.service.IProjectInformationService;
+import com.neteast.business.service.IProjectStageService;
+import com.neteast.business.service.IProjectStatusService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -16,7 +19,7 @@ import com.neteast.common.core.page.TableSupport;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +38,12 @@ public class ProjectInformationController extends BaseController {
     @Resource
     IPackageInformationService packageInformationService;
 
+    @Resource
+    IProjectStageService stageService;
+
+    @Resource
+    IProjectStatusService statusService;
+
     @GetMapping("/listByPage")
     public AjaxResult getProjectInformationListByPage(ProjectInformation projectInformation){
 
@@ -46,6 +55,28 @@ public class ProjectInformationController extends BaseController {
         return success(body);
     }
 
+    @GetMapping("/listStepByPage")
+    public AjaxResult getProjectInformationStepListByPage(ProjectInformation projectInformation){
+
+        startPage();
+        PageDomain pageDomain = TableSupport.getPageDomain();
+        List<ProjectInformation> list = projectInformationService.getProjectInformationList(projectInformation);
+        List<ProjectStepStatusVO> vo = new ArrayList<>();
+        list.forEach(l->{
+            ProjectStepStatusVO status = ProjectStepStatusVO.convert(l);
+            List<ProjectStage> stages = stageService.getProjectStageListById(l.getProjectTypeId());
+            List<ProjectStatus> statuses = statusService.getProjectStatusListById(l.getProjectTypeId());
+            if (statuses!=null&&statuses.size()!=0){
+                status.setProjectStatus(statuses.get(0).getStageId());
+            }
+            status.setProjectStages(stages);
+            vo.add(status);
+        });
+        TableDataInfo info = getDataTable(vo);
+        JSONObject body = initPageParams(info,pageDomain.getPageSize(), pageDomain.getPageNum());
+        return success(body);
+    }
+
     @GetMapping("/one")
     public AjaxResult getProjectInformationOne(ProjectInformation projectInformation){
         ProjectInformation data = projectInformationService.getById(projectInformation);
@@ -53,18 +84,6 @@ public class ProjectInformationController extends BaseController {
         List<PackageInformationVO> temp = packageInformationService.getPackageInformationVOList(projectInformation.getId());
         projectInformationVO.setPackageInformationList(temp);
         return success(projectInformationVO);
-    }
-
-    @GetMapping("/projectStatus")
-    public AjaxResult getProjectInformationStatus(){
-        HashMap<Integer,String> map = new HashMap<>();
-        ProjectStatus[] list = ProjectStatus.values();
-        for (ProjectStatus projectStatus : list) {
-            Integer key = projectStatus.getStatus();
-            String value = projectStatus.getLabel();
-            map.put(key, value);
-        }
-        return success(map);
     }
 
     @PostMapping("/add")

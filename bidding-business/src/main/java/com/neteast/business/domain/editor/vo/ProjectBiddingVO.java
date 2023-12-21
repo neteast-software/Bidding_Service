@@ -21,22 +21,22 @@ public class ProjectBiddingVO {
     /** 项目id */
     private Integer projectId;
 
-    /** 项目文件类型(如招标文件) */
-    private String type;
+    /** 阶段id */
+    private Integer stageId;
+
+    /** 阶段名称 */
+    private String stageName;
 
     /** 文件名称 */
-    private String name;
+    private String fileName;
 
-    /** 文件类型(excel,word) */
-    private String fileType;
-
-    public static ProjectBidding convert(ProjectBiddingVO projectBiddingVO){
+    public static ProjectBidding convert(ProjectBiddingVO vo){
         ProjectBidding bidding = new ProjectBidding();
-        bidding.setId(projectBiddingVO.getId());
-        bidding.setProjectId(projectBiddingVO.getProjectId());
-        bidding.setName(projectBiddingVO.getName());
-        bidding.setType(projectBiddingVO.getType());
-        bidding.setFileType(projectBiddingVO.getFileType());
+        bidding.setId(vo.getId());
+        bidding.setProjectId(vo.getProjectId());
+        bidding.setStageId(vo.getStageId());
+        bidding.setFileName(vo.getFileName());
+        bidding.setStageName(vo.getStageName());
         return bidding;
     }
 }

@@ -38,13 +38,13 @@ public class ProjectInformation extends BaseEntity {
     @TableField("agency_id")
     private Integer agencyId;
 
-    /** 采购类型Id(项目类型) */
-    @TableField("procure_id")
-    private Integer procureId ;
+    /** 项目类型Id */
+    @TableField("project_type_id")
+    private Integer projectTypeId ;
 
-    /** 采购类型 */
-    @TableField("procure_type")
-    private String procureType;
+    /** 项目类型 基础(公开招标、邀请招标、询价、单一来源采购、竞争性谈判、磋商) */
+    @TableField("project_type_name")
+    private String projectTypeName;
 
     /** 项目编号 */
     @TableField("project_code")
@@ -55,16 +55,16 @@ public class ProjectInformation extends BaseEntity {
     private String filingsNumber;
 
     /** 项目行业 */
-    @TableField("project_type")
-    private String projectType ;
+    @TableField("project_industry")
+    private String projectIndustry ;
 
     /** 项目名称 */
     @TableField("project_name")
     private String projectName ;
 
-    /** 项目状态 1-招标 2-流标 3-结束 */
-    @TableField("project_status")
-    private Integer projectStatus;
+    /** 项目状态（项目阶段管理状态） */
+    //@TableField("project_status")
+    //private Integer projectStatus;
 
     /** 当前项目状态的完成时间 */
     @TableField("status_time")

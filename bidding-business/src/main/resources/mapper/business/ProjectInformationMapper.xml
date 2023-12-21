@@ -18,14 +18,14 @@
             <if test="filingsNumber != null and filingsNumber != ''">
                 and filings_number = #{filingsNumber}
             </if>
-            <if test="projectType != null and projectType != ''">
-                and project_type = #{projectType}
+            <if test="projectIndustry != null and projectIndustry != ''">
+                and project_industry = #{projectIndustry}
             </if>
             <if test="projectName != null and projectName != ''">
                 and project_name like '%'||#{projectName}||'%'
             </if>
-            <if test="procureType != null and procureType != ''">
-                and procure_type = #{procureType}
+            <if test="projectTypeName != null and projectTypeName != ''">
+                and project_type_name = #{projectTypeName}
             </if>
             <if test="projectStatus != null and projectStatus != ''">
                 and project_status = #{projectStatus}

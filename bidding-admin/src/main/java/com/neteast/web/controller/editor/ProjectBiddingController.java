@@ -7,6 +7,7 @@ import com.neteast.business.domain.editor.ProjectFileContent;
 import com.neteast.business.domain.editor.vo.ProjectBiddingVO;
 import com.neteast.business.domain.project.vo.ProjectFileMsgVO;
 import com.neteast.business.service.IProjectBiddingService;
+import com.neteast.business.service.IProjectInformationService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -53,6 +54,7 @@ public class ProjectBiddingController extends BaseController {
 
     @PostMapping("/add")
     public AjaxResult addProjectBiddingData(@RequestBody ProjectBiddingVO projectBiddingVO) throws IOException {
+
         ProjectBidding projectBidding = ProjectBiddingVO.convert(projectBiddingVO);
         projectBiddingService.creatProjectBiddingFile(projectBidding);
         return success();
