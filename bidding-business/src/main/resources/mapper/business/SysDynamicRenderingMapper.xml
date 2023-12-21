@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.SysDynamicRenderingMapper">
+
+    <select id="getList" resultType="com.neteast.business.domain.rendering.SysDynamicRendering" parameterType="com.neteast.business.domain.rendering.SysDynamicRendering">
+        select
+        id,module,page,method,rendering,create_by,create_time,update_by,update_time
+        from sys_dynamic_rendering
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="module != null and module != ''">
+                and module = '%'||#{module}||'%'
+            </if>
+            <if test="page != null and page != ''">
+                and page = '%'||#{page}||'%'
+            </if>
+            <if test="method != null and method != ''">
+                and method = '%'||#{method}||'%'
+            </if>
+            <if test="rendering != null and rendering != ''">
+                and rendering = '%'||#{rendering}||'%'
+            </if>
+        </where>
+    </select>
+</mapper>
