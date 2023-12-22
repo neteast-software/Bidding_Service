@@ -20,6 +20,10 @@ public class ScoreItem {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
+    /** 子项标题 */
+    @TableField("title")
+    private String title;
+
     /** 项目的评分项id */
     @TableField("ext_id")
     private Integer extId;

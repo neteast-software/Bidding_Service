@@ -6,7 +6,7 @@
 
     <select id="getList" resultType="com.neteast.business.domain.project.ScoreItem" parameterType="com.neteast.business.domain.project.ScoreItem">
         select
-        id,ext_id,content,value,choose
+        id,ext_id,content,value,choose,title
         from score_item
         <where>
             <if test="id != null and id != ''">

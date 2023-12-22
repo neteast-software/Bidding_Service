@@ -14,4 +14,10 @@ public interface IProjectStageService extends IService<ProjectStage> {
     List<ProjectStage> getProjectStageList(ProjectStage projectStage);
 
     List<ProjectStage> getProjectStageListById(Integer projectTypeId);
+
+    boolean addProjectStage(ProjectStage projectStage);
+
+    boolean delProjectStage(Integer id);
+
+    boolean updateProjectStage(ProjectStage projectStage);
 }

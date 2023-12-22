@@ -46,6 +46,10 @@ public class ProjectScoreItem {
     @TableField("value")
     private Double value;
 
+    /** 子项内容汇总 */
+    @TableField("content")
+    private String content;
+
     /** 子项数量 */
     @TableField("num")
     private Integer num;

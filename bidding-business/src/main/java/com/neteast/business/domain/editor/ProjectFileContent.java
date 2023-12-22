@@ -34,9 +34,7 @@ public class ProjectFileContent {
         ProjectFileContent fileContent = new ProjectFileContent();
         fileContent.setId(projectBidding.getId());
         fileContent.setProjectId(projectBidding.getProjectId());
-        fileContent.setFileType(projectBidding.getFileType());
-        fileContent.setName(projectBidding.getName());
-        fileContent.setType(projectBidding.getType());
+        fileContent.setName(projectBidding.getFileName());
         return fileContent;
     }
 }

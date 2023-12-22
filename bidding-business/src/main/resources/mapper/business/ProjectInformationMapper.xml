@@ -27,9 +27,6 @@
             <if test="projectTypeName != null and projectTypeName != ''">
                 and project_type_name = #{projectTypeName}
             </if>
-            <if test="projectStatus != null and projectStatus != ''">
-                and project_status = #{projectStatus}
-            </if>
             <if test="inviteBidding != null and inviteBidding != ''">
                 and invite_bidding = #{inviteBidding}
             </if>

@@ -56,21 +56,21 @@ public class ProjectStageController extends BaseController {
     @PostMapping("/add")
     public AjaxResult addProjectStep(@RequestBody ProjectStage projectStage){
 
-        stageService.save(projectStage);
+        stageService.addProjectStage(projectStage);
         return addSuccess();
     }
 
     @PostMapping("/update")
     public AjaxResult updateProjectStep(@RequestBody ProjectStage projectStage){
 
-        stageService.updateById(projectStage);
+        stageService.updateProjectStage(projectStage);
         return updateSuccess();
     }
 
     @PostMapping("/del/{id}")
     public AjaxResult delProjectStep(@PathVariable("id")Integer id){
 
-        stageService.removeById(id);
+        stageService.delProjectStage(id);
         return delSuccess();
     }
 

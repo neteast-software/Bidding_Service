@@ -40,4 +40,8 @@ public class ProjectType {
     public void changeNum(Integer change){
         this.num = this.num + change;
     }
+
+    public void changeStepNum(Integer change){
+        this.stepNum = this.stepNum + change;
+    }
 }
