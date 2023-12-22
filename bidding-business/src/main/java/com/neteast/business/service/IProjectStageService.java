@@ -20,4 +20,6 @@ public interface IProjectStageService extends IService<ProjectStage> {
     boolean delProjectStage(Integer id);
 
     boolean updateProjectStage(ProjectStage projectStage);
+
+    boolean updateTemplateMessage(Integer templateId,String templateName);
 }

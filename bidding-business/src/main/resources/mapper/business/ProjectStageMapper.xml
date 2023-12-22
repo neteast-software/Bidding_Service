@@ -27,4 +27,8 @@
         </where>
     </select>
 
+    <update id="updateTemplateMessage">
+        update project_stage set template_name = #{templateName} where template_id = #{templateId}
+    </update>
+
 </mapper>

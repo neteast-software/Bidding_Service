@@ -9,6 +9,7 @@ import com.neteast.business.domain.template.vo.TemplateContent;
 import com.neteast.business.domain.template.vo.TemplateFileVO;
 import com.neteast.business.domain.template.vo.TemplateTypeVO;
 import com.neteast.business.mapper.TemplateFileMapper;
+import com.neteast.business.service.IProjectStageService;
 import com.neteast.business.service.ITemplateFileService;
 import com.neteast.business.service.ITemplateTypeService;
 import com.neteast.common.exception.BaseBusException;
@@ -38,6 +39,9 @@ public class TemplateFileServiceImpl extends ServiceImpl<TemplateFileMapper, Tem
 
     @Resource
     ITemplateTypeService templateTypeService;
+
+    @Resource
+    IProjectStageService projectStageService;
 
     @Value("${ruoyi.templateFilePath}")
     String filePath;
@@ -134,13 +138,16 @@ public class TemplateFileServiceImpl extends ServiceImpl<TemplateFileMapper, Tem
 
         TemplateFile after = TemplateFileVO.convert(templateFileVO);
         TemplateFile before = getById(after.getId());
-        if (after.getExtId().compareTo(before.getExtId())!=0){
+        if (before.getExtId().compareTo(after.getExtId())!=0){
             TemplateType typeAfter = templateTypeService.getById(after.getExtId());
             TemplateType typeBefore = templateTypeService.getById(before.getExtId());
             typeAfter.changeNum(1);
             typeBefore.changeNum(-1);
             templateTypeService.updateById(typeAfter);
             templateTypeService.updateById(typeBefore);
+        }
+        if (!before.getName().equals(after.getName())){
+            projectStageService.updateTemplateMessage(after.getId(),after.getName());
         }
         this.updateById(after);
         return true;

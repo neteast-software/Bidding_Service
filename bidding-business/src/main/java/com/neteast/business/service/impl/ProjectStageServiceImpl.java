@@ -75,4 +75,9 @@ public class ProjectStageServiceImpl extends ServiceImpl<ProjectStageMapper, Pro
         updateById(after);
         return false;
     }
+
+    @Override
+    public boolean updateTemplateMessage(Integer templateId, String templateName) {
+        return projectStageMapper.updateTemplateMessage(templateId,templateName);
+    }
 }
