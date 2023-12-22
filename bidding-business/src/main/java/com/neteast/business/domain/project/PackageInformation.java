@@ -25,6 +25,10 @@ public class PackageInformation extends BaseEntity {
     @TableField("project_id")
     private Integer projectId;
 
+    /** 分包名称 */
+    @TableField("package_name")
+    private String packageName;
+
     /** 评分方式id 方式有(综合评标法,最低评标价法等) */
     @TableField("score_id")
     private Integer scoreId;

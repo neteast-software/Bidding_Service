@@ -1,5 +1,6 @@
 package com.neteast.business.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.project.ProjectScoreItem;
 import com.neteast.business.domain.project.ScoreItem;
@@ -40,7 +41,9 @@ public class ProjectScoreItemServiceImpl extends ServiceImpl<ProjectScoreItemMap
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean removeProjectScoreItem(Integer id) {
-        scoreItemService.remove(scoreItemService.lambdaQuery().eq(ScoreItem::getExtId,id));
+        QueryWrapper<ScoreItem> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("ext_id",id);
+        scoreItemService.remove(queryWrapper);
         this.removeById(id);
         return true;
     }

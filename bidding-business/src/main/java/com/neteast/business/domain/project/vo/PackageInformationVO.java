@@ -3,6 +3,7 @@ package com.neteast.business.domain.project.vo;
 import cn.hutool.core.bean.BeanUtil;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectCondition;
+import com.neteast.business.domain.project.ProjectScoreItem;
 import lombok.Data;
 
 import java.util.List;
@@ -19,6 +20,12 @@ public class PackageInformationVO {
 
     /** 对应甲方项目id */
     private Integer projectId;
+
+    /** 评分方式id */
+    private Integer scoreId;
+
+    /** 分包名称 */
+    private String packageName;
 
     /** 分包预算金额 */
     private Double budgetAmount;
@@ -46,6 +53,8 @@ public class PackageInformationVO {
 
     /** 分包附加项 */
     private List<ProjectCondition> conditions;
+
+    private List<ProjectScoreItem> scoreItems;
 
     public static PackageInformation convert(PackageInformationVO packageInformationVO){
         PackageInformation packageInformation = new PackageInformation();

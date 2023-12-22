@@ -3,9 +3,12 @@ package com.neteast.web.controller.project;
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.PackageInformation;
 import com.neteast.business.domain.project.ProjectCondition;
+import com.neteast.business.domain.project.ProjectScoreItem;
+import com.neteast.business.domain.project.ScoreItem;
 import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.service.IPackageInformationService;
 import com.neteast.business.service.IProjectPlusConditionService;
+import com.neteast.business.service.IProjectScoreItemService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -15,6 +18,7 @@ import com.neteast.common.utils.PageUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,13 +37,23 @@ public class PackageInformationController extends BaseController {
     @Resource
     IProjectPlusConditionService projectPlusConditionService;
 
+    @Resource
+    IProjectScoreItemService scoreItemService;
+
     @GetMapping("/list")
     public AjaxResult getPackageInformationList(PackageInformation packageInformation){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<PackageInformation> list = packageInformationService.lambdaQuery().eq(PackageInformation::getProjectId,packageInformation.getProjectId()).list();
-        TableDataInfo info = getDataTable(list);
+        List<PackageInformationVO> voList = new ArrayList<>();
+        list.forEach(l->{
+            PackageInformationVO vo = PackageInformationVO.convert(l);
+            List<ProjectScoreItem> scoreItems = scoreItemService.getProjectScoreItemList(l.getProjectId(),l.getId());
+            vo.setScoreItems(scoreItems);
+            voList.add(vo);
+        });
+        TableDataInfo info = getDataTable(voList);
         JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
         return success(body);
     }

@@ -79,9 +79,9 @@ public class SupplierInformation extends BaseEntity{
 
     /** 是否中标 */
     @TableField("suc_bid")
-    private boolean sucBid;
+    private String sucBid;
 
     /** 是否到达现场 */
     @TableField("in_scene")
-    private boolean inScene;
+    private String inScene;
 }

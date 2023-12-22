@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.business.domain.project.ProjectScoreItem;
 import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
@@ -21,6 +22,10 @@ public class ItemTemplate extends BaseEntity {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
+    /** 评分方式id */
+    @TableField("score_id")
+    private Integer scoreId;
+
     /** 评分项名称 */
     @TableField("item_name")
     private String itemName;
@@ -36,4 +41,13 @@ public class ItemTemplate extends BaseEntity {
     /** 该项的总分值 */
     @TableField("value")
     private Double value;
+
+    public static ProjectScoreItem covert(ItemTemplate itemTemplate){
+        ProjectScoreItem scoreItem = new ProjectScoreItem();
+        scoreItem.setItemName(itemTemplate.getItemName());
+        scoreItem.setItemType(itemTemplate.getItemType());
+        scoreItem.setValueType(itemTemplate.getValueType());
+        scoreItem.setValue(itemTemplate.getValue());
+        return scoreItem;
+    }
 }

@@ -14,4 +14,6 @@ public interface IItemTemplateService extends IService<ItemTemplate> {
     List<ItemTemplate> getItemTemplateList(ItemTemplate itemTemplate);
 
     boolean removeItemTemplate(Integer id);
+
+    List<ItemTemplate> getItemTemplateListById(Integer scoreId);
 }

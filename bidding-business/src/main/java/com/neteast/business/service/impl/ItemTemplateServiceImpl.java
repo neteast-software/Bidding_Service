@@ -36,4 +36,9 @@ public class ItemTemplateServiceImpl extends ServiceImpl<ItemTemplateMapper, Ite
         scoreTemplateService.removeByExtId(id);
         return true;
     }
+
+    @Override
+    public List<ItemTemplate> getItemTemplateListById(Integer scoreId) {
+        return this.lambdaQuery().eq(ItemTemplate::getScoreId,scoreId).list();
+    }
 }
