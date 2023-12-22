@@ -1,5 +1,6 @@
 package com.neteast.business.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.project.ScoreMethod;
 import com.neteast.business.mapper.ScoreMethodMapper;
@@ -18,6 +19,7 @@ public class ScoreMethodServiceImpl extends ServiceImpl<ScoreMethodMapper, Score
 
     @Override
     public List<ScoreMethod> getScoreMethodList(ScoreMethod scoreMethod) {
-        return this.lambdaQuery().eq(ScoreMethod::getScoreName,scoreMethod.getScoreName()).list();
+        return this.lambdaQuery().
+                eq(StrUtil.isNotBlank(scoreMethod.getScoreName()),ScoreMethod::getScoreName,scoreMethod.getScoreName()).list();
     }
 }

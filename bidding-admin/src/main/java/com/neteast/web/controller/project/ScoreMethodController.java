@@ -46,14 +46,14 @@ public class ScoreMethodController extends BaseController {
         return error("不存在该评分方式");
     }
     @PostMapping("/add")
-    public AjaxResult addScoreMethod(ScoreMethod scoreMethod){
+    public AjaxResult addScoreMethod(@RequestBody ScoreMethod scoreMethod){
 
         scoreMethodService.save(scoreMethod);
         return addSuccess();
     }
 
     @PostMapping("/update")
-    public AjaxResult updateScoreMethod(ScoreMethod scoreMethod){
+    public AjaxResult updateScoreMethod(@RequestBody ScoreMethod scoreMethod){
 
         scoreMethodService.updateById(scoreMethod);
         return updateSuccess();

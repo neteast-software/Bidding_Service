@@ -67,8 +67,8 @@ public class ProjectInformation extends BaseEntity {
     //private Integer projectStatus;
 
     /** 当前项目状态的完成时间 */
-    @TableField("status_time")
-    private Date statusTime;
+    //@TableField("status_time")
+    //private Date statusTime;
 
     /** 招标时间 */
     @TableField("invite_bidding")

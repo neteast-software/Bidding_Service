@@ -58,7 +58,7 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
 
         ProjectInformation after = ProjectInformation.convert(projectInformationVO);
         ProjectInformation before = getById(after.getId());
-        if (before.getProjectTypeId().compareTo(after.getProjectTypeId())!=0){
+        if (after.getProjectTypeId()!=null&&before.getProjectTypeId().compareTo(after.getProjectTypeId())!=0){
             ProjectType typeAfter = projectTypeService.getById(after.getProjectTypeId());
             ProjectType typeBefore = projectTypeService.getById(before.getProjectTypeId());
             typeAfter.changeNum(1);
@@ -75,6 +75,7 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
     public boolean addProjectInformation(ProjectInformationVO projectInformationVO) {
 
         ProjectInformation projectInformation = ProjectInformationVO.convert(projectInformationVO);
+        projectInformation.setProjectDel(1);
         List<ProjectInformation> list = lambdaQuery().eq(ProjectInformation::getProjectCode,projectInformation.getProjectCode()).list();
         if (list.size()==0){
             //代理商信息
@@ -88,7 +89,6 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
                 throw new BaseBusException("无该招标类型");
             }
             projectInformation.setProjectTypeName(projectType.getName());
-            projectInformation.setStatusTime(new Date());
             //save(projectInformation);
             projectInformationMapper.insert(projectInformation);
             Integer projectId = projectInformation.getId();
