@@ -64,6 +64,9 @@ public class ItemTemplateController extends BaseController {
     @PostMapping("/add")
     public AjaxResult addItemTemplate(@RequestBody ItemTemplate itemTemplate){
 
+        if (itemTemplate.getValueType()==2){
+            itemTemplate.setValue(0.0d);
+        }
         itemTemplateService.save(itemTemplate);
         return addSuccess();
     }

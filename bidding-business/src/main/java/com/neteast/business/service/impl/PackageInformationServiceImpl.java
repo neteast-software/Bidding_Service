@@ -90,7 +90,7 @@ public class PackageInformationServiceImpl extends ServiceImpl<PackageInformatio
         setPackageScoreItem(after.getScoreId(),projectId,packageId);
         //包信息更新
         this.updateById(after);
-        //附件项信息更新
+        //附加项信息更新
         QueryWrapper<ProjectCondition> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("package_id",after.getId()).eq("project_id",after.getProjectId());
         conditionService.remove(queryWrapper);
@@ -105,6 +105,7 @@ public class PackageInformationServiceImpl extends ServiceImpl<PackageInformatio
         List<PackageInformationVO> voList = new ArrayList<>();
         list.forEach(l->{
             PackageInformationVO informationVO = PackageInformationVO.convert(l);
+            //附加项
             ProjectCondition projectCondition = ProjectCondition.builder().projectId(l.getProjectId()).packageId(l.getId()).build();
             List<ProjectCondition> conditions = conditionService.getProjectPlusConditionList(projectCondition);
             informationVO.setConditions(conditions);

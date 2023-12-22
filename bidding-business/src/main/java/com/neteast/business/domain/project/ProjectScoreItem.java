@@ -57,4 +57,12 @@ public class ProjectScoreItem {
     /** 该评分的评分项*/
     @TableField(exist = false)
     private List<ScoreItem> scoreItems;
+
+    public void changeNum(Integer change){
+        this.num = this.num + change;
+    }
+
+    public void changeValue(Double change){
+        this.value = this.value + change;
+    }
 }

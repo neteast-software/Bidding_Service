@@ -7,6 +7,7 @@ import com.neteast.business.mapper.ScoreItemMapper;
 import com.neteast.business.service.IProjectScoreItemService;
 import com.neteast.business.service.IScoreItemService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,12 +29,40 @@ public class ScoreItemServiceImpl extends ServiceImpl<ScoreItemMapper, ScoreItem
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean addScoreItem(ScoreItem scoreItem) {
-        ProjectScoreItem projectScoreItem = projectScoreItemService.lambdaQuery().eq(ProjectScoreItem::getId,scoreItem).one();
+        ProjectScoreItem projectScoreItem = projectScoreItemService.lambdaQuery().eq(ProjectScoreItem::getId,scoreItem.getExtId()).one();
         save(scoreItem);
-        int num = projectScoreItem.getNum()+1;
-        projectScoreItem.setNum(num);
+        projectScoreItem.changeNum(1);
+        projectScoreItem.changeValue(scoreItem.getValue());
         projectScoreItemService.updateById(projectScoreItem);
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean removeScoreItem(Integer id) {
+
+        ScoreItem item = getById(id);
+        ProjectScoreItem projectScoreItem = projectScoreItemService.lambdaQuery().eq(ProjectScoreItem::getId,item.getExtId()).one();
+        removeById(id);
+        projectScoreItem.changeNum(-1);
+        projectScoreItem.changeValue(-item.getValue());
+        projectScoreItemService.updateById(projectScoreItem);
+        return true;
+    }
+
+    @Override
+    public boolean updateScoreItem(ScoreItem after) {
+
+        ScoreItem before = getById(after.getId());
+        if (after.getValue()!=null&&before.getValue().compareTo(after.getValue())!=0){
+            ProjectScoreItem projectScoreItem = projectScoreItemService.lambdaQuery().eq(ProjectScoreItem::getId,after.getExtId()).one();
+            Double change = after.getValue()-before.getValue();
+            projectScoreItem.changeValue(change);
+            projectScoreItemService.updateById(projectScoreItem);
+        }
+        updateById(after);
         return true;
     }
 }

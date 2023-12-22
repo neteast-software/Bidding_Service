@@ -15,6 +15,7 @@ import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
 import com.neteast.common.utils.PageUtils;
+import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -49,8 +50,13 @@ public class PackageInformationController extends BaseController {
         List<PackageInformationVO> voList = new ArrayList<>();
         list.forEach(l->{
             PackageInformationVO vo = PackageInformationVO.convert(l);
+            //评分项内容
             List<ProjectScoreItem> scoreItems = scoreItemService.getProjectScoreItemList(l.getProjectId(),l.getId());
             vo.setScoreItems(scoreItems);
+            //附加项内容
+            List<ProjectCondition> conditions = projectPlusConditionService.lambdaQuery().eq(ProjectCondition::getPackageId,l.getId())
+                    .eq(ProjectCondition::getProjectId,l.getProjectId()).list();
+            vo.setConditions(conditions);
             voList.add(vo);
         });
         TableDataInfo info = getDataTable(voList);
@@ -62,9 +68,16 @@ public class PackageInformationController extends BaseController {
     public AjaxResult getPackageInformationOne(@PathVariable("id")Integer id){
 
         PackageInformation information = packageInformationService.getById(id);
+        Integer packageId = information.getId();
+        Integer projectId = information.getProjectId();
         PackageInformationVO informationVO = PackageInformationVO.convert(information);
-        List<ProjectCondition> conditions = projectPlusConditionService.lambdaQuery().eq(ProjectCondition::getPackageId,id).eq(ProjectCondition::getProjectId,information.getProjectId()).list();
+        //附加项内容
+        List<ProjectCondition> conditions = projectPlusConditionService.lambdaQuery().eq(ProjectCondition::getPackageId,packageId)
+                .eq(ProjectCondition::getProjectId,projectId).list();
         informationVO.setConditions(conditions);
+        //评分项内容
+        List<ProjectScoreItem> scoreItems = scoreItemService.getProjectScoreItemList(projectId,packageId);
+        informationVO.setScoreItems(scoreItems);
         return success(informationVO);
     }
 

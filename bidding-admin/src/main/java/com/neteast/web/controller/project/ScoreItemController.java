@@ -30,12 +30,16 @@ public class ScoreItemController extends BaseController{
 
     @PostMapping("/update")
     public AjaxResult updateScoreItem(@RequestBody ScoreItem scoreItem){
-        return success(scoreItemService.updateById(scoreItem));
+
+        scoreItemService.updateScoreItem(scoreItem);
+        return success();
     }
 
     @PostMapping("/del/{id}")
-    public AjaxResult delScoreItem(@RequestBody ScoreItem scoreItem){
-        return success(scoreItemService.removeById(scoreItem));
+    public AjaxResult delScoreItem(@PathVariable("id")Integer id){
+
+        scoreItemService.removeScoreItem(id);
+        return success();
     }
 
     @GetMapping("/list")

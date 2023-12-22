@@ -14,4 +14,8 @@ public interface IScoreItemService extends IService<ScoreItem> {
     List<ScoreItem> getListByExtId(Integer id);
 
     boolean addScoreItem(ScoreItem scoreItem);
+
+    boolean removeScoreItem(Integer id);
+
+    boolean updateScoreItem(ScoreItem scoreItem);
 }

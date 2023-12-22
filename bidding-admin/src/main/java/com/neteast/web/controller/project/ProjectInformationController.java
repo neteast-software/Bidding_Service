@@ -1,16 +1,15 @@
 package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.neteast.business.domain.custom.AgencyMessage;
+import com.neteast.business.domain.custom.PurchaserMessage;
 import com.neteast.business.domain.project.ProjectInformation;
 import com.neteast.business.domain.project.ProjectStage;
 import com.neteast.business.domain.project.ProjectStatus;
 import com.neteast.business.domain.project.vo.PackageInformationVO;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.business.domain.project.vo.ProjectStepStatusVO;
-import com.neteast.business.service.IPackageInformationService;
-import com.neteast.business.service.IProjectInformationService;
-import com.neteast.business.service.IProjectStageService;
-import com.neteast.business.service.IProjectStatusService;
+import com.neteast.business.service.*;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -43,6 +42,12 @@ public class ProjectInformationController extends BaseController {
 
     @Resource
     IProjectStatusService statusService;
+
+    @Resource
+    IPurchaserMessageService purchaserMessageService;
+
+    @Resource
+    IAgencyMessageService agencyMessageService;
 
     @GetMapping("/listByPage")
     public AjaxResult getProjectInformationListByPage(ProjectInformation projectInformation){
@@ -83,6 +88,12 @@ public class ProjectInformationController extends BaseController {
         ProjectInformationVO projectInformationVO = ProjectInformationVO.convert(data);
         List<PackageInformationVO> temp = packageInformationService.getPackageInformationVOList(projectInformation.getId());
         projectInformationVO.setPackageInformationList(temp);
+        //设置甲方信息
+        PurchaserMessage purchaser = purchaserMessageService.getById(data.getPartyaId());
+        projectInformationVO.setPurchaserMessage(purchaser);
+        //设置代理商信息
+        AgencyMessage agency = agencyMessageService.getById(data.getAgencyId());
+        projectInformationVO.setAgencyMessage(agency);
         return success(projectInformationVO);
     }
 
