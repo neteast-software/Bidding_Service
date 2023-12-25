@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 得分
+ * 评分项情况
  * @author lzp
  * @date 2023年12月12 13:36
  */

@@ -62,14 +62,6 @@ public class ProjectInformation extends BaseEntity {
     @TableField("project_name")
     private String projectName ;
 
-    /** 项目状态（项目阶段管理状态） */
-    //@TableField("project_status")
-    //private Integer projectStatus;
-
-    /** 当前项目状态的完成时间 */
-    //@TableField("status_time")
-    //private Date statusTime;
-
     /** 招标时间 */
     @TableField("invite_bidding")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

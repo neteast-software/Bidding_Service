@@ -1,6 +1,5 @@
 package com.neteast.web.controller.ws;
 
-import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
@@ -50,14 +49,12 @@ public class SocketIOListener implements DataListener<String> {
             operaRecord.setTime(new Date());
             String receiver = operaRecord.getReceiver();
             String channel = operaRecord.getChannel();
-            //设置用户选择的信息
-            Score score = setExpertSelectRecord(operaRecord);
             //获取接收方
             List<Custom> customs = SocketIOMessageEventHandler.getSocketIOByRole(receiver,channel);
-            //记录操作
+            //添加记录操作
             SocketIOMessageEventHandler.setOperaRecord(operaRecord.getChannel(),operaRecord);
-
-            String body = messageHandler(receiver,operaRecord,score);
+            //获取返回体
+            String body = messageHandler(receiver,operaRecord);
             customs.forEach(o->{
                 //实时操作状态
                 SocketIOClient socketIOClient = socketIOServer.getClient(o.getUuid());
@@ -66,31 +63,33 @@ public class SocketIOListener implements DataListener<String> {
         }
     }
 
-    private String messageHandler(String receiver,OperaRecord operaRecord,Score score){
+    private String messageHandler(String receiver,OperaRecord operaRecord){
 
         String temp = "";
         switch (receiver){
             //发送主持人端信息
             case "client":
+                //设置专家的评选的信息
+                Score score = setExpertSelectRecord(operaRecord);
                 CompletionStatus completionStatus = getCompletionStatus(score);
                 completionStatus.setUserId(operaRecord.getUserId());
                 completionStatus.setName(operaRecord.getUserName());
                 completionStatus.setSupplierId(operaRecord.getSupplierId());
                 temp = JSONObject.toJSONString(completionStatus);
+                //设置供应商方的评选信息(可以异步存储)
                 setSupplierBidRecord(operaRecord,completionStatus);
                 break;
             //发送专家端
             case "user":
                 temp = operaRecord.getRecord();
         }
-
         return temp;
     }
 
     /**
-     * @Description 设置用户保存记录
+     * @Description 添加或更新专家端的数据
      * @author lzp
-     * @Date 2023/12/11
+     * @Date 2023/12/25
      */
     private static Score setExpertSelectRecord(OperaRecord operaRecord){
 
@@ -101,6 +100,7 @@ public class SocketIOListener implements DataListener<String> {
                 if (expertBidMsg.getId()==operaRecord.getUserId()&&
                         expertBidMsg.getSupplierId()==operaRecord.getSupplierId()&&
                         expertBidMsg.getPackageId()==operaRecord.getPackageId()){
+                    //设置专家记录相关信息
                     return setExpertBidMsg(expertBidMsg,operaRecord);
                 }
             }
@@ -114,6 +114,11 @@ public class SocketIOListener implements DataListener<String> {
         return score;
     }
 
+    /**
+     * @Description 添加或更新供应商评审的数据
+     * @author lzp
+     * @Date 2023/12/25
+     */
     private static void setSupplierBidRecord(OperaRecord operaRecord,CompletionStatus completionStatus){
 
         String channel = operaRecord.getChannel();
@@ -134,6 +139,11 @@ public class SocketIOListener implements DataListener<String> {
         supplierMap.put(channel,list);
     }
 
+    /**
+     * @Description 设置供应商评审相关信息
+     * @author lzp
+     * @Date 2023/12/25
+     */
     private static void setSupplierBidMsg(SupplierBidMsg supplierBidMsg,OperaRecord operaRecord,CompletionStatus completionStatus){
         supplierBidMsg.setSupplierId(operaRecord.getSupplierId());
         supplierBidMsg.setSupplierName(operaRecord.getSupplierName());
@@ -157,6 +167,11 @@ public class SocketIOListener implements DataListener<String> {
         supplierBidMsg.setTotalScores(totalScore);
     }
 
+    /**
+     * @Description 设置专家端数据的相关信息
+     * @author lzp
+     * @Date 2023/12/25
+     */
     private static Score setExpertBidMsg(ExpertBidMsg expertBidMsg,OperaRecord operaRecord){
 
         expertBidMsg.setId(operaRecord.getUserId());
@@ -184,6 +199,11 @@ public class SocketIOListener implements DataListener<String> {
         return score;
     }
 
+    /**
+     * @Description 设置该专家的该评分项的完成情况
+     * @author lzp
+     * @Date 2023/12/25
+     */
     private static CompletionStatus getCompletionStatus(Score score){
         CompletionStatus completionStatus = new CompletionStatus();
         completionStatus.setNum(score.getList().size());
@@ -194,5 +214,4 @@ public class SocketIOListener implements DataListener<String> {
         }
         return completionStatus;
     }
-
 }

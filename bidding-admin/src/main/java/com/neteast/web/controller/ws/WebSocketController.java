@@ -30,9 +30,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/webSocket")
 public class WebSocketController extends BaseController {
 
-    @Resource
-    SocketIOServer socketIOServer;
-
     /**
      * @Description 专家端展示
      * @author lzp

@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class SocketIOMessageEventHandler{
 
-
+    /** 登录用户信息 */
     private static ConcurrentHashMap<UUID,Custom> clientHashMap = new ConcurrentHashMap<>();
 
     /** 在会议确定结束时清除 */
