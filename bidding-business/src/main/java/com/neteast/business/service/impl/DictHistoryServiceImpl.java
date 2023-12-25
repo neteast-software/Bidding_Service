@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 @Service
-public class IDictHistoryServiceImpl extends ServiceImpl<DictHistoryMapper, DictHistory> implements IDictHistoryService {
+public class DictHistoryServiceImpl extends ServiceImpl<DictHistoryMapper, DictHistory> implements IDictHistoryService {
 
     @Resource
     DictHistoryMapper dictHistoryMapper;

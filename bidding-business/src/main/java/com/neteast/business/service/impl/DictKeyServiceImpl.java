@@ -1,10 +1,7 @@
 package com.neteast.business.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.neteast.business.domain.dict.DictHistory;
 import com.neteast.business.domain.dict.DictKey;
-import com.neteast.business.domain.dict.DictValue;
 import com.neteast.business.domain.dict.vo.DictKeyVO;
 import com.neteast.business.mapper.DictKeyMapper;
 import com.neteast.business.service.IDictHistoryService;
@@ -22,7 +19,7 @@ import java.util.List;
  */
 
 @Service
-public class IDictKeyServiceImpl extends ServiceImpl<DictKeyMapper, DictKey> implements IDictKeyService {
+public class DictKeyServiceImpl extends ServiceImpl<DictKeyMapper, DictKey> implements IDictKeyService {
 
     @Resource
     DictKeyMapper dictKeyMapper;
