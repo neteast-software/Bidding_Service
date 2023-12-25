@@ -6,7 +6,7 @@
 
     <select id="getList" resultType="com.neteast.business.domain.editor.ProjectRecord" parameterType="com.neteast.business.domain.editor.ProjectRecord">
         select
-        id,file_id,file_name,opera_type,opera_time,user_id,opera_user,opera
+        id,file_id,file_name,opera_type,opera_time,user_id,opera_user,opera,project_id
         from project_record
         <where>
             <if test="id != null and id != ''">

@@ -159,6 +159,7 @@ public class ProjectBiddingServiceImpl extends ServiceImpl<ProjectBiddingMapper,
         projectStatus.setProjectId(bidding.getProjectId());
         projectStatus.setStageId(bidding.getStageId());
         projectStatus.setStepNum(bidding.getStageNum());
+        projectStatus.setProjectId(bidding.getProjectId());
         projectStatus.setStageTime(new Date());
         return projectStatus;
     }

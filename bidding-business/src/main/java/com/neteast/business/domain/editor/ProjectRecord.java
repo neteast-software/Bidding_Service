@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import java.util.Date;
 
@@ -20,6 +21,10 @@ public class ProjectRecord {
     /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
+
+    /** 项目id */
+    @TableField("project_id")
+    private Integer projectId;
 
     /** 文件id */
     @TableField("file_id")
@@ -39,6 +44,7 @@ public class ProjectRecord {
 
     /** 操作时间 */
     @TableField("opera_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date operaTime;
 
     /** 操作人id */

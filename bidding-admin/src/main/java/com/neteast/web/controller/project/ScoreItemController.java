@@ -1,7 +1,12 @@
 package com.neteast.web.controller.project;
 
 import com.neteast.business.domain.bid.Score;
+import com.neteast.business.domain.project.ProjectInformation;
+import com.neteast.business.domain.project.ProjectScoreItem;
 import com.neteast.business.domain.project.ScoreItem;
+import com.neteast.business.domain.project.vo.PackageInformationVO;
+import com.neteast.business.domain.project.vo.ProjectInformationVO;
+import com.neteast.business.domain.project.vo.ProjectScoreItemVO;
 import com.neteast.business.service.IScoreItemService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -23,9 +28,11 @@ public class ScoreItemController extends BaseController{
     IScoreItemService scoreItemService;
 
     @PostMapping("/add")
-    public AjaxResult addScoreItem(@RequestBody ScoreItem scoreItem){
-        boolean res = scoreItemService.addScoreItem(scoreItem);
-        return success(res);
+    public AjaxResult addScoreItem(@RequestBody ProjectScoreItemVO itemVO){
+
+        List<ScoreItem> projectScoreItems = itemVO.getItems();
+        scoreItemService.saveBatch(projectScoreItems);
+        return success();
     }
 
     @PostMapping("/update")

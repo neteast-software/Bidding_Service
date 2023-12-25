@@ -1,11 +1,14 @@
 package com.neteast.web.controller.project;
 
+import com.neteast.business.domain.project.ProjectInformation;
 import com.neteast.business.domain.project.ProjectScoreItem;
 import com.neteast.business.domain.project.ScoreItem;
+import com.neteast.business.domain.project.vo.ProjectInformationVO;
 import com.neteast.business.service.IProjectScoreItemService;
 import com.neteast.business.service.IScoreItemService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
+import com.neteast.common.core.domain.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
