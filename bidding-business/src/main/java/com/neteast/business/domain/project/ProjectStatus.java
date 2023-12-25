@@ -37,4 +37,12 @@ public class ProjectStatus {
     /** 阶段时间 */
     @TableField("stage_time")
     private Date stageTime;
+
+    /** 该阶段文件数量 */
+    @TableField("num")
+    private Integer num;
+
+    public void changeNum(Integer change){
+        this.num = this.num + change;
+    }
 }

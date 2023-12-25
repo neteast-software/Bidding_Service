@@ -23,13 +23,17 @@ public class ProjectRecord {
 
     /** 文件id */
     @TableField("file_id")
-    private Integer file_id;
+    private Integer fileId;
 
     /** 文件名称 */
     @TableField("file_name")
     private String fileName;
 
-    /** 操作类型(1-新增,2-更新,3-删除) */
+    /** 操作说明 */
+    @TableField("opera")
+    private String opera;
+
+    /** 操作类型(1-新增,2-更新,3-删除,4-保存) */
     @TableField("opera_type")
     private Integer operaType;
 
@@ -39,7 +43,7 @@ public class ProjectRecord {
 
     /** 操作人id */
     @TableField("user_id")
-    private String userId;
+    private Long userId;
 
     /** 操作人名称 */
     @TableField("opera_user")

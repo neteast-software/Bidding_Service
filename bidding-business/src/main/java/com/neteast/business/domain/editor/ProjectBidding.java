@@ -29,6 +29,10 @@ public class ProjectBidding extends BaseEntity {
     @TableField("stage_id")
     private Integer stageId;
 
+    /** 阶段序号 */
+    @TableField("stage_num")
+    private Integer stageNum;
+
     /** 阶段名称 */
     @TableField("stage_name")
     private String stageName;

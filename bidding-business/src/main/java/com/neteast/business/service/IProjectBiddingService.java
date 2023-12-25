@@ -2,6 +2,7 @@ package com.neteast.business.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.neteast.business.domain.editor.ProjectBidding;
+import com.neteast.business.domain.editor.ProjectFileContent;
 import com.neteast.business.domain.editor.vo.ProjectBiddingVO;
 import com.neteast.business.domain.project.vo.ProjectFileMsgVO;
 
@@ -29,4 +30,13 @@ public interface IProjectBiddingService extends IService<ProjectBidding> {
      * @Date 2023/12/13
      */
     boolean delProjectBiddingFile(Integer id);
+
+    /**
+     * @Description 进行项目招标文件更新
+     * @author lzp
+     * @Date 2023/12/25
+     */
+    boolean updateProjectBiddingFile(ProjectBidding projectBidding);
+
+    boolean saveProjectBiddingFile(ProjectFileContent content);
 }

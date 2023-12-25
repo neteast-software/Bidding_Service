@@ -5,6 +5,7 @@ import com.neteast.business.domain.project.ProjectStage;
 import com.neteast.business.domain.project.ProjectType;
 import com.neteast.business.mapper.ProjectStageMapper;
 import com.neteast.business.service.IProjectStageService;
+import com.neteast.business.service.IProjectStatusService;
 import com.neteast.business.service.IProjectTypeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,9 @@ public class ProjectStageServiceImpl extends ServiceImpl<ProjectStageMapper, Pro
 
     @Resource
     IProjectTypeService projectTypeService;
+
+    @Resource
+    IProjectStatusService projectStatusService;
 
     @Override
     public List<ProjectStage> getProjectStageList(ProjectStage projectStage) {
@@ -71,6 +75,10 @@ public class ProjectStageServiceImpl extends ServiceImpl<ProjectStageMapper, Pro
             afterType.changeStepNum(1);
             projectTypeService.updateById(beforeType);
             projectTypeService.updateById(afterType);
+        }
+        //阶段排序不相同
+        if (before.getStepNum().compareTo(after.getStepNum())!=0){
+            projectStatusService.updateStepMsg(after.getId(),after.getStepNum());
         }
         updateById(after);
         return false;

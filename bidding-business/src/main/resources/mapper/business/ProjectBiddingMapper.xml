@@ -16,38 +16,4 @@
         </where>
     </select>
 
-    <select id="getWholeMessageList" resultType="com.neteast.business.domain.project.vo.ProjectFileMsgVO" parameterType="com.neteast.business.domain.project.vo.ProjectFileMsgVO">
-        select b.id,b.project_id,b.template_id,b.package_id,b.type,b.stage,b.name,b.file_type,b.download_url,project_code,filings_number,project_name,procure_type,contract_package,package_num,bidding_subject,b.create_by,b.create_time,b.update_by,b.update_time from project_bidding b
-            INNER JOIN project_message on project_id = project_message.id INNER JOIN package_information on package_id = package_information.id
-        <where>
-            <if test="id != null and id != ''">
-                and id = #{id}
-            </if>
-            <if test="projectId != null and projectId != ''">
-                and project_id = #{projectId}
-            </if>
-            <if test="templateId != null and templateId != ''">
-                and template_id = #{templateId}
-            </if>
-            <if test="packageId != null and packageId != ''">
-                and package_id = #{packageId}
-            </if>
-            <if test="type != null and type != ''">
-                and type = #{type}
-            </if>
-            <if test="stage != null and stage != ''">
-                and stage = #{stage}
-            </if>
-            <if test="name != null and name != ''">
-                and name = #{name}
-            </if>
-            <if test="fileType != null and fileType != ''">
-                and file_type = #{fileType}
-            </if>
-            <if test="downloadUrl != null and downloadUrl != ''">
-                and download_url = #{downloadUrl}
-            </if>
-        </where>
-    </select>
-
 </mapper>

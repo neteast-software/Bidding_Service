@@ -40,7 +40,7 @@ public class ProjectInformation extends BaseEntity {
 
     /** 项目类型Id */
     @TableField("project_type_id")
-    private Integer projectTypeId ;
+    private Integer projectTypeId;
 
     /** 项目类型 基础(公开招标、邀请招标、询价、单一来源采购、竞争性谈判、磋商) */
     @TableField("project_type_name")
@@ -48,7 +48,7 @@ public class ProjectInformation extends BaseEntity {
 
     /** 项目编号 */
     @TableField("project_code")
-    private String projectCode ;
+    private String projectCode;
 
     /** 备案编号 **/
     @TableField("filings_number")
@@ -56,11 +56,11 @@ public class ProjectInformation extends BaseEntity {
 
     /** 项目行业 */
     @TableField("project_industry")
-    private String projectIndustry ;
+    private String projectIndustry;
 
     /** 项目名称 */
     @TableField("project_name")
-    private String projectName ;
+    private String projectName;
 
     /** 招标时间 */
     @TableField("invite_bidding")
@@ -74,7 +74,7 @@ public class ProjectInformation extends BaseEntity {
 
     /** 项目预算金额 */
     @TableField("budget_amount")
-    private Double budgetAmount ;
+    private Double budgetAmount;
 
     /** 项目最大金额 **/
     @TableField("max_amount")
@@ -86,7 +86,7 @@ public class ProjectInformation extends BaseEntity {
 
     /** 流标次数 */
     @TableField("fail_bidding_count")
-    private Integer failBiddingCount ;
+    private Integer failBiddingCount;
 
     /** 代理费用 */
     @TableField("agent_money")

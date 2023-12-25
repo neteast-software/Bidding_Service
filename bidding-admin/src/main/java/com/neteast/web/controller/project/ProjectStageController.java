@@ -3,8 +3,12 @@ package com.neteast.web.controller.project;
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.ProjectInformation;
 import com.neteast.business.domain.project.ProjectStage;
+import com.neteast.business.domain.project.ProjectStatus;
+import com.neteast.business.domain.project.vo.ProjectStageVO;
+import com.neteast.business.domain.project.vo.ProjectStepStatusVO;
 import com.neteast.business.service.IProjectInformationService;
 import com.neteast.business.service.IProjectStageService;
+import com.neteast.business.service.IProjectStatusService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -13,7 +17,11 @@ import com.neteast.common.core.page.TableSupport;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 项目步骤管理
@@ -30,6 +38,9 @@ public class ProjectStageController extends BaseController {
 
     @Resource
     IProjectInformationService informationService;
+
+    @Resource
+    IProjectStatusService statusService;
 
     @GetMapping("/listByPage")
     public AjaxResult getProjectStageListByPage(ProjectStage projectStage){
@@ -50,7 +61,19 @@ public class ProjectStageController extends BaseController {
         Integer typeId = information.getProjectTypeId();
         //获取项目步骤
         List<ProjectStage> list = stageService.getProjectStageListById(typeId);
-        return success(list);
+        //获取项目当前阶段情况
+        List<ProjectStatus> statuses = statusService.getProjectStatusListById(projectId);
+        Map<Integer,ProjectStatus> map = statuses.stream().collect(Collectors.toMap(ProjectStatus::getStageId, a1->a1,(k1, k2)->k1));
+        List<ProjectStageVO> voList = new ArrayList<>();
+        list.forEach(l->{
+            ProjectStageVO vo = ProjectStageVO.convert(l);
+            ProjectStatus status = map.get(l.getId());
+            if (status!=null){
+                vo.setNum(status.getNum());
+            }
+            voList.add(vo);
+        });
+        return success(voList);
     }
 
     @PostMapping("/add")

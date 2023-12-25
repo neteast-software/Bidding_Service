@@ -37,7 +37,6 @@ public class ProjectBiddingController extends BaseController {
     public AjaxResult getProjectBiddingList(ProjectBiddingVO projectBidding){
 
         List<ProjectBiddingVO> res = projectBiddingService.getProjectBiddingList(projectBidding);
-        //Map<Integer,List<ProjectBidding>> res = list.stream().collect(Collectors.groupingBy(ProjectBidding::getStage));
         return success(res);
     }
 
@@ -69,21 +68,13 @@ public class ProjectBiddingController extends BaseController {
     @PostMapping("/update")
     public AjaxResult updateProjectBiddingData(@RequestBody ProjectBiddingVO projectBiddingVO){
         ProjectBidding projectBidding = ProjectBiddingVO.convert(projectBiddingVO);
-        projectBiddingService.updateById(projectBidding);
+        projectBiddingService.updateProjectBiddingFile(projectBidding);
         return success();
     }
 
     @PostMapping("/save")
     public AjaxResult saveProjectBiddingFile(@RequestBody ProjectFileContent fileContent) throws IOException {
-        //项目文件保存
-        ProjectBidding projectBidding = projectBiddingService.getById(fileContent.getId());
-        if (projectBidding==null){
-            throw new BaseBusException(500,"该项目文件不存在");
-        }
-        String path = projectBidding.getFilePath();
-        String content = fileContent.getContent();
-        FileUtil.writeUtf8String(content,new File(path));
-        //todo 敏感词判断
+        projectBiddingService.saveProjectBiddingFile(fileContent);
         return success();
     }
 

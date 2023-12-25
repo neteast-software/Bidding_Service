@@ -4,4 +4,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.ProjectRecordMapper">
 
+    <select id="getList" resultType="com.neteast.business.domain.editor.ProjectRecord" parameterType="com.neteast.business.domain.editor.ProjectRecord">
+        select
+        id,file_id,file_name,opera_type,opera_time,user_id,opera_user,opera
+        from project_record
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="fileId != null and fileId != ''">
+                and file_id = #{fileId}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                and file_name like '%'||#{fileName}||'%'
+            </if>
+            <if test="operaType != null and operaType != ''">
+                and opera_type = #{operaType}
+            </if>
+            <if test="operaTime != null and operaTime != ''">
+                and opera_time = #{operaTime}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="operaUser != null and operaUser != ''">
+                and opera_user like '%'||#{operaUser}||'%'
+            </if>
+        </where>
+    </select>
 </mapper>

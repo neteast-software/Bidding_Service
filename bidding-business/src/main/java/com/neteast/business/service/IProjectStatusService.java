@@ -12,4 +12,12 @@ import java.util.List;
 public interface IProjectStatusService extends IService<ProjectStatus> {
 
     List<ProjectStatus> getProjectStatusListById(Integer projectId);
+
+    boolean removeByExtId(Integer projectId,Integer stageId);
+
+    boolean updateStepMsg(Integer stepId,Integer stepNum);
+
+    boolean saveByExtId(ProjectStatus status);
+
+    boolean updateTime(Integer projectId,Integer stageId);
 }
