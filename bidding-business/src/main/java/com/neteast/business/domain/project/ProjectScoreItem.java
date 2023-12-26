@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * 项目的评分项
+ * 资格审查，符合性，商务分，技术分，价格分
+ * 对于价格分无子项
  * @author lzp
  * @date 2023年12月12 11:26
  */
@@ -39,8 +41,8 @@ public class ProjectScoreItem {
     private String itemType;
 
     /** 值类型(1单选,2分数) */
-    @TableField("value_type")
-    private Integer valueType;
+    //@TableField("value_type")
+    //private Integer valueType;
 
     /** 该项总分值 */
     @TableField("value")

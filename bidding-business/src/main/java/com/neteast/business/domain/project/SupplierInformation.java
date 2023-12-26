@@ -84,4 +84,12 @@ public class SupplierInformation extends BaseEntity{
     /** 是否到达现场 */
     @TableField("in_scene")
     private String inScene;
+
+    /** 一次报价金额 */
+    @TableField("one_price")
+    private Double onePrice;
+
+    /** 二次报价金额 */
+    @TableField("two_price")
+    private Double twoPrice;
 }

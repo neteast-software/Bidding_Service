@@ -2,7 +2,6 @@ package com.neteast.business.domain.template.vo;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.neteast.business.domain.template.ItemTemplate;
-import com.neteast.business.domain.template.ScoreTemplate;
 import lombok.Data;
 
 import java.util.List;
@@ -29,8 +28,6 @@ public class ItemTemplateVO {
 
     /** 该项的总分值 */
     private Double value;
-
-    private List<ScoreTemplate> templates;
 
     public static ItemTemplateVO convert(ItemTemplate template){
         ItemTemplateVO vo = new ItemTemplateVO();

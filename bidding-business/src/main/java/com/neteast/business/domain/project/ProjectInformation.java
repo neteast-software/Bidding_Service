@@ -96,6 +96,10 @@ public class ProjectInformation extends BaseEntity {
     @TableField("earnest")
     private Double earnest;
 
+    /** 项目交易类型 */
+    @TableField("trade_type")
+    private Integer tradeType;
+
     /** 项目删除，0-已删除,1-未删除 **/
     @TableField("project_del")
     private Integer projectDel;

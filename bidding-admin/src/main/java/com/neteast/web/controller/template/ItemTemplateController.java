@@ -2,10 +2,8 @@ package com.neteast.web.controller.template;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.template.ItemTemplate;
-import com.neteast.business.domain.template.ScoreTemplate;
 import com.neteast.business.domain.template.vo.ItemTemplateVO;
 import com.neteast.business.service.IItemTemplateService;
-import com.neteast.business.service.IScoreTemplateService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -29,9 +27,6 @@ public class ItemTemplateController extends BaseController {
     @Resource
     IItemTemplateService itemTemplateService;
 
-    @Resource
-    IScoreTemplateService scoreTemplateService;
-
     @GetMapping("/list")
     public AjaxResult getItemTemplateList(ItemTemplate itemTemplate){
 
@@ -50,23 +45,9 @@ public class ItemTemplateController extends BaseController {
         return success(body);
     }
 
-    @GetMapping("/getOne/{id}")
-    public AjaxResult getItemTemplateOne(@PathVariable("id")Integer id){
-
-        ItemTemplate itemTemplate = itemTemplateService.getById(id);
-        ScoreTemplate scoreTemplate = ScoreTemplate.builder().extId(id).build();
-        List<ScoreTemplate> scoreTemplates = scoreTemplateService.getScoreTemplateList(scoreTemplate);
-        ItemTemplateVO vo = ItemTemplateVO.convert(itemTemplate);
-        vo.setTemplates(scoreTemplates);
-        return success(vo);
-    }
-
     @PostMapping("/add")
     public AjaxResult addItemTemplate(@RequestBody ItemTemplate itemTemplate){
 
-        if (itemTemplate.getValueType()==2){
-            itemTemplate.setValue(0.0d);
-        }
         itemTemplateService.save(itemTemplate);
         return addSuccess();
     }

@@ -54,6 +54,7 @@ public class PackageInformationVO {
     /** 分包附加项 */
     private List<ProjectCondition> conditions;
 
+    /** 分包评分项 */
     private List<ProjectScoreItem> scoreItems;
 
     public static PackageInformation convert(PackageInformationVO packageInformationVO){
