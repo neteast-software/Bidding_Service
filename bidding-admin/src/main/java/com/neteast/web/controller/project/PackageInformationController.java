@@ -1,14 +1,9 @@
 package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.neteast.business.domain.project.PackageInformation;
-import com.neteast.business.domain.project.ProjectCondition;
-import com.neteast.business.domain.project.ProjectScoreItem;
-import com.neteast.business.domain.project.ScoreItem;
-import com.neteast.business.domain.project.vo.PackageInformationVO;
-import com.neteast.business.service.IPackageInformationService;
-import com.neteast.business.service.IProjectPlusConditionService;
-import com.neteast.business.service.IProjectScoreItemService;
+import com.neteast.business.domain.project.*;
+import com.neteast.business.domain.project.vo.*;
+import com.neteast.business.service.*;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -39,7 +34,13 @@ public class PackageInformationController extends BaseController {
     IProjectPlusConditionService projectPlusConditionService;
 
     @Resource
+    ISupplierInformationService supplierInformationService;
+
+    @Resource
     IProjectScoreItemService scoreItemService;
+
+    @Resource
+    IProjectExpertService projectExpertService;
 
     @GetMapping("/list")
     public AjaxResult getPackageInformationList(PackageInformation packageInformation){
@@ -80,6 +81,54 @@ public class PackageInformationController extends BaseController {
         informationVO.setScoreItems(scoreItems);
         return success(informationVO);
     }
+
+    /**
+     * @Description 主持人端的界面信息展示
+     * @author lzp
+     * @Date 2023/12/28
+     */
+    @GetMapping("/showHost")
+    public AjaxResult getShowHostMsg(Integer packageId,Integer projectId){
+
+        ShowHostMsgVO showHostMsgVO = new ShowHostMsgVO();
+
+        //获取该分包的供应商信息
+        List<SupplierInformation> suppliers = supplierInformationService.getList(projectId,packageId);
+        List<HostSupplierVO> suppliersVO = new ArrayList<>();
+        suppliers.forEach(s->{
+            HostSupplierVO vo1 = HostSupplierVO.convert(s);
+            suppliersVO.add(vo1);
+        });
+        showHostMsgVO.setSuppliers(suppliersVO);
+
+        //获取分包的专家信息
+        ProjectExpertVO vo = ProjectExpertVO.builder().packageId(packageId).projectId(projectId).build();
+        List<ProjectExpertVO> experts = projectExpertService.getProjectExpertList(vo);
+        List<HostExpertVO> expertsVO = new ArrayList<>();
+        experts.forEach(e->{
+            HostExpertVO vo2 = HostExpertVO.convert(e);
+            expertsVO.add(vo2);
+        });
+        showHostMsgVO.setExperts(expertsVO);
+
+        //获取分包的题目信息
+        List<ProjectScoreItem> scoreItems = scoreItemService.getProjectScoreItemList(projectId,packageId);
+        List<HostTitleVO> scoreItemsVO = new ArrayList<>();
+        int num = 0;
+        for (ProjectScoreItem item:scoreItems) {
+            num = num + item.getNum();
+            HostTitleVO vo3 = HostTitleVO.convert(item);
+            scoreItemsVO.add(vo3);
+        }
+        showHostMsgVO.setTitles(scoreItemsVO);
+
+        //设置总题目数
+        int total = num*expertsVO.size();
+        showHostMsgVO.setTotalTitle(total);
+        return success(showHostMsgVO);
+    }
+
+
 
     @PostMapping("/add")
     public AjaxResult addPackageInformationData(@RequestBody PackageInformationVO packageInformationVO){

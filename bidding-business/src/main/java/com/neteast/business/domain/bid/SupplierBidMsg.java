@@ -27,13 +27,10 @@ public class SupplierBidMsg {
     /** 项目id */
     private Integer packageId;
 
-    /** 专家总数 */
-    private Integer expertNum;
-
     /** 供应商的淘汰情况 */
-    private List<SelectItem> selectItems;
+    private List<SelectItem> selectItems = new ArrayList<>();
 
-    private List<RadioItem> radioItems;
+    private List<RadioItem> radioItems = new ArrayList<>();
 
     /** SelectItem的淘汰情况 */
     private Boolean selectOutStatus = false;

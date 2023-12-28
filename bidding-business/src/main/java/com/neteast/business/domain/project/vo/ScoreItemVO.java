@@ -31,7 +31,7 @@ public class ScoreItemVO {
     /**
      * 选择题目类型(单选,选择加分)
      * 1- 一票否决 value值0.0 (客观题)
-     * 2- 通过加该分 value有值 (客观题)
+     * 2- 偏离扣分 (客观题)
      * 3- 输入分值 (选择主观题/客观题)
      */
     private Integer passType;
@@ -58,7 +58,7 @@ public class ScoreItemVO {
         scoreItem.setValue(vo.getValue());
         scoreItem.setExtId(vo.getExtId());
         scoreItem.setTitleType(vo.getTitleType());
-        scoreItem.setInputType(vo.getInputType());
+        scoreItem.setInputType(2);
         return scoreItem;
     }
 
@@ -72,7 +72,7 @@ public class ScoreItemVO {
         scoreItem.setValue(vo.getValue());
         scoreItem.setExtId(vo.getExtId());
         scoreItem.setTitleType(vo.getTitleType());
-        scoreItem.setInputType(vo.getInputType());
+        scoreItem.setInputType(2);
         return scoreItem;
     }
 
@@ -91,7 +91,7 @@ public class ScoreItemVO {
         }
         scoreItem.setTitleType(2);
         scoreItem.setExtId(vo.getExtId());
-        scoreItem.setInputType(vo.getInputType());
+        scoreItem.setInputType(1);
         return scoreItem;
     }
 

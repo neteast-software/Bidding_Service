@@ -7,32 +7,38 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
- * 项目评分项的子项
+ * 专家操作记录(类似答案)
  * @author lzp
- * @date 2023年12月12 11:44
+ * @date 2023年12月28 17:57
  */
 
 @Data
-@TableName("score_item")
-public class ScoreItem {
+@TableName("expert_opera_record")
+public class ExpertOperaRecord {
 
-    /** 选项id */
+    /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    /** 子项标题 */
-    @TableField("title")
-    private String title;
+    /** 供应商id */
+    @TableField("supplier_id")
+    private Integer supplierId;
 
-    /** 项目的评分项id */
-    @TableField("ext_id")
-    private Integer extId;
+    /** 专家id */
+    @TableField("expert_id")
+    private Integer expertId;
 
-    /** 选项展示
-     * 1->单选 2->分数 3->分值
-     */
-    @TableField("input_type")
-    private Integer inputType;
+    /** 评分项id */
+    @TableField("score_item_id")
+    private Integer scoreItemId;
+
+    /** 评分项类型 */
+    @TableField("item_type")
+    private String itemType;
+
+    /** 评分项子项id */
+    @TableField("item_id")
+    private Integer itemId;
 
     /**
      * 选择题目类型(单选,选择加分)
@@ -50,15 +56,17 @@ public class ScoreItem {
     @TableField("title_type")
     private Integer titleType;
 
-    /** 评分项描述 */
-    @TableField("content")
-    private String content;
+    /** 选项展示
+     * 1->单选 2->分数 3->分值
+     */
+    @TableField("input_type")
+    private Integer inputType;
 
-    /** 评分项的分值,无则为0.0 */
+    /** 分数类型的值 */
     @TableField("value")
-    private Double value = 0.0D;
+    private Double value;
 
-    /** 选择内容值(json) */
-    //@TableField("choose")
-    //private String choose;
+    /** 单选类型的值 */
+    @TableField("choose")
+    private Boolean choose;
 }

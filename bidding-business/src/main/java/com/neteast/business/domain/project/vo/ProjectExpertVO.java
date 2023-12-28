@@ -1,6 +1,9 @@
 package com.neteast.business.domain.project.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author lzp
@@ -8,6 +11,9 @@ import lombok.Data;
  */
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProjectExpertVO {
 
     /** 项目id */

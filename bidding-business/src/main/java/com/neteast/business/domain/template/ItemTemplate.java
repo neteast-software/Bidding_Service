@@ -34,9 +34,15 @@ public class ItemTemplate extends BaseEntity {
     @TableField("item_type")
     private String itemType;
 
+    /** 排序字段 */
+    @TableField("sort")
+    private Integer sort;
+
     public static ProjectScoreItem covert(ItemTemplate itemTemplate){
         ProjectScoreItem scoreItem = new ProjectScoreItem();
         scoreItem.setItemName(itemTemplate.getItemName());
+        scoreItem.setSort(itemTemplate.getSort());
+        scoreItem.setItemType(itemTemplate.getItemType());
         return scoreItem;
     }
 }

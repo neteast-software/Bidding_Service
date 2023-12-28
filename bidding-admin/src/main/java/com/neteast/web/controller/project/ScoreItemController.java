@@ -53,9 +53,15 @@ public class ScoreItemController extends BaseController{
                     item = ScoreItemVO.toPrice(l);
                     list.add(item);
                     break;
+                case "qualification":
+                    item = ScoreItemVO.toQualification(l);
+                    list.add(item);
+                    break;
             }
         });
-        scoreItemService.saveBatch(list);
+        list.forEach(l->{
+            scoreItemService.addScoreItem(l);
+        });
         return success();
     }
 

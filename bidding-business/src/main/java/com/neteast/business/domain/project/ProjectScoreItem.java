@@ -40,7 +40,7 @@ public class ProjectScoreItem {
     @TableField("item_type")
     private String itemType;
 
-    /** 该项总分值 */
+    /** 该项总分值 默认0.0 */
     @TableField("value")
     private Double value;
 
@@ -51,6 +51,10 @@ public class ProjectScoreItem {
     /** 子项数量 */
     @TableField("num")
     private Integer num;
+
+    /** 排序 */
+    @TableField("sort")
+    private Integer sort;
 
     /** 该评分的评分项*/
     @TableField(exist = false)

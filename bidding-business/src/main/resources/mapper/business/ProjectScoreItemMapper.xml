@@ -6,7 +6,7 @@
 
     <select id="getList" resultType="com.neteast.business.domain.project.ProjectScoreItem" parameterType="com.neteast.business.domain.project.ProjectScoreItem">
         select
-        id,project_id,package_id,item_name,item_type,value_type,value,num,content
+        id,project_id,package_id,item_name,item_type,num,content,value
         from project_score_item
         <where>
             <if test="id != null and id != ''">
@@ -23,12 +23,6 @@
             </if>
             <if test="itemType != null and itemType != ''">
                 and item_type = #{itemType}
-            </if>
-            <if test="valueType != null and valueType != ''">
-                and value_type = #{valueType}
-            </if>
-            <if test="value != null and value != ''">
-                and value = #{value}
             </if>
         </where>
     </select>

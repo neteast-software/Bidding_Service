@@ -13,7 +13,7 @@
                 and id = #{id}
             </if>
             <if test="agencyName != null and agencyName != ''">
-                and agency_name = '%'||#{agencyName}||'%'
+                and agency_name like '%'||#{agencyName}||'%'
             </if>
             <if test="agencyAddress != null and agencyAddress != ''">
                 and agency_address = #{agencyAddress}

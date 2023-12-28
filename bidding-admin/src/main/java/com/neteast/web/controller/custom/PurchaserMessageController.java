@@ -39,7 +39,7 @@ public class PurchaserMessageController extends BaseController {
 
     @GetMapping("/list")
     public AjaxResult getPurchaserMessageList(PurchaserMessage purchaserMessage){
-
+        System.out.println(purchaserMessage);
         List<PurchaserMessage> list = purchaserMessageService.getPurchaserMessageList(purchaserMessage);
         return success(list);
     }

@@ -18,6 +18,9 @@
             <if test="itemType != null and itemType != ''">
                 and item_type = #{itemType}
             </if>
+            <if test="scoreId != null and scoreId != ''">
+                and score_id = #{scoreId}
+            </if>
         </where>
     </select>
 </mapper>

@@ -10,13 +10,16 @@ import com.neteast.business.domain.bid.score.GradeItem;
 import com.neteast.business.domain.bid.score.PriceScore;
 import com.neteast.business.domain.bid.score.RadioItem;
 import com.neteast.business.domain.bid.score.SelectItem;
+import com.neteast.business.service.ExpertOperaRecordService;
 import com.neteast.framework.websockt.bean.Custom;
 import com.neteast.framework.websockt.bean.OperaRecord;
 import com.neteast.framework.websockt.handler.SocketIOMessageEventHandler;
 import com.neteast.framework.websockt.service.SocketIOService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +35,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SocketIOListener implements DataListener<String> {
 
     private SocketIOServer socketIOServer;
+
+    private ExpertOperaRecordService expertOperaRecordService;
 
     /** channel作为key 专家端数据 */
     public static ConcurrentHashMap<String,List<ExpertBidMsg>> map = new ConcurrentHashMap<>();
@@ -131,6 +136,9 @@ public class SocketIOListener implements DataListener<String> {
             list = new ArrayList<>();
         }
         SupplierBidMsg supplierBidMsg = new SupplierBidMsg();
+        supplierBidMsg.setSupplierId(operaRecord.getSupplierId());
+        supplierBidMsg.setSupplierName(supplierBidMsg.getSupplierName());
+        supplierBidMsg.setPackageId(supplierBidMsg.getPackageId());
         supplierBidMsg.addReviewStatus(completionStatus,operaRecord.getItemType());
 
         setSupplierConsistent(supplierBidMsg,operaRecord);

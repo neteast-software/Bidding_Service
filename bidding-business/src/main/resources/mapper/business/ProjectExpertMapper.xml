@@ -11,7 +11,7 @@
                 and project_id = #{projectId}
             </if>
             <if test="packageId != null and packageId != ''">
-                and expert_id = #{expertId}
+                and expert_id = #{packageId}
             </if>
             <if test="expertId != null and expertId != ''">
                 and expert_id = #{expertId}

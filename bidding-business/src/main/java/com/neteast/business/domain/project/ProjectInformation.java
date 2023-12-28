@@ -104,6 +104,10 @@ public class ProjectInformation extends BaseEntity {
     @TableField("project_del")
     private Integer projectDel;
 
+    /** 转账备注 */
+    @TableField("earnest_remark")
+    private String earnestRemark;
+
     public static ProjectInformation convert(ProjectInformationVO projectInformationVO){
         ProjectInformation projectInformation = new ProjectInformation();
         BeanUtil.copyProperties(projectInformationVO,projectInformation);

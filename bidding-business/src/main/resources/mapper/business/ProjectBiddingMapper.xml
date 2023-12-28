@@ -13,6 +13,15 @@
             <if test="projectId != null and projectId != ''">
                 and project_id = #{projectId}
             </if>
+            <if test="stageName != null and stageName != ''">
+                and stage_name = #{stageName}
+            </if>
+            <if test="stageId != null and stageId != ''">
+                and stage_id = #{stageId}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                and file_name like '%'||#{fileName}||'%'
+            </if>
         </where>
     </select>
 

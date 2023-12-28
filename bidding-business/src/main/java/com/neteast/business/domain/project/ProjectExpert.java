@@ -25,10 +25,19 @@ public class ProjectExpert extends BaseEntity{
     @TableField("project_id")
     private Integer projectId;
 
+    /** 分包id */
     @TableField("package_id")
     private Integer packageId;
 
     /** 专家id */
     @TableField("expert_id")
     private Integer expertId;
+
+    /** 专家操作当前阶段id */
+    @TableField("step_id")
+    private Integer stepId;
+
+    /** 是否是组长 true表示是，false表示否 */
+    @TableField("leader")
+    private Boolean leader;
 }

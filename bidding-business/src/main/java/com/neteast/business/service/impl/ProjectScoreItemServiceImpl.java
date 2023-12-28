@@ -35,7 +35,8 @@ public class ProjectScoreItemServiceImpl extends ServiceImpl<ProjectScoreItemMap
 
     @Override
     public List<ProjectScoreItem> getProjectScoreItemList(Integer projectId, Integer packageId) {
-        return this.lambdaQuery().eq(ProjectScoreItem::getProjectId,projectId).eq(ProjectScoreItem::getPackageId,packageId).list();
+        return this.lambdaQuery().eq(ProjectScoreItem::getProjectId,projectId).eq(ProjectScoreItem::getPackageId,packageId)
+                .orderByDesc(ProjectScoreItem::getSort).list();
     }
 
     @Override

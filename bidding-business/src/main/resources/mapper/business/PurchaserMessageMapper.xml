@@ -13,7 +13,7 @@
                 and id = #{id}
             </if>
             <if test="purchaserName != null and purchaserName != ''">
-                and purchaser_name = #{purchaserName}
+                and purchaser_name like '%'||#{purchaserName}||'%'
             </if>
             <if test="purchaserAddress != null and purchaserAddress != ''">
                 and purchaser_address = #{purchaserAddress}
