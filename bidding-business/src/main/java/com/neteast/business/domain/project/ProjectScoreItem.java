@@ -40,10 +40,6 @@ public class ProjectScoreItem {
     @TableField("item_type")
     private String itemType;
 
-    /** 值类型(1单选,2分数) */
-    //@TableField("value_type")
-    //private Integer valueType;
-
     /** 该项总分值 */
     @TableField("value")
     private Double value;

@@ -76,7 +76,8 @@ public class WebSocketController extends BaseController {
     public AjaxResult getWholeCompletionStatus(String channel,Integer packageId){
         List<SupplierBidMsg> list = SocketIOListener.supplierMap.get(channel);
         List<SupplierBidMsg> temp = list.stream().filter(u->u.getPackageId().intValue()==packageId).collect(Collectors.toList());
-        Long res = temp.stream().collect(Collectors.summarizingInt(SupplierBidMsg::getNum)).getSum();
+        //Long res = temp.stream().collect(Collectors.summarizingInt(SupplierBidMsg::getNum)).getSum();
+        Long res = 0L;
         return success(res);
     }
 

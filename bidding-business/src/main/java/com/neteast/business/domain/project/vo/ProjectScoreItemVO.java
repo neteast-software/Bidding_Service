@@ -13,5 +13,5 @@ import java.util.List;
 @Data
 public class ProjectScoreItemVO {
 
-    List<ScoreItem> items;
+    List<ScoreItemVO> items;
 }

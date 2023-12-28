@@ -34,19 +34,9 @@ public class ItemTemplate extends BaseEntity {
     @TableField("item_type")
     private String itemType;
 
-    /** 值类型(1单选,2分数) */
-    //@TableField("value_type")
-    //private Integer valueType;
-
-    /** 该项的总分值 */
-    //@TableField("value")
-    //private Double value;
-
     public static ProjectScoreItem covert(ItemTemplate itemTemplate){
         ProjectScoreItem scoreItem = new ProjectScoreItem();
         scoreItem.setItemName(itemTemplate.getItemName());
-        scoreItem.setItemType(itemTemplate.getItemType());
-        //scoreItem.setValue(itemTemplate.getValue());
         return scoreItem;
     }
 }

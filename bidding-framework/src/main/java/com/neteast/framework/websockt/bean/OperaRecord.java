@@ -16,8 +16,14 @@ public class OperaRecord {
     /** 记录id */
     private int id;
 
+    /** 通道 */
+    private String channel;
+
     /** 用户id */
     private int userId;
+
+    /** 用户名称 */
+    private String userName;
 
     /** 供应商id */
     private int supplierId;
@@ -28,8 +34,8 @@ public class OperaRecord {
     /** 分包id */
     private int packageId;
 
-    /** 用户名称 */
-    private String userName;
+    /**评分项类型 */
+    private String itemType;
 
     /** 接收角色 */
     private String receiver;
@@ -37,15 +43,6 @@ public class OperaRecord {
     /** 用户操作记录 */
     private String record;
 
-    /** 通道 */
-    private String channel;
-
     /** 操作时间 */
     private Date time;
-
-    /**操作类型 */
-    private String itemType;
-
-    /** 输入值类型 */
-    private Integer type;
 }

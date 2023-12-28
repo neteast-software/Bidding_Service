@@ -55,7 +55,7 @@ public class ScoreItem {
 
     /** 评分项的分值,无则为0.0 */
     @TableField("value")
-    private Double value;
+    private Double value = 0.0D;
 
     /** 选择内容值(json) */
     //@TableField("choose")

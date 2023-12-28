@@ -6,16 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 供应商评审的总情况
+ * 单个供应商的每个评分项的几个专家的做题情况
  * @author lzp
  * @date 2023年12月13 9:38
  */
 
 @Data
-public class TotalScore {
-
-    /** 类型 1-选择 2-分值 */
-    private Integer type;
+public class ReviewStatus {
 
     /** 评分项类型 */
     private String itemType;
@@ -23,6 +20,7 @@ public class TotalScore {
     /**专家完成情况*/
     private List<CompletionStatus> completionStatuses = new ArrayList<>();
 
+    /** 供应商该评分项完成情况 */
     private Integer num;
 
     public void setCompletionStatus(CompletionStatus completionStatus){
@@ -32,11 +30,6 @@ public class TotalScore {
                 c.setName(completionStatus.getName());
                 num = num - c.getNum() + completionStatus.getNum();
                 c.setNum(completionStatus.getNum());
-                if (type==1){
-                    c.setPass(completionStatus.getPass());
-                }else {
-                    c.setValue(completionStatus.getValue());
-                }
                 return;
             }
         }

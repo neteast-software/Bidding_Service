@@ -1,5 +1,6 @@
 package com.neteast.business.domain.bid;
 
+import com.neteast.business.domain.bid.score.*;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -26,10 +27,18 @@ public class ExpertBidMsg {
     /** 分包id */
     private Integer packageId;
 
-    /** 评审情况 */
-    private List<Score> reviewStatus = new ArrayList<>();
+    /** 资格审查得分情况 */
+    QualificationScore qualificationScore = new QualificationScore();
 
-    public void setReviewStatus(Score score){
-        reviewStatus.add(score);
-    }
+    /** 符合性得分情况 */
+    ConformScore conformScore = new ConformScore();
+
+    /** 商务分得分情况 */
+    BusinessScore businessScore = new BusinessScore();
+
+    /** 技术分得分情况 */
+    TechScore techScore = new TechScore();
+
+    /** 价格分得分情况 */
+    PriceScore priceScore = new PriceScore();
 }

@@ -73,6 +73,10 @@ public class BaseEntityMsgInterceptor implements Interceptor {
     }
 
     private void setParameter(Object parameter,SqlCommandType sqlCommandType) throws Throwable {
+
+        if (parameter==null){
+            return;
+        }
         Class<?> aClass = parameter.getClass();
 
         //该类继承父类

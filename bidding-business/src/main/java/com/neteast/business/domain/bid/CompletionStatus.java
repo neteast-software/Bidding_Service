@@ -21,10 +21,4 @@ public class CompletionStatus{
 
     /** 完成题目数 */
     Integer num;
-
-    /** 该项的分值 */
-    Double value;
-
-    /** 该项是否一致通过 */
-    Boolean pass;
 }
