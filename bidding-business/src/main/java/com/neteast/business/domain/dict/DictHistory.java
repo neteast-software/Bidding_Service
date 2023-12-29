@@ -62,7 +62,7 @@ public class DictHistory implements Serializable {
         }catch (Exception e){
             log.info("保存历史字典信息错误-{}",e.getMessage());
         }
-        dictHistory.setDoBy(SecurityUtils.getUsername());
+        //dictHistory.setDoBy(SecurityUtils.getUsername());
         dictHistory.setHistoryTime(new Date());
         return dictHistory;
     }

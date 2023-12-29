@@ -96,7 +96,7 @@ public class ProjectInformation extends BaseEntity {
     @TableField("earnest")
     private Double earnest;
 
-    /** 项目交易类型 */
+    /** 项目交易类型 1-货物类 2-服务类 3-工程类 */
     @TableField("trade_type")
     private Integer tradeType;
 
@@ -107,6 +107,10 @@ public class ProjectInformation extends BaseEntity {
     /** 转账备注 */
     @TableField("earnest_remark")
     private String earnestRemark;
+
+    /** 项目特殊条件 */
+    @TableField("special_condition")
+    private String specialCondition;
 
     public static ProjectInformation convert(ProjectInformationVO projectInformationVO){
         ProjectInformation projectInformation = new ProjectInformation();
