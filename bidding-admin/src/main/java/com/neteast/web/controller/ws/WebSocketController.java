@@ -106,7 +106,7 @@ public class WebSocketController extends BaseController {
     }
 
     /**
-     * @Description 主持人端展示数据
+     * @Description 主持人端展示数据恢复
      * @author lzp
      * @Date 2023/12/11
      */
@@ -114,7 +114,31 @@ public class WebSocketController extends BaseController {
     public AjaxResult getProjectShow(Integer packageId){
 
         List<CompletionStatus> list = statusService.getListByPackageId(packageId);
-        return success(list);
+        List<CompletionMsg> voList = new ArrayList<>();
+        list.forEach(l->{
+            CompletionMsg msg = CompletionMsg.convert(l);
+            String itemType = msg.getItemType();
+            Integer itemId = msg.getItemId();
+            Integer supplierId = msg.getSupplierId();
+            boolean consistent = true;
+            boolean out = false;
+            switch (itemType){
+                case "qualification":
+                case "conform":
+                    consistent = operaRecordService.getChooseConsistentBySupplierId(itemId,supplierId);
+                    out = operaRecordService.getOutBySupplierId(supplierId,itemId);
+                    break;
+                case "business":
+                case "technical":
+                case "price":
+                    consistent = operaRecordService.getScoreConsistentBySupplierId(msg.getItemId(),msg.getSupplierId());
+                    break;
+            }
+            msg.setConsistent(consistent);
+            msg.setOut(out);
+            voList.add(msg);
+        });
+        return success(voList);
     }
 
     /**

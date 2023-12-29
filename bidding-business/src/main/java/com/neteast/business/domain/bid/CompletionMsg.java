@@ -31,4 +31,14 @@ public class CompletionMsg {
 
     /** 该供应商是否被淘汰 */
     private boolean out;
+
+    public static CompletionMsg convert(CompletionStatus status){
+        CompletionMsg completionMsg = new CompletionMsg();
+        completionMsg.setNum(status.getNum());
+        completionMsg.setItemId(status.getItemId());
+        completionMsg.setUserId(status.getUserId());
+        completionMsg.setSupplierId(status.getSupplierId());
+        completionMsg.setItemType(status.getItemType());
+        return completionMsg;
+    }
 }

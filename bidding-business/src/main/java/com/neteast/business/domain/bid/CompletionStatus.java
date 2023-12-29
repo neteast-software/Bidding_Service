@@ -19,37 +19,40 @@ public class CompletionStatus{
 
     /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
-    Integer id;
+    private Integer id;
 
     /** 专家名称 */
     @TableField("name")
-    String name;
+    private String name;
 
     /** 分包id */
     @TableField("package_id")
-    Integer packageId;
+    private Integer packageId;
 
     /** 专家id */
     @TableField("user_id")
-    Integer userId;
+    private Integer userId;
 
     /** 供应商id */
     @TableField("supplier_id")
-    Integer supplierId;
+    private Integer supplierId;
 
     /** 评分项id */
     @TableField("item_id")
-    Integer itemId;
+    private Integer itemId;
+
+    @TableField("item_type")
+    private String itemType;
 
     /** 完成题目数 */
     @TableField("num")
-    Long num = 0L;
+    private Long num = 0L;
 
     /** 价格分 */
     @TableField("score")
-    Double score = 0.0;
+    private Double score = 0.0;
 
     /** 更新时间 */
     @TableField("update_time")
-    Date updateTime;
+    private Date updateTime;
 }
