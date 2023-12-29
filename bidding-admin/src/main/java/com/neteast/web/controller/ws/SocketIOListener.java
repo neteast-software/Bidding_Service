@@ -36,7 +36,7 @@ public class SocketIOListener implements DataListener<String> {
 
     private SocketIOServer socketIOServer;
 
-    private ExpertOperaRecordService expertOperaRecordService;
+    //private ExpertOperaRecordService expertOperaRecordService;
 
     /** channel作为key 专家端数据 */
     public static ConcurrentHashMap<String,List<ExpertBidMsg>> map = new ConcurrentHashMap<>();
