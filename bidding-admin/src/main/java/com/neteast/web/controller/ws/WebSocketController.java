@@ -49,15 +49,13 @@ public class WebSocketController extends BaseController {
     SocketIOServer socketIOServer;
 
     /**
-     * @Description 专家端展示
+     * @Description 专家端离线后信息恢复
      * @author lzp
      * @Date 2023/12/11
      */
     @GetMapping("/expertSelect")
     public AjaxResult getExpertSelectMsg(String channel,int userId,int packageId){
-        List<ExpertBidMsg> list = SocketIOListener.map.get(channel);
-        List<ExpertBidMsg> res = list.stream().filter(u->u.getId()==userId).filter(u->u.getPackageId()==packageId).collect(Collectors.toList());
-        return success(res);
+        return success();
     }
 
     /**
@@ -67,10 +65,7 @@ public class WebSocketController extends BaseController {
      */
     @GetMapping("/projectShow")
     public AjaxResult getProjectShow(String channel,Integer packageId){
-
-        List<SupplierBidMsg> list = SocketIOListener.supplierMap.get(channel);
-        List<SupplierBidMsg> res = list.stream().filter(u->u.getPackageId().intValue()==packageId).collect(Collectors.toList());
-        return success(res);
+        return success();
     }
 
     /**
@@ -80,11 +75,8 @@ public class WebSocketController extends BaseController {
      */
     @GetMapping("/getWholeCompletionStatus")
     public AjaxResult getWholeCompletionStatus(String channel,Integer packageId){
-        List<SupplierBidMsg> list = SocketIOListener.supplierMap.get(channel);
-        List<SupplierBidMsg> temp = list.stream().filter(u->u.getPackageId().intValue()==packageId).collect(Collectors.toList());
-        //Long res = temp.stream().collect(Collectors.summarizingInt(SupplierBidMsg::getNum)).getSum();
         Long res = 0L;
-        return success(res);
+        return success();
     }
 
     /**
@@ -94,12 +86,7 @@ public class WebSocketController extends BaseController {
      */
     @GetMapping("/getSupplierDetail")
     public AjaxResult getSupplierDetail(String channel,Integer packageId,Integer supplierId){
-        List<SupplierBidMsg> list = SocketIOListener.supplierMap.get(channel);
-        List<SupplierBidMsg> temp = list.stream().filter(u->u.getPackageId().intValue()==packageId).
-                filter(t->t.getSupplierId().intValue()==supplierId).collect(Collectors.toList());
-        if (temp.size()==1){
-            return success(temp);
-        }
+
         return error("获取供应商详情信息出错");
     }
 

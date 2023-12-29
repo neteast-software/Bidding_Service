@@ -28,6 +28,9 @@ public class GradeItem {
      */
     private Integer passType;
 
+    /** 1->单选 2->分数 3->分值 */
+    private Integer inputType;
+
     /** 取值 */
     private Double value;
 }

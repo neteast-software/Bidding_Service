@@ -28,6 +28,9 @@ public class SelectItem {
      */
     private Integer titleType;
 
+    /** 1->单选 2->分数 3->分值 */
+    private Integer inputType;
+
     private Boolean choose;
 
     /** 扣分数 */

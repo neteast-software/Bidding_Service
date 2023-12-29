@@ -12,7 +12,7 @@ import lombok.Data;
 public class CompletionMsg {
 
     /** 该专家当前评分项完成情况 */
-    private int num;
+    private Long num;
 
     /** 供应商id */
     private int supplierId;

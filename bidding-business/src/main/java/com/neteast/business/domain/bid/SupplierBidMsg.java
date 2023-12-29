@@ -50,7 +50,7 @@ public class SupplierBidMsg {
    /** 资格审查一致性 */
    HashMap<Integer,QualificationConsistentStatus> qualificationConsistentStatuses = new HashMap<>();
 
-   /** 供应商专家做题情况 */
+   /** 供应商专家做题情况 把题目类型作为key */
    private HashMap<String,ReviewStatus> reviewStatuses = new HashMap<>();
 
    /** 价格分情况 */

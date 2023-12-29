@@ -1,5 +1,6 @@
 package com.neteast.web.controller.ws;
 
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
@@ -10,16 +11,16 @@ import com.neteast.business.domain.bid.score.GradeItem;
 import com.neteast.business.domain.bid.score.PriceScore;
 import com.neteast.business.domain.bid.score.RadioItem;
 import com.neteast.business.domain.bid.score.SelectItem;
-import com.neteast.business.service.ExpertOperaRecordService;
+import com.neteast.business.domain.project.ExpertOperaRecord;
+import com.neteast.business.service.IExpertOperaRecordService;
 import com.neteast.framework.websockt.bean.Custom;
 import com.neteast.framework.websockt.bean.OperaRecord;
 import com.neteast.framework.websockt.handler.SocketIOMessageEventHandler;
 import com.neteast.framework.websockt.service.SocketIOService;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,19 +37,7 @@ public class SocketIOListener implements DataListener<String> {
 
     private SocketIOServer socketIOServer;
 
-    //private ExpertOperaRecordService expertOperaRecordService;
-
-    /** channel作为key 专家端数据 */
-    public static ConcurrentHashMap<String,List<ExpertBidMsg>> map = new ConcurrentHashMap<>();
-
-    /** channel作为key 供应商数据 */
-    public static ConcurrentHashMap<String,List<SupplierBidMsg>> supplierMap = new ConcurrentHashMap<>();
-
-    /** 会议结束 清除通道数据 */
-    public static void clear(String channelName){
-        map.remove(channelName);
-        supplierMap.remove(channelName);
-    }
+    private IExpertOperaRecordService recordService;
 
     @Override
     public void onData(SocketIOClient client, String s, AckRequest ackRequest){
@@ -60,8 +49,6 @@ public class SocketIOListener implements DataListener<String> {
             String channel = operaRecord.getChannel();
             //获取接收方
             List<Custom> customs = SocketIOMessageEventHandler.getSocketIOByRole(receiver,channel);
-            //添加记录操作
-            SocketIOMessageEventHandler.setOperaRecord(operaRecord.getChannel(),operaRecord);
             //获取返回体
             String body = messageHandler(receiver,operaRecord);
             customs.forEach(o->{
@@ -78,10 +65,13 @@ public class SocketIOListener implements DataListener<String> {
         switch (receiver){
             //发送主持人端信息
             case "client":
-                //设置专家的评选信息
-                ExpertBidMsg expertBidMsg = setExpertSelectRecord(operaRecord);
-                CompletionStatus completionStatus = getCompletionStatus(expertBidMsg,operaRecord.getItemType());
-                setSupplierBidRecord(operaRecord,completionStatus);
+                //保存专家信息
+                CompletionStatus completionStatus = updateExpertBidMsg(operaRecord);
+                //对完成信息进行保存/更新
+
+                CompletionMsg completionMsg = convertCompletionMsg(completionStatus,operaRecord);
+                setSupplierConsistent(operaRecord,completionMsg);
+                temp = JSON.toJSONString(completionMsg);
                 break;
             //发送专家端
             case "user":
@@ -90,93 +80,15 @@ public class SocketIOListener implements DataListener<String> {
         return temp;
     }
 
-    /**
-     * @Description 设置专家端的的数据
-     * @author lzp
-     * @Date 2023/12/27
-     */
-    private ExpertBidMsg setExpertSelectRecord(OperaRecord operaRecord){
+    private CompletionMsg convertCompletionMsg(CompletionStatus completionStatus,OperaRecord operaRecord){
 
-        String channel = operaRecord.getChannel();
-        List<ExpertBidMsg> list = map.get(channel);
-        if (list != null){
-            for (ExpertBidMsg expertBidMsg:list) {
-                if (expertBidMsg.getId()==operaRecord.getUserId()&&
-                        expertBidMsg.getSupplierId()==operaRecord.getSupplierId()&&
-                        expertBidMsg.getPackageId()==operaRecord.getPackageId()){
-                    //更新专家的信息
-                    updateExpertBidMsg(expertBidMsg,operaRecord);
-                    return expertBidMsg;
-                }
-            }
-        }else {
-            list = new ArrayList<>();
-        }
-        ExpertBidMsg expertBidMsg = new ExpertBidMsg();
-        //设置专家的信息
-        addExpertBidMsg(expertBidMsg,operaRecord);
-        list.add(expertBidMsg);
-        map.put(channel,list);
-        return expertBidMsg;
-    }
-
-    private void setSupplierBidRecord(OperaRecord operaRecord,CompletionStatus completionStatus){
-
-        String channel = operaRecord.getChannel();
-        List<SupplierBidMsg> list = supplierMap.get(channel);
-        if (list != null){
-            for (SupplierBidMsg supplierBidMsg:list){
-                if (supplierBidMsg.getSupplierId()==operaRecord.getSupplierId()){
-                    supplierBidMsg.addReviewStatus(completionStatus,operaRecord.getItemType());
-                    setSupplierConsistent(supplierBidMsg,operaRecord);
-                    return;
-                }
-            }
-        }else {
-            list = new ArrayList<>();
-        }
-        SupplierBidMsg supplierBidMsg = new SupplierBidMsg();
-        supplierBidMsg.setSupplierId(operaRecord.getSupplierId());
-        supplierBidMsg.setSupplierName(supplierBidMsg.getSupplierName());
-        supplierBidMsg.setPackageId(supplierBidMsg.getPackageId());
-        supplierBidMsg.addReviewStatus(completionStatus,operaRecord.getItemType());
-
-        setSupplierConsistent(supplierBidMsg,operaRecord);
-        list.add(supplierBidMsg);
-        supplierMap.put(channel,list);
-    }
-
-    private CompletionStatus getCompletionStatus(ExpertBidMsg expertBidMsg,String itemType){
-        CompletionStatus status = new CompletionStatus();
-        status.setSupplierId(expertBidMsg.getSupplierId());
-        status.setName(expertBidMsg.getName());
-        status.setUserId(expertBidMsg.getId());
-        int num = 0;
-        switch (itemType){
-            //资格审查
-            case "qualification":
-                num = expertBidMsg.getQualificationScore().getNum();
-                status.setNum(num);
-                break;
-            //商务分
-            case "business":
-                num = expertBidMsg.getBusinessScore().getNum();
-                status.setNum(num);
-                break;
-            //符合性
-            case "conform":
-                num = expertBidMsg.getConformScore().getNum();
-                status.setNum(num);
-                break;
-            //技术分
-            case "technical":
-                num = expertBidMsg.getTechScore().getNum();
-                status.setNum(num);
-                break;
-            default:
-                status.setNum(num);
-        }
-        return status;
+        CompletionMsg completionMsg = new CompletionMsg();
+        completionMsg.setSupplierId(operaRecord.getSupplierId());
+        completionMsg.setUserId(operaRecord.getUserId());
+        completionMsg.setItemId(operaRecord.getItemId());
+        completionMsg.setItemType(operaRecord.getItemType());
+        completionMsg.setNum(completionStatus.getNum());
+        return completionMsg;
     }
 
     /**
@@ -184,51 +96,83 @@ public class SocketIOListener implements DataListener<String> {
      * @author lzp
      * @Date 2023/12/27
      */
-    private void updateExpertBidMsg(ExpertBidMsg expertBidMsg,OperaRecord operaRecord){
+    private CompletionStatus updateExpertBidMsg(OperaRecord operaRecord){
 
         String itemType = operaRecord.getItemType();
         String opera = operaRecord.getRecord();
+        //操作记录保留
+        ExpertOperaRecord record = new ExpertOperaRecord();
+        record.setExpertId(operaRecord.getUserId());
+        record.setSupplierId(operaRecord.getSupplierId());
+        record.setScoreItemId(operaRecord.getItemId());
+        record.setItemType(operaRecord.getItemType());
+        //返回主持人端数据信息
+        CompletionStatus completionStatus = new CompletionStatus();
+        completionStatus.setSupplierId(operaRecord.getSupplierId());
+        completionStatus.setUserId(operaRecord.getUserId());
+        completionStatus.setItemId(operaRecord.getItemId());
+        completionStatus.setName(operaRecord.getUserName());
+        Integer item = -1;
         switch (itemType){
             //资格审查
             case "qualification":
                 RadioItem radioItem = JSONObject.parseObject(opera,RadioItem.class);
-                expertBidMsg.getQualificationScore().setRadioItem(radioItem);
+                item = radioItem.getId();
+                record.setPassType(radioItem.getPassType());
+                record.setTitleType(radioItem.getTitleType());
+                record.setInputType(radioItem.getInputType());//单选
+                record.setChoose(radioItem.getChoose());
                 break;
             //商务分
             case "business":
+            //技术分
+            case "technical":
                 GradeItem businessItem = JSONObject.parseObject(opera,GradeItem.class);
-                expertBidMsg.getBusinessScore().setGradeItems(businessItem);
+                item = businessItem.getId();
+                record.setPassType(businessItem.getPassType());
+                record.setTitleType(businessItem.getTitleType());
+                record.setInputType(businessItem.getInputType());
+                record.setValue(businessItem.getValue());
                 break;
             //符合性
             case "conform":
                 SelectItem selectItem = JSONObject.parseObject(opera,SelectItem.class);
-                expertBidMsg.getConformScore().setSelectItem(selectItem);
-                break;
-            //技术分
-            case "technical":
-                GradeItem techItem = JSONObject.parseObject(opera,GradeItem.class);
-                expertBidMsg.getTechScore().setGradeItems(techItem);
+                item = selectItem.getId();
+                record.setPassType(selectItem.getPassType());
+                record.setTitleType(selectItem.getTitleType());
+                record.setInputType(selectItem.getInputType());
+                record.setValue(selectItem.getValue());
+                record.setChoose(selectItem.getChoose());
                 break;
             //价格分
             case "price":
                 PriceScore priceScore = JSONObject.parseObject(opera,PriceScore.class);
-                expertBidMsg.setPriceScore(priceScore);
+                record.setValue(priceScore.getValue());
+                record.setPassType(3);// 输入分值
+                record.setInputType(2);// 分数
+                record.setTitleType(1);// 主观/客观题
                 break;
         }
-    }
+        record.setItemId(item);
+        //对专家记录进行保存或更新
+        Long count = recordService.lambdaQuery().eq(ExpertOperaRecord::getItemId,record.getItemId())
+                .eq(ExpertOperaRecord::getExpertId,record.getExpertId()).count();
+        if (count==0){
+            recordService.save(record);
+        }else {
+            recordService.updateRecordByItemId(record);
+        }
 
-    /**
-     * @Description 增加专家信息
-     * @author lzp
-     * @Date 2023/12/27
-     */
-    private void addExpertBidMsg(ExpertBidMsg expertBidMsg,OperaRecord operaRecord){
-
-        expertBidMsg.setId(operaRecord.getUserId());
-        expertBidMsg.setName(operaRecord.getUserName());
-        expertBidMsg.setSupplierId(operaRecord.getSupplierId());
-        expertBidMsg.setPackageId(operaRecord.getPackageId());
-        updateExpertBidMsg(expertBidMsg,operaRecord);
+        //查看该专家该供应商该评分项的完成情况
+        if ("price".equals(itemType)){
+            //价格分展示
+            completionStatus.setScore(record.getValue());
+        }else {
+            //其他评分项展示
+            Long num = recordService.getCountByCompletionStatus(completionStatus);
+            completionStatus.setNum(num);
+        }
+        return completionStatus;
     }
 
     /**
@@ -236,46 +180,22 @@ public class SocketIOListener implements DataListener<String> {
      * @author lzp
      * @Date 2023/12/27
      */
-    private void setSupplierConsistent(SupplierBidMsg supplierBidMsg,OperaRecord operaRecord){
+    private void setSupplierConsistent(OperaRecord operaRecord,CompletionMsg completionMsg){
+
+        //获取评分项类型
         String itemType = operaRecord.getItemType();
-        String opera = operaRecord.getRecord();
-        switch (itemType){
-            //资格审查
-            case "qualification":
-                RadioItem radioItem = JSONObject.parseObject(opera,RadioItem.class);
-                if (radioItem.getTitleType()==2){
-                    supplierBidMsg.addQualificationConsistent(radioItem);
-                }
-                if (radioItem.getPassType()==1){
-                    supplierBidMsg.addOutNumStatus(radioItem);
-                }
-                break;
-            //商务分
-            case "business":
-                GradeItem businessItem = JSONObject.parseObject(opera,GradeItem.class);
-                if (businessItem.getTitleType()==2){
-                    supplierBidMsg.addBusinessConsistent(businessItem);
-                }
-                break;
-            //符合性
-            case "conform":
-                SelectItem selectItem = JSONObject.parseObject(opera,SelectItem.class);
-                if (selectItem.getTitleType()==2){
-                    supplierBidMsg.addConformConsistent(selectItem);
-                }
-                if (selectItem.getPassType()==1){
-                    supplierBidMsg.addOutNumStatus(selectItem);
-                }
-                break;
-            //技术分
-            case "technical":
-                GradeItem techItem = JSONObject.parseObject(opera,GradeItem.class);
-                if (techItem.getTitleType()==2){
-                    supplierBidMsg.addTechConsistent(techItem);
-                }
-                break;
+
+        //判断供应商该评分项的一致性信息
+        boolean consistent = recordService.getConsistentBySupplierId(operaRecord.getItemId(),operaRecord.getSupplierId());
+        completionMsg.setConsistent(consistent);
+
+        if ("conform".equals(itemType)||"qualification".equals(itemType)){
+            //判断供应商该评分项的淘汰
+            boolean out = recordService.getOutBySupplierId(operaRecord.getPackageId(),operaRecord.getSupplierId(),operaRecord.getItemId());
+            completionMsg.setOut(out);
+        }else {
+            completionMsg.setOut(false);
         }
     }
-
 
 }

@@ -13,6 +13,12 @@ import java.util.List;
 @Data
 public class PriceScore{
 
+    /** 评分项id */
+    private Integer itemId;
+
+    /** 评分项类型 */
+    private String itemType;
+
     /** 价格分得分 */
     private Double value;
 }

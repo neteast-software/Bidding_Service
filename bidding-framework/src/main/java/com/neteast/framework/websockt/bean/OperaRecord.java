@@ -34,6 +34,9 @@ public class OperaRecord {
     /** 分包id */
     private int packageId;
 
+    /** 评分项id */
+    private int itemId;
+
     /**评分项类型 */
     private String itemType;
 

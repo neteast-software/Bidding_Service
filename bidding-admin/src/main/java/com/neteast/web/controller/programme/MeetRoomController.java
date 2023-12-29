@@ -3,6 +3,7 @@ package com.neteast.web.controller.programme;
 import com.alibaba.fastjson2.JSONObject;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.neteast.business.domain.programme.MeetRoom;
+import com.neteast.business.service.IExpertOperaRecordService;
 import com.neteast.business.service.IMeetRoomService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
@@ -31,6 +32,9 @@ public class MeetRoomController extends BaseController {
     @Resource
     SocketIOServer socketIOServer;
 
+    @Resource
+    IExpertOperaRecordService operaRecordService;
+
     /**
      * @Description 初始化会议室通道号
      * @author lzp
@@ -42,7 +46,7 @@ public class MeetRoomController extends BaseController {
         List<MeetRoom> list = meetRoomService.getWholeMeetRoom();
         list.forEach(l->{
             logger.info("创建通道-{}",l.getChannelName());
-            socketIOServer.addEventListener(l.getChannelName(), String.class, new SocketIOListener(socketIOServer));
+            socketIOServer.addEventListener(l.getChannelName(), String.class, new SocketIOListener(socketIOServer,operaRecordService));
         });
     }
 
@@ -64,7 +68,7 @@ public class MeetRoomController extends BaseController {
         if (list!=null&&list.size()==0){
             meetRoomService.save(meetRoom);
             //创建新通道
-            socketIOServer.addEventListener(meetRoom.getChannelName(),String.class,new SocketIOListener(socketIOServer));
+            socketIOServer.addEventListener(meetRoom.getChannelName(),String.class,new SocketIOListener(socketIOServer,operaRecordService));
             return addSuccess();
         }
         return error("该通道号已存在");
@@ -75,7 +79,7 @@ public class MeetRoomController extends BaseController {
 
         MeetRoom temp = meetRoomService.getById(meetRoom.getId());
         if (!temp.getChannelName().equals(meetRoom.getChannelName())){
-            socketIOServer.addEventListener(meetRoom.getChannelName(),String.class,new SocketIOListener(socketIOServer));
+            socketIOServer.addEventListener(meetRoom.getChannelName(),String.class,new SocketIOListener(socketIOServer,operaRecordService));
         }
         meetRoomService.updateById(meetRoom);
         return updateSuccess();
