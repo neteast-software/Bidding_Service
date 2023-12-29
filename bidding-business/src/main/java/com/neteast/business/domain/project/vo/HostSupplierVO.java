@@ -1,6 +1,5 @@
 package com.neteast.business.domain.project.vo;
 
-import com.neteast.business.domain.bid.SupplierBidMsg;
 import com.neteast.business.domain.project.SupplierInformation;
 import lombok.Data;
 

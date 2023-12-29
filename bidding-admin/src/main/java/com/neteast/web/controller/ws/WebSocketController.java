@@ -173,6 +173,8 @@ public class WebSocketController extends BaseController {
         if (total.compareTo(num)==0){
             List<Custom> list = SocketIOMessageEventHandler.getSocketIOByChannel(expertSubmitVO.getChannel());
             JSONObject jsonObject = new JSONObject();
+            //判断当前状态的情况是否符合规则
+
             jsonObject.put("next","true");
             list.forEach(l->{
                 SocketIOClient client = socketIOServer.getClient(l.getUuid());
