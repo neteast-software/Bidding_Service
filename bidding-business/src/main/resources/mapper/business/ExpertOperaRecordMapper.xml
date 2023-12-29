@@ -4,4 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neteast.business.mapper.ExpertOperaRecordMapper">
 
+    <select id="getScoreConsistent" resultType="com.neteast.business.domain.bid.res.ScoreConsistent" >
+        select count(*) num ,item_id,value from expert_opera_record where supplier_id = #{supplierId} and score_item_id = #{scoreItemId} and title_type = 2 GROUP BY item_id,value
+    </select>
+
+    <select id="getChooseConsistent" resultType="com.neteast.business.domain.bid.res.ChooseConsistent" >
+        select count(*) num ,item_id,choose from expert_opera_record where supplier_id = #{supplierId} and score_item_id = #{scoreItemId} and title_type = 2 GROUP BY item_id,choose
+    </select>
+
 </mapper>

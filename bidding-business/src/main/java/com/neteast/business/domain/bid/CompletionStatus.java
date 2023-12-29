@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.neteast.common.core.domain.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -25,6 +24,10 @@ public class CompletionStatus{
     /** 专家名称 */
     @TableField("name")
     String name;
+
+    /** 分包id */
+    @TableField("package_id")
+    Integer packageId;
 
     /** 专家id */
     @TableField("user_id")

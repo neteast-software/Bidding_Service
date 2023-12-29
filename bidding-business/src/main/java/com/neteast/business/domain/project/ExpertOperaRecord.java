@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.business.domain.bid.score.GradeItem;
+import com.neteast.business.domain.bid.score.PriceScore;
+import com.neteast.business.domain.bid.score.RadioItem;
+import com.neteast.business.domain.bid.score.SelectItem;
 import lombok.Data;
 
 /**
@@ -69,4 +73,43 @@ public class ExpertOperaRecord {
     /** 单选类型的值 */
     @TableField("choose")
     private Boolean choose;
+
+    public static GradeItem toGradItem(ExpertOperaRecord record){
+        GradeItem gradeItem = new GradeItem();
+        gradeItem.setId(record.getItemId());
+        gradeItem.setValue(record.getValue());
+        gradeItem.setInputType(record.getInputType());
+        gradeItem.setTitleType(record.getTitleType());
+        gradeItem.setInputType(record.getInputType());
+        return gradeItem;
+    }
+
+    public static RadioItem toRadioItem(ExpertOperaRecord record){
+        RadioItem radioItem = new RadioItem();
+        radioItem.setId(record.getItemId());
+        radioItem.setChoose(record.getChoose());
+        radioItem.setInputType(record.getInputType());
+        radioItem.setPassType(record.getPassType());
+        radioItem.setTitleType(record.getTitleType());
+        return radioItem;
+    }
+
+    public static SelectItem toSelectItem(ExpertOperaRecord record){
+        SelectItem selectItem = new SelectItem();
+        selectItem.setId(record.getItemId());
+        selectItem.setChoose(record.getChoose());
+        selectItem.setPassType(record.getPassType());
+        selectItem.setInputType(record.getInputType());
+        selectItem.setTitleType(record.getTitleType());
+        selectItem.setValue(record.getValue());
+        return selectItem;
+    }
+
+    public static PriceScore toPriceScore(ExpertOperaRecord record){
+        PriceScore priceScore = new PriceScore();
+        priceScore.setItemId(record.getItemId());
+        priceScore.setItemType(record.getItemType());
+        priceScore.setValue(record.getValue());
+        return priceScore;
+    }
 }

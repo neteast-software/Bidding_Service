@@ -6,6 +6,10 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIONamespace;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.neteast.business.domain.bid.*;
+import com.neteast.business.domain.bid.score.GradeItem;
+import com.neteast.business.domain.bid.score.PriceScore;
+import com.neteast.business.domain.bid.score.RadioItem;
+import com.neteast.business.domain.bid.score.SelectItem;
 import com.neteast.business.domain.project.*;
 import com.neteast.business.domain.project.vo.ExpertSubmitVO;
 import com.neteast.business.domain.project.vo.ProjectExpertVO;
@@ -16,6 +20,7 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.framework.websockt.bean.Custom;
 import com.neteast.framework.websockt.handler.SocketIOMessageEventHandler;
 import com.neteast.framework.websockt.service.SocketIOService;
+import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.ls.LSInput;
 
@@ -48,14 +53,56 @@ public class WebSocketController extends BaseController {
     @Resource
     SocketIOServer socketIOServer;
 
+    @Resource
+    IExpertOperaRecordService operaRecordService;
+
+    @Resource
+    ICompletionStatusService statusService;
+
     /**
-     * @Description 专家端离线后信息恢复
+     * @Description 专家端获取其操作的信息,以及主持人查看专家评审详情
+     * userId: 专家id
+     * packageId: 分包id
+     * itemId: 评分项id
      * @author lzp
      * @Date 2023/12/11
      */
     @GetMapping("/expertSelect")
-    public AjaxResult getExpertSelectMsg(String channel,int userId,int packageId){
-        return success();
+    public AjaxResult getExpertSelectMsg(Integer userId, Integer supplierId, Integer itemId,String itemType){
+
+        List<ExpertOperaRecord> list = operaRecordService.getExpertOperaRecordByItemId(supplierId,userId,itemId);
+        switch (itemType){
+            case "qualification":
+                List<RadioItem> radioItems = new ArrayList<>();
+                list.forEach(l->{
+                    RadioItem item = ExpertOperaRecord.toRadioItem(l);
+                    radioItems.add(item);
+                });
+                return success(radioItems);
+            case "business":
+            case "technical":
+                List<GradeItem> gradeItems = new ArrayList<>();
+                list.forEach(l->{
+                    GradeItem item = ExpertOperaRecord.toGradItem(l);
+                    gradeItems.add(item);
+                });
+                return success(gradeItems);
+            case "conform":
+                List<SelectItem> selectItems = new ArrayList<>();
+                list.forEach(l->{
+                    SelectItem item = ExpertOperaRecord.toSelectItem(l);
+                    selectItems.add(item);
+                });
+                return success(selectItems);
+            case "price":
+                List<PriceScore> priceScores = new ArrayList<>();
+                list.forEach(l->{
+                    PriceScore score = ExpertOperaRecord.toPriceScore(l);
+                    priceScores.add(score);
+                });
+                return success(priceScores);
+        }
+        return error("无该评分项类型");
     }
 
     /**
@@ -64,8 +111,10 @@ public class WebSocketController extends BaseController {
      * @Date 2023/12/11
      */
     @GetMapping("/projectShow")
-    public AjaxResult getProjectShow(String channel,Integer packageId){
-        return success();
+    public AjaxResult getProjectShow(Integer packageId){
+
+        List<CompletionStatus> list = statusService.getListByPackageId(packageId);
+        return success(list);
     }
 
     /**
@@ -74,20 +123,10 @@ public class WebSocketController extends BaseController {
      * @Date 2023/12/14
      */
     @GetMapping("/getWholeCompletionStatus")
-    public AjaxResult getWholeCompletionStatus(String channel,Integer packageId){
-        Long res = 0L;
-        return success();
-    }
+    public AjaxResult getWholeCompletionStatus(Integer packageId){
 
-    /**
-     * @Description 获取某个供应商的评分详情
-     * @author lzp
-     * @Date 2023/12/20
-     */
-    @GetMapping("/getSupplierDetail")
-    public AjaxResult getSupplierDetail(String channel,Integer packageId,Integer supplierId){
-
-        return error("获取供应商详情信息出错");
+        Long count = statusService.lambdaQuery().eq(CompletionStatus::getPackageId,packageId).count();
+        return success(count);
     }
 
     /**
@@ -146,6 +185,5 @@ public class WebSocketController extends BaseController {
     private Double getPriceScoreByScoreMethod(SupplierInformation supplierInformation, ScoreMethod method,PackageInformation packageInformation){
         return 0.0D;
     }
-
 
 }

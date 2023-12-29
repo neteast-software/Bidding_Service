@@ -12,19 +12,16 @@ import com.neteast.business.domain.bid.score.PriceScore;
 import com.neteast.business.domain.bid.score.RadioItem;
 import com.neteast.business.domain.bid.score.SelectItem;
 import com.neteast.business.domain.project.ExpertOperaRecord;
+import com.neteast.business.service.ICompletionStatusService;
 import com.neteast.business.service.IExpertOperaRecordService;
 import com.neteast.framework.websockt.bean.Custom;
 import com.neteast.framework.websockt.bean.OperaRecord;
 import com.neteast.framework.websockt.handler.SocketIOMessageEventHandler;
 import com.neteast.framework.websockt.service.SocketIOService;
-import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author lzp
@@ -38,6 +35,8 @@ public class SocketIOListener implements DataListener<String> {
     private SocketIOServer socketIOServer;
 
     private IExpertOperaRecordService recordService;
+
+    private ICompletionStatusService statusService;
 
     @Override
     public void onData(SocketIOClient client, String s, AckRequest ackRequest){
@@ -68,7 +67,7 @@ public class SocketIOListener implements DataListener<String> {
                 //保存专家信息
                 CompletionStatus completionStatus = updateExpertBidMsg(operaRecord);
                 //对完成信息进行保存/更新
-
+                updateCompletionStatus(completionStatus);
                 CompletionMsg completionMsg = convertCompletionMsg(completionStatus,operaRecord);
                 setSupplierConsistent(operaRecord,completionMsg);
                 temp = JSON.toJSONString(completionMsg);
@@ -78,6 +77,20 @@ public class SocketIOListener implements DataListener<String> {
                 temp = operaRecord.getRecord();
         }
         return temp;
+    }
+
+    private void updateCompletionStatus(CompletionStatus status) {
+
+        Long count = statusService.lambdaQuery().eq(CompletionStatus::getUserId,status.getUserId())
+                .eq(CompletionStatus::getSupplierId,status.getSupplierId())
+                .eq(CompletionStatus::getItemId,status.getItemId()).count();
+        if (count==0){
+            //添加供应商结果
+            statusService.save(status);
+        }else {
+            //更新供应商结果
+            statusService.updateByCompletionStatus(status);
+        }
     }
 
     private CompletionMsg convertCompletionMsg(CompletionStatus completionStatus,OperaRecord operaRecord){
@@ -112,6 +125,7 @@ public class SocketIOListener implements DataListener<String> {
         completionStatus.setUserId(operaRecord.getUserId());
         completionStatus.setItemId(operaRecord.getItemId());
         completionStatus.setName(operaRecord.getUserName());
+        completionStatus.setPackageId(operaRecord.getPackageId());
         Integer item = -1;
         switch (itemType){
             //资格审查
@@ -184,16 +198,20 @@ public class SocketIOListener implements DataListener<String> {
 
         //获取评分项类型
         String itemType = operaRecord.getItemType();
-
-        //判断供应商该评分项的一致性信息
-        boolean consistent = recordService.getConsistentBySupplierId(operaRecord.getItemId(),operaRecord.getSupplierId());
-        completionMsg.setConsistent(consistent);
+        Integer scoreItemId = operaRecord.getItemId();
+        Integer supplierId = operaRecord.getSupplierId();
 
         if ("conform".equals(itemType)||"qualification".equals(itemType)){
+            //判断供应商该评分项的一致性信息(选择)
+            boolean consistent = recordService.getChooseConsistentBySupplierId(scoreItemId,supplierId);
+            completionMsg.setConsistent(consistent);
             //判断供应商该评分项的淘汰
-            boolean out = recordService.getOutBySupplierId(operaRecord.getPackageId(),operaRecord.getSupplierId(),operaRecord.getItemId());
+            boolean out = recordService.getOutBySupplierId(operaRecord.getSupplierId(),operaRecord.getItemId());
             completionMsg.setOut(out);
         }else {
+            //判断供应商该评分项的一致性信息(分数)
+            boolean consistent = recordService.getScoreConsistentBySupplierId(scoreItemId,supplierId);
+            completionMsg.setConsistent(consistent);
             completionMsg.setOut(false);
         }
     }
