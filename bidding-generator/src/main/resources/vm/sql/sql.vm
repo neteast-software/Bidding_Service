@@ -20,3 +20,621 @@ values('${functionName}删除', @parentId, '4',  '#', '', 1, 0, 'F', '0', '0', '
 
 insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
 values('${functionName}导出', @parentId, '5',  '#', '', 1, 0, 'F', '0', '0', '${permissionPrefix}:export',       '#', 'admin', sysdate(), '', null, '');
+
+-- 动态表单渲染SQL
+-- 列表
+insert into sys_dynamic_rendering (module, page, method, rendering) values('${moduleName}', '${businessName}', 'list', '{
+"filter": {"items":[
+#foreach($column in $queryColumns)
+    {
+        "name": "$column.javaField",
+        #if($column.htmlType == 'input')
+            "span": "3",
+            "attrs": {
+                "placeholder": "请输入$column.columnComment"
+            },
+            "component": "input",
+            "showLabel": true,
+            "labelPlacement": "left",
+        #elseif($column.htmlType == 'select')
+            "span": "2",
+            "attrs": {
+                "options": [
+                    #foreach($dict in $dictsData.entrySet())
+                        #if($dict.key == $column.dictType)
+                            #foreach($item in $dict.value)
+                            {
+                            "dictLabel": "$item.dictLabel",
+                            "dictValue": "$item.dictValue"
+                            }#if($foreach.hasNext),#end
+                            #end
+                        #end
+                    #end
+                ],
+                "labelField": "dictLabel",
+                "valueField": "dictValue",
+                "placeholder": "请选择$column.columnComment"
+            },
+            "component": "dropdown",
+            "showLabel": false,
+        #elseif($column.htmlType == 'radio')
+        "span": "8",
+        "attrs": {
+            "type": "daterange",
+            "format": "yyyy-MM-dd",
+            "actions": ["clear"],
+            "close-on-select": true
+        },
+        "component": "date",
+        "showLabel": true,
+        #else
+            "span": "3",
+            "attrs": {
+            "placeholder": "请输入$column.columnComment"
+            },
+            "component": "input",
+            "showLabel": true,
+        #end
+        "label": "$column.columnComment"
+    }#if($foreach.hasNext),#end
+#end
+],
+"xGap": 15
+},
+"buttons": [
+{
+"link": "/${moduleName}/${businessName}/toAdd",
+"name": "添加",
+"type": "button",
+"method": "get"
+}
+],
+"columns": [
+#foreach($column in $listColumns)
+    {
+        "id": "$column.javaField",
+        "name": "$column.columnComment",
+        "type": "text"
+    }#if($foreach.hasNext),#end
+#end
+],
+
+#foreach($column in $columns)
+    #if($column.pk)
+        "primary": "$column.javaField",
+    #end
+#end
+"row_buttons": [
+#foreach($column in $columns)
+    #if($column.pk)
+        {
+            "link": "/${moduleName}/${businessName}/toModify/:$column.javaField",
+            "name": "修改",
+            "type": "button",
+            "method": "get"
+        },
+        {
+            "link": "/${moduleName}/${businessName}/:$column.javaField",
+            "name": "删除",
+            "type": "button",
+            "method": "delete",
+            "confirm": {
+                "title": "提示",
+                "content": "是否确认删除编号为:id的数据项？",
+                "showCancel": true
+            }
+        }
+    #end
+#end
+]
+}');
+
+-- 新增
+insert into sys_dynamic_rendering (module, page, method, rendering) values('${moduleName}', '${businessName}', 'toAdd', '{
+"graph": {
+"name": "新增${functionName}",
+"inner": false,
+"items": [
+#foreach($column in $addColumns)
+    #if($column.pk)
+        {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "hidden": true,
+            "component": "input"
+        }
+    #elseif($column.htmlType == 'input')
+        {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "rules": [
+                #if($column.required)
+                    {
+                        "tigger": "input",
+                        "message": "请填写$column.columnComment",
+                        "required": true
+                    }
+                #end
+            ],
+            "attrs": {
+                "maxlength": 30,
+                "placeholder": "请输入$column.columnComment"
+            },
+            "component": "input"
+        }
+    #elseif($column.htmlType == 'treeSelect')
+        {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "rules": [
+                #if($column.required)
+                    {
+                        "tigger": "blur",
+                        "message": "请选择$column.columnComment",
+                        "required": true
+                    }
+                #end
+            ],
+            "attrs": {
+                "options": [
+                    {
+                        "id": "root000000",
+                        "label": "若依科技",
+                        "children": [
+                            {
+                                "id": "101",
+                                "label": "深圳总公司",
+                                "children": [
+
+                                ]
+                            },
+                            {
+                                "id": "102",
+                                "label": "长沙总公司",
+                                "children": [
+                                    {
+                                        "id": "103",
+                                        "label": "研发部门"
+                                    },
+                                    {
+                                        "id": "104",
+                                        "label": "市场部门"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "keyField": "id",
+                "placeholeer": "请选择$column.columnComment"
+            },
+            "component": "treeSelect"
+        }
+    #elseif($column.htmlType == 'select')
+        {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "rules": [
+                #if($column.required)
+                    {
+                        "tigger": "blur",
+                        "message": "请选择$column.columnComment",
+                        "required": true
+                    }
+                #end
+            ],
+            "attrs": {
+                "options": [
+                #foreach($dict in $dictsData.entrySet())
+                    #if($dict.key == $column.dictType)
+                        #foreach($item in $dict.value)
+                            {
+                                "dictLabel": "$item.dictLabel",
+                                "dictValue": "$item.dictValue"
+                            }#if($foreach.hasNext),#end
+                        #end
+                    #end
+                #end
+                ],
+                "labelField": "dictLabel",
+                "valueField": "dictValue",
+                "placeholder": "请选择$column.columnComment"
+            },
+            "component": "select"
+        }
+    #elseif($column.htmlType == 'datetime')
+        {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "rules": [
+                #if($column.required)
+                    {
+                        "tigger": "blur",
+                        "message": "请选择$column.columnComment",
+                        "required": true
+                    }
+                #end
+            ],
+            "attrs": {
+                "options": [
+                    #foreach($dict in $dictsData.entrySet())
+                        #if($dict.key == $column.dictType)
+                            #foreach($item in $dict.value)
+                            {
+                            "dictLabel": "$item.dictLabel",
+                            "dictValue": "$item.dictValue"
+                            }#if($foreach.hasNext),#end
+                            #end
+                        #end
+                    #end
+                ],
+                "keyField": "dictValue",
+                "labelField": "dictLabel"
+            },
+            "component": "radio"
+        }
+    #elseif($column.htmlType == 'checkbox')
+        {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "rules": [
+                #if($column.required)
+                    {
+                        "tigger": "blur",
+                        "message": "请选择$column.columnComment",
+                        "required": true
+                    }
+                #end
+            ],
+            "attrs": {
+                "options": [
+                    #foreach($dict in $dictsData.entrySet())
+                        #if($dict.key == $column.dictType)
+                            #foreach($item in $dict.value)
+                                {
+                                "dictLabel": "$item.dictLabel",
+                                "dictValue": "$item.dictValue"
+                                }#if($foreach.hasNext),#end
+                            #end
+                        #end
+                    #end
+                ],
+                "keyField": "dictValue",
+                "labelField": "dictLabel"
+            },
+            "component": "checkbox"
+        }
+    #elseif($column.htmlType == 'textarea')
+        {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "rules": [
+                #if($column.required)
+                    {
+                        "tigger": "input",
+                        "message": "请填写$column.columnComment",
+                        "required": true
+                    }
+                #end
+            ],
+            "attrs": {
+                "type": "textarea",
+                "maxlength": 200,
+                "placeholder": "请输入$column.columnComment"
+            },
+            "component": "input"
+        }
+    #elseif($column.htmlType == 'datetime')
+        {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "rules": [
+                #if($column.required)
+                    {
+                        "tigger": "blur",
+                        "message": "请选择$column.columnComment",
+                        "required": true
+                    }
+                #end
+            ],
+            "attrs": {
+                "type": "datetime",
+                "placeholder": "请选择$column.columnComment",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "actions":["clear"]
+            },
+            "component": "date"
+        }
+    #elseif($column.htmlType == 'image' || $column.htmlType == 'upload')
+        {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "rules": [
+                #if($column.required)
+                    {
+                        "tigger": "blur",
+                        "message": "请上传$column.columnComment",
+                        "required": true
+                    }
+                #end
+            ],
+            "attrs": {
+                "tip": "上传$column.columnComment",
+                "limit": 1,
+                "accept": "*.jpg;*.png;*.jpeg",
+                "action": "/file/upload",
+                "defaultUpload": false
+            },
+            "component": "upload"
+        }
+    #end
+    #if($foreach.hasNext),#end
+#end
+],
+"buttons": [
+    {
+    "link": "/${moduleName}/${businessName}",
+    "name": "提交",
+    "type": "submit",
+    "method": "post"
+    }
+],
+"placement": "center"
+},
+"type": "popForm"
+}');
+
+-- 修改
+insert into sys_dynamic_rendering (module, page, method, rendering) values('${moduleName}', '${businessName}', 'toModify', '{
+"graph": {
+    "name": "编辑${functionName}",
+    "inner": false,
+    "items": [
+    #foreach($column in $addColumns)
+        #if($column.pk)
+            {
+            "name": "$column.javaField",
+            "label": "$column.columnComment",
+            "hidden": true,
+            "component": "input"
+            }
+        #elseif($column.htmlType == 'input')
+            {
+                "name": "$column.javaField",
+                "label": "$column.columnComment",
+                "rules": [
+                    #if($column.required)
+                        {
+                        "tigger": "input",
+                        "message": "请填写$column.columnComment",
+                        "required": true
+                        }
+                    #end
+                ],
+                "attrs": {
+                    "maxlength": 30,
+                    "placeholder": "请输入$column.columnComment"
+                },
+                "component": "input"
+            }
+        #elseif($column.htmlType == 'treeSelect')
+        {
+        "name": "$column.javaField",
+        "label": "$column.columnComment",
+        "rules": [
+            #if($column.required)
+            {
+            "tigger": "blur",
+            "message": "请选择$column.columnComment",
+            "required": true
+            }
+            #end
+        ],
+        "attrs": {
+        "options": [
+        {
+        "id": "root000000",
+        "label": "若依科技",
+        "children": [
+        {
+        "id": "101",
+        "label": "深圳总公司",
+        "children": [
+
+        ]
+        },
+        {
+        "id": "102",
+        "label": "长沙总公司",
+        "children": [
+        {
+        "id": "103",
+        "label": "研发部门"
+        },
+        {
+        "id": "104",
+        "label": "市场部门"
+        }
+        ]
+        }
+        ]
+        }
+        ],
+        "keyField": "id",
+        "placeholeer": "请选择$column.columnComment"
+        },
+        "component": "treeSelect"
+        }
+        #elseif($column.htmlType == 'select')
+        {
+        "name": "$column.javaField",
+        "label": "$column.columnComment",
+        "rules": [
+            #if($column.required)
+            {
+            "tigger": "blur",
+            "message": "请选择$column.columnComment",
+            "required": true
+            }
+            #end
+        ],
+        "attrs": {
+        "options": [
+            #foreach($dict in $dictsData.entrySet())
+                #if($dict.key == $column.dictType)
+                    #foreach($item in $dict.value)
+                    {
+                    "dictLabel": "$item.dictLabel",
+                    "dictValue": "$item.dictValue"
+                    }#if($foreach.hasNext),#end
+                    #end
+                #end
+            #end
+        ],
+        "labelField": "dictLabel",
+        "valueField": "dictValue",
+        "placeholder": "请选择$column.columnComment"
+        },
+        "component": "select"
+        }
+        #elseif($column.htmlType == 'radio')
+        {
+        "name": "$column.javaField",
+        "label": "$column.columnComment",
+        "rules": [
+            #if($column.required)
+            {
+            "tigger": "blur",
+            "message": "请选择$column.columnComment",
+            "required": true
+            }
+            #end
+        ],
+        "attrs": {
+        "options": [
+            #foreach($dict in $dictsData.entrySet())
+                #if($dict.key == $column.dictType)
+                    #foreach($item in $dict.value)
+                    {
+                    "dictLabel": "$item.dictLabel",
+                    "dictValue": "$item.dictValue"
+                    }#if($foreach.hasNext),#end
+                    #end
+                #end
+            #end
+        ],
+        "keyField": "dictValue",
+        "labelField": "dictLabel"
+        },
+        "component": "radio"
+        }
+        #elseif($column.htmlType == 'checkbox')
+        {
+        "name": "$column.javaField",
+        "label": "$column.columnComment",
+        "rules": [
+            #if($column.required)
+            {
+            "tigger": "blur",
+            "message": "请选择$column.columnComment",
+            "required": true
+            }
+            #end
+        ],
+        "attrs": {
+        "options": [
+            #foreach($dict in $dictsData.entrySet())
+                #if($dict.key == $column.dictType)
+                    #foreach($item in $dict.value)
+                    {
+                    "dictLabel": "$item.dictLabel",
+                    "dictValue": "$item.dictValue"
+                    }#if($foreach.hasNext),#end
+                    #end
+                #end
+            #end
+        ],
+        "keyField": "dictValue",
+        "labelField": "dictLabel"
+        },
+        "component": "checkbox"
+        }
+        #elseif($column.htmlType == 'textarea')
+        {
+        "name": "$column.javaField",
+        "label": "$column.columnComment",
+        "rules": [
+            #if($column.required)
+            {
+            "tigger": "input",
+            "message": "请填写$column.columnComment",
+            "required": true
+            }
+            #end
+        ],
+        "attrs": {
+        "type": "textarea",
+        "maxlength": 200,
+        "placeholder": "请输入$column.columnComment"
+        },
+        "component": "input"
+        }
+        #elseif($column.htmlType == 'datetime')
+        {
+        "name": "$column.javaField",
+        "label": "$column.columnComment",
+        "rules": [
+            #if($column.required)
+            {
+            "tigger": "blur",
+            "message": "请选择$column.columnComment",
+            "required": true
+            }
+            #end
+        ],
+        "attrs": {
+        "type": "datetime",
+        "placeholder": "请选择$column.columnComment",
+        "format": "yyyy-MM-dd HH:mm:ss",
+        "actions":["clear"]
+        },
+        "component": "date"
+        }
+        #elseif($column.htmlType == 'image' || $column.htmlType == 'upload')
+        {
+        "name": "$column.javaField",
+        "label": "$column.columnComment",
+        "rules": [
+            #if($column.required)
+            {
+            "tigger": "blur",
+            "message": "请上传$column.columnComment",
+            "required": true
+            }
+            #end
+        ],
+        "attrs": {
+            "tip": "上传$column.columnComment",
+            "limit": 1,
+            "accept": "*.jpg;*.png;*.jpeg",
+            "action": "/file/upload",
+            "defaultUpload": false
+        },
+        "component": "upload"
+        }
+        #end
+        #if($foreach.hasNext),#end
+    #end
+    ],
+    "buttons": [
+        {
+            "link": "/${moduleName}/${businessName}",
+            "name": "提交",
+            "type": "submit",
+            "method": "put"
+        }
+    ],
+    "placement": "center"
+},
+"type": "popForm"
+}');

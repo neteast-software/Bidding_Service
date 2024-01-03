@@ -37,23 +37,41 @@ public class PackageInformationController extends BaseController {
     ISupplierInformationService supplierInformationService;
 
     @Resource
+    IProjectInformationService projectInformationService;
+
+    @Resource
     IProjectScoreItemService scoreItemService;
 
     @Resource
     IProjectExpertService projectExpertService;
+
+    @Resource
+    IScoreItemRuleService scoreItemRuleService;
 
     @GetMapping("/list")
     public AjaxResult getPackageInformationList(PackageInformation packageInformation){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
+        ProjectInformation project = projectInformationService.getById(packageInformation.getProjectId());
+        if (project==null){
+            return error("不存在该项目");
+        }
         List<PackageInformation> list = packageInformationService.lambdaQuery().eq(PackageInformation::getProjectId,packageInformation.getProjectId()).list();
         List<PackageInformationVO> voList = new ArrayList<>();
         list.forEach(l->{
             PackageInformationVO vo = PackageInformationVO.convert(l);
             //评分项内容
             List<ProjectScoreItem> scoreItems = scoreItemService.getProjectScoreItemList(l.getProjectId(),l.getId());
-            vo.setScoreItems(scoreItems);
+            List<ProjectScoreVO> vos = new ArrayList<>();
+            scoreItems.forEach(s->{
+                ScoreItemRule temp = ScoreItemRule.builder().projectType(project.getProjectTypeId()).scoreMethod(l.getScoreId())
+                        .tradeMethod(project.getTradeType()).itemType(s.getItemType()).specialCondition(project.getSpecialCondition()).build();
+                ScoreItemRule rule = scoreItemRuleService.getScoreItemRole(temp);
+                ProjectScoreVO scoreVO = ProjectScoreVO.convert(s,rule);
+                vos.add(scoreVO);
+            });
+            vo.setScoreItems(vos);
             //附加项内容
             List<ProjectCondition> conditions = projectPlusConditionService.lambdaQuery().eq(ProjectCondition::getPackageId,l.getId())
                     .eq(ProjectCondition::getProjectId,l.getProjectId()).list();
@@ -71,6 +89,7 @@ public class PackageInformationController extends BaseController {
         PackageInformation information = packageInformationService.getById(id);
         Integer packageId = information.getId();
         Integer projectId = information.getProjectId();
+        ProjectInformation project = projectInformationService.getById(projectId);
         PackageInformationVO informationVO = PackageInformationVO.convert(information);
         //附加项内容
         List<ProjectCondition> conditions = projectPlusConditionService.lambdaQuery().eq(ProjectCondition::getPackageId,packageId)
@@ -78,7 +97,15 @@ public class PackageInformationController extends BaseController {
         informationVO.setConditions(conditions);
         //评分项内容
         List<ProjectScoreItem> scoreItems = scoreItemService.getProjectScoreItemList(projectId,packageId);
-        informationVO.setScoreItems(scoreItems);
+        List<ProjectScoreVO> vos = new ArrayList<>();
+        scoreItems.forEach(s->{
+            ScoreItemRule temp = ScoreItemRule.builder().projectType(project.getProjectTypeId()).scoreMethod(informationVO.getScoreId())
+                    .tradeMethod(project.getTradeType()).itemType(s.getItemType()).specialCondition(project.getSpecialCondition()).build();
+            ScoreItemRule rule = scoreItemRuleService.getScoreItemRole(temp);
+            ProjectScoreVO scoreVO = ProjectScoreVO.convert(s,rule);
+            vos.add(scoreVO);
+        });
+        informationVO.setScoreItems(vos);
         return success(informationVO);
     }
 

@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
     
     <sql id="selectConfigVo">
-        select config_id, config_name, config_key, config_value, config_type, create_by, create_time, update_by, update_time, remark 
+        select config_id, config_name, config_key, config_value, config_type, create_by, create_time, update_by, update_time
 		from sys_config
     </sql>
     
@@ -76,7 +76,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="configValue != null and configValue != '' ">config_value,</if>
 			<if test="configType != null and configType != '' ">config_type,</if>
 			<if test="createBy != null and createBy != ''">create_by,</if>
-			<if test="remark != null and remark != ''">remark,</if>
  			create_time
         )values(
 			<if test="configName != null and configName != ''">#{configName},</if>
@@ -84,7 +83,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="configValue != null and configValue != ''">#{configValue},</if>
 			<if test="configType != null and configType != ''">#{configType},</if>
 			<if test="createBy != null and createBy != ''">#{createBy},</if>
-			<if test="remark != null and remark != ''">#{remark},</if>
  			sysdate()
 		)
     </insert>
@@ -97,7 +95,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="configValue != null and configValue != ''">config_value = #{configValue},</if>
             <if test="configType != null and configType != ''">config_type = #{configType},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-            <if test="remark != null">remark = #{remark},</if>
  			update_time = sysdate()
         </set>
         where config_id = #{configId}

@@ -55,7 +55,7 @@ public class PackageInformationVO {
     private List<ProjectCondition> conditions;
 
     /** 分包评分项 */
-    private List<ProjectScoreItem> scoreItems;
+    private List<ProjectScoreVO> scoreItems;
 
     public static PackageInformation convert(PackageInformationVO packageInformationVO){
         PackageInformation packageInformation = new PackageInformation();

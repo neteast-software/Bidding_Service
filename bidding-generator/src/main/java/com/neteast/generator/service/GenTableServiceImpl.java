@@ -11,6 +11,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import com.neteast.generator.util.VelocityUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
@@ -35,7 +37,6 @@ import com.neteast.generator.mapper.GenTableColumnMapper;
 import com.neteast.generator.mapper.GenTableMapper;
 import com.neteast.generator.util.GenUtils;
 import com.neteast.generator.util.VelocityInitializer;
-import com.neteast.generator.util.VelocityUtils;
 
 /**
  * 业务 服务层实现

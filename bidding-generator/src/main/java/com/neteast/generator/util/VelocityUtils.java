@@ -1,20 +1,21 @@
 package com.neteast.generator.util;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import org.apache.velocity.VelocityContext;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import com.neteast.common.constant.GenConstants;
+import com.neteast.common.core.domain.entity.SysDictData;
 import com.neteast.common.utils.DateUtils;
+import com.neteast.common.utils.DictUtils;
 import com.neteast.common.utils.StringUtils;
 import com.neteast.generator.domain.GenTable;
 import com.neteast.generator.domain.GenTableColumn;
+import org.apache.velocity.VelocityContext;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 
 /**
- * 模板处理工具类
+ * 模板工具类
  * 
  * @author ruoyi
  */
@@ -28,6 +29,8 @@ public class VelocityUtils
 
     /** 默认上级菜单，系统工具 */
     private static final String DEFAULT_PARENT_MENU_ID = "3";
+
+
 
     /**
      * 设置模板变量信息
@@ -60,7 +63,16 @@ public class VelocityUtils
         velocityContext.put("permissionPrefix", getPermissionPrefix(moduleName, businessName));
         velocityContext.put("columns", genTable.getColumns());
         velocityContext.put("table", genTable);
-        velocityContext.put("dicts", getDicts(genTable));
+        String dicts = getDicts(genTable);
+        velocityContext.put("dicts", dicts);
+        // 设置列和查询字段
+        velocityContext.put("listColumns", genTable.getColumns().stream().filter(o->o.isList()).collect(Collectors.toList()));
+        velocityContext.put("queryColumns", genTable.getColumns().stream().filter(o->o.isQuery()).collect(Collectors.toList()));
+        velocityContext.put("addColumns", genTable.getColumns().stream().filter(o->o.isInsert()).collect(Collectors.toList()));
+        velocityContext.put("editColumns", genTable.getColumns().stream().filter(o->o.isEdit()).collect(Collectors.toList()));
+        // 设置字典数据
+        velocityContext.put("dictsData", getDictsData(dicts));
+
         setMenuVelocityContext(velocityContext, genTable);
         if (GenConstants.TPL_TREE.equals(tplCategory))
         {
@@ -71,6 +83,25 @@ public class VelocityUtils
             setSubVelocityContext(velocityContext, genTable);
         }
         return velocityContext;
+    }
+
+    /**
+     * 获取数据字典数据
+     * @author hj
+     * @date 2023/6/15 14:06
+     * @param dicts 
+     * @return java.lang.Object
+     */
+    private static Map getDictsData(String dicts) {
+        Map<String, List<SysDictData>> resultMap = new HashMap<>();
+        if(StringUtils.isNotEmpty(dicts)){
+            List<String> split = Arrays.asList(dicts.replace("'","").split(","));
+            split.forEach(o->{
+                List<SysDictData> dictData = DictUtils.getDictCache(o.trim());
+                resultMap.put(o.trim(),dictData);
+            });
+        }
+        return resultMap;
     }
 
     public static void setMenuVelocityContext(VelocityContext context, GenTable genTable)

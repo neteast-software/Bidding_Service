@@ -47,8 +47,8 @@ public class ScoreItem {
      * 1-主观题(同一个供应商，该子项得分不一致)
      * 2-客观题(同一个供应商，该子项得分一致)
      */
-    @TableField("title_type")
-    private Integer titleType;
+    @TableField("judge_type")
+    private Integer judgeType;
 
     /** 评分项描述 */
     @TableField("content")

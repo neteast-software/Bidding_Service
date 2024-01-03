@@ -57,7 +57,7 @@ public class ScoreItemVO {
         scoreItem.setPassType(3);
         scoreItem.setValue(vo.getValue());
         scoreItem.setExtId(vo.getExtId());
-        scoreItem.setTitleType(vo.getTitleType());
+        scoreItem.setJudgeType(vo.getTitleType());
         scoreItem.setInputType(2);
         return scoreItem;
     }
@@ -71,7 +71,7 @@ public class ScoreItemVO {
         scoreItem.setPassType(3);
         scoreItem.setValue(vo.getValue());
         scoreItem.setExtId(vo.getExtId());
-        scoreItem.setTitleType(vo.getTitleType());
+        scoreItem.setJudgeType(vo.getTitleType());
         scoreItem.setInputType(2);
         return scoreItem;
     }
@@ -89,7 +89,7 @@ public class ScoreItemVO {
             //扣除分数
             scoreItem.setValue(vo.getValue());
         }
-        scoreItem.setTitleType(2);
+        scoreItem.setJudgeType(2);
         scoreItem.setExtId(vo.getExtId());
         scoreItem.setInputType(1);
         return scoreItem;
@@ -103,7 +103,7 @@ public class ScoreItemVO {
         scoreItem.setExtId(vo.getExtId());
         scoreItem.setPassType(3);
         scoreItem.setValue(vo.getValue());
-        scoreItem.setTitleType(2);
+        scoreItem.setJudgeType(2);
         scoreItem.setInputType(2);
         return scoreItem;
     }
@@ -116,7 +116,7 @@ public class ScoreItemVO {
         scoreItem.setExtId(vo.getExtId());
         scoreItem.setPassType(1);
         scoreItem.setInputType(1);
-        scoreItem.setTitleType(2);
+        scoreItem.setJudgeType(2);
         scoreItem.setValue(0.0D);
         return scoreItem;
     }

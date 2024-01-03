@@ -5,9 +5,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import com.github.pagehelper.PageHelper;
@@ -32,6 +36,13 @@ import com.neteast.common.utils.sql.SqlUtil;
 public class BaseController
 {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private final static String FILTER_STR = "filter";
+    private final static String NAME_STR = "name";
+    private final static String ATTRS_STR = "attrs";
+    private final static String OPTIONS_STR = "options";
+    private final static String ITEMS_STR = "items";
+    private final static String GRAPH_STR = "graph";
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
@@ -236,4 +247,58 @@ public class BaseController
     {
         return getLoginUser().getUsername();
     }
+
+    /**
+     * 填充过滤器选项值
+     * @author hj
+     * @date 2023/7/17 15:18
+     * @param rendering
+     * @param list
+     * @param filterName
+     * @return com.alibaba.fastjson2.JSONObject
+     */
+    protected JSONObject fillFilterOptions(JSONObject rendering, List list, String filterName) {
+        if(CollectionUtils.isEmpty(list)){
+            return rendering;
+        }
+        try {
+            JSONArray jsonArray = rendering.getJSONObject(FILTER_STR).getJSONArray(ITEMS_STR);
+            for (int i=0; i<jsonArray.size(); i++){
+                JSONObject filterJson = jsonArray.getJSONObject(i);
+                if(filterJson.getString(NAME_STR).equals(filterName)){
+                    JSONObject attrsObj = filterJson.getJSONObject(ATTRS_STR);
+                    if(!MapUtils.isEmpty(attrsObj)){
+                        attrsObj.put(OPTIONS_STR, list);
+                    }
+                }
+            }
+        }catch (Exception e) {
+            logger.error("填充过滤器选项值异常", e);
+        }
+        return rendering;
+    }
+
+    protected JSONObject fillGraphOptions(JSONObject rendering, List list, String filterName) {
+        if(CollectionUtils.isEmpty(list)){
+            return rendering;
+        }
+        try {
+            JSONArray jsonArray = rendering.getJSONObject(GRAPH_STR).getJSONArray(ITEMS_STR);
+            for (int i=0; i<jsonArray.size(); i++){
+                JSONObject filterJson = jsonArray.getJSONObject(i);
+                String nameStr = filterJson.getString(NAME_STR);
+                nameStr = StrUtil.isNotBlank(nameStr)?nameStr:"";
+                if(nameStr.equals(filterName)){
+                    JSONObject attrsObj = filterJson.getJSONObject(ATTRS_STR);
+                    if(!MapUtils.isEmpty(attrsObj)){
+                        attrsObj.put(OPTIONS_STR, list);
+                    }
+                }
+            }
+        }catch (Exception e) {
+            logger.error("填充过滤器选项值异常", e);
+        }
+        return rendering;
+    }
+
 }
