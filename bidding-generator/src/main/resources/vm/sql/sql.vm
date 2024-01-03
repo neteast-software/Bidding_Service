@@ -491,7 +491,9 @@ insert into sys_dynamic_rendering (module, page, method, rendering) values('${mo
                 #end
             #end
         ],
-        "dictType":"$column.dictType",
+        #if($column.dictType)
+            "dictType":"$column.dictType",
+        #end
         "labelField": "dictLabel",
         "valueField": "dictValue",
         "placeholder": "请选择$column.columnComment"

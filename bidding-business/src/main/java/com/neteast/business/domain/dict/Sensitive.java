@@ -21,13 +21,17 @@ public class Sensitive extends BaseEntity {
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    /** 模板招标类型 */
-    @TableField("bidding_type")
-    private String biddingType;
+    /** 是否通用 */
+    @TableField("common")
+    private Integer common;
 
-    /** 模板的所属项目类型 */
-    @TableField("project_type")
-    private String projectType;
+    /** 项目交易类型 */
+    @TableField("trade_type")
+    private Integer tradeType;
+
+    /** 项目行业类型 */
+    @TableField("project_industry")
+    private Integer projectIndustry;
 
     /** 敏感词 */
     @TableField("word")
