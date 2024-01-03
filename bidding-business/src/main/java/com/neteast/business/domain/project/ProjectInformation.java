@@ -108,10 +108,6 @@ public class ProjectInformation extends BaseEntity {
     @TableField("earnest_remark")
     private String earnestRemark;
 
-    /** 项目特殊条件 */
-    @TableField("special_condition")
-    private String specialCondition;
-
     public static ProjectInformation convert(ProjectInformationVO projectInformationVO){
         ProjectInformation projectInformation = new ProjectInformation();
         BeanUtil.copyProperties(projectInformationVO,projectInformation);

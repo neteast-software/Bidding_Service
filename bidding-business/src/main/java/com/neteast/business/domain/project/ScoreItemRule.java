@@ -63,4 +63,8 @@ public class ScoreItemRule extends BaseEntity {
     /** 评分子项最大分 */
     @TableField("child_value")
     private Double childValue;
+
+    /** 项目是否删除 */
+    @TableField("del")
+    private Boolean del;
 }

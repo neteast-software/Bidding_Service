@@ -30,8 +30,6 @@ public class VelocityUtils
     /** 默认上级菜单，系统工具 */
     private static final String DEFAULT_PARENT_MENU_ID = "3";
 
-
-
     /**
      * 设置模板变量信息
      *
@@ -63,15 +61,15 @@ public class VelocityUtils
         velocityContext.put("permissionPrefix", getPermissionPrefix(moduleName, businessName));
         velocityContext.put("columns", genTable.getColumns());
         velocityContext.put("table", genTable);
-        String dicts = getDicts(genTable);
-        velocityContext.put("dicts", dicts);
         // 设置列和查询字段
         velocityContext.put("listColumns", genTable.getColumns().stream().filter(o->o.isList()).collect(Collectors.toList()));
         velocityContext.put("queryColumns", genTable.getColumns().stream().filter(o->o.isQuery()).collect(Collectors.toList()));
         velocityContext.put("addColumns", genTable.getColumns().stream().filter(o->o.isInsert()).collect(Collectors.toList()));
         velocityContext.put("editColumns", genTable.getColumns().stream().filter(o->o.isEdit()).collect(Collectors.toList()));
         // 设置字典数据
-        velocityContext.put("dictsData", getDictsData(dicts));
+        //String dicts = getDicts(genTable);
+        //velocityContext.put("dicts", dicts);
+        //velocityContext.put("dictsData", getDictsData(dicts));
 
         setMenuVelocityContext(velocityContext, genTable);
         if (GenConstants.TPL_TREE.equals(tplCategory))

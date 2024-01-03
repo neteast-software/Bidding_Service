@@ -9,5 +9,5 @@ import com.neteast.business.domain.project.ScoreItemRule;
  */
 public interface IScoreItemRuleService extends IService<ScoreItemRule> {
 
-    ScoreItemRule getScoreItemRole(ScoreItemRule rule);
+    ScoreItemRule getScoreItemRole(ScoreItemRule rule,Integer projectId,Integer packageId);
 }

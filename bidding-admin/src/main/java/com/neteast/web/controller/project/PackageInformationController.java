@@ -66,8 +66,8 @@ public class PackageInformationController extends BaseController {
             List<ProjectScoreVO> vos = new ArrayList<>();
             scoreItems.forEach(s->{
                 ScoreItemRule temp = ScoreItemRule.builder().projectType(project.getProjectTypeId()).scoreMethod(l.getScoreId())
-                        .tradeMethod(project.getTradeType()).itemType(s.getItemType()).specialCondition(project.getSpecialCondition()).build();
-                ScoreItemRule rule = scoreItemRuleService.getScoreItemRole(temp);
+                        .tradeMethod(project.getTradeType()).itemType(s.getItemType()).build();
+                ScoreItemRule rule = scoreItemRuleService.getScoreItemRole(temp,l.getProjectId(),l.getId());
                 ProjectScoreVO scoreVO = ProjectScoreVO.convert(s,rule);
                 vos.add(scoreVO);
             });
@@ -100,8 +100,8 @@ public class PackageInformationController extends BaseController {
         List<ProjectScoreVO> vos = new ArrayList<>();
         scoreItems.forEach(s->{
             ScoreItemRule temp = ScoreItemRule.builder().projectType(project.getProjectTypeId()).scoreMethod(informationVO.getScoreId())
-                    .tradeMethod(project.getTradeType()).itemType(s.getItemType()).specialCondition(project.getSpecialCondition()).build();
-            ScoreItemRule rule = scoreItemRuleService.getScoreItemRole(temp);
+                    .tradeMethod(project.getTradeType()).itemType(s.getItemType()).build();
+            ScoreItemRule rule = scoreItemRuleService.getScoreItemRole(temp,projectId,packageId);
             ProjectScoreVO scoreVO = ProjectScoreVO.convert(s,rule);
             vos.add(scoreVO);
         });

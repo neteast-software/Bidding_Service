@@ -2,11 +2,14 @@ package com.neteast.common.utils;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+
 import com.alibaba.fastjson2.JSONArray;
 import com.neteast.common.constant.CacheConstants;
 import com.neteast.common.core.domain.entity.SysDictData;
 import com.neteast.common.core.redis.RedisCache;
 import com.neteast.common.utils.spring.SpringUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * 字典工具类
@@ -182,5 +185,19 @@ public class DictUtils
     public static String getCacheKey(String configKey)
     {
         return CacheConstants.SYS_DICT_KEY + configKey;
+    }
+
+    public static String getDictDataLabel(List<SysDictData> dictDataList, String value){
+        String label = "";
+        if(CollectionUtils.isNotEmpty(dictDataList)){
+            Optional<SysDictData> optional = dictDataList.stream().filter(o->{
+                final Object dictValue = o.getDictValue();
+                return dictValue != null && dictValue.equals(value);
+            }).findFirst();
+            if(optional.isPresent()){
+                label = (String)optional.get().getDictLabel();
+            }
+        }
+        return label;
     }
 }
