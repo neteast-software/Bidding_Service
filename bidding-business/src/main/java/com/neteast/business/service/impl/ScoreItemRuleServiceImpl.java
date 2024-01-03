@@ -24,6 +24,15 @@ public class ScoreItemRuleServiceImpl extends ServiceImpl<ScoreItemRuleMapper, S
     @Resource
     ISpecialConditionService specialConditionService;
 
+    @Resource
+    ScoreItemRuleMapper scoreItemRuleMapper;
+
+    @Override
+    public List<ScoreItemRule> getScoreItemList(ScoreItemRule scoreItemRule) {
+
+        return scoreItemRuleMapper.getList(scoreItemRule);
+    }
+
     @Override
     public ScoreItemRule getScoreItemRole(ScoreItemRule rule,Integer projectId,Integer packageId) {
         //获取相应规则
