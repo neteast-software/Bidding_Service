@@ -54,8 +54,11 @@ public class ProjectStageController extends BaseController {
     }
 
     @GetMapping("/getProjectStep/{id}")
-    public AjaxResult getProjectStepList(@PathVariable("id") Integer projectId){
+    public AjaxResult getProjectStepList(@PathVariable(value = "id",required = false) Integer projectId){
 
+        if (projectId==null){
+            return error("未携带项目id参数");
+        }
         ProjectInformation information = informationService.getById(projectId);
         //获取项目类型
         Integer typeId = information.getProjectTypeId();

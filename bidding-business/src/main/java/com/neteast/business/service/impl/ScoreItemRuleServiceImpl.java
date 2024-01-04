@@ -1,12 +1,13 @@
 package com.neteast.business.service.impl;
 
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.project.ScoreItemRule;
-import com.neteast.business.domain.project.SpecialCondition;
+import com.neteast.business.domain.project.RuleCondition;
+import com.neteast.business.domain.project.vo.ScoreItemRuleVO;
 import com.neteast.business.mapper.ScoreItemRuleMapper;
 import com.neteast.business.service.IScoreItemRuleService;
-import com.neteast.business.service.ISpecialConditionService;
+import com.neteast.business.service.IRuleConditionService;
+import com.neteast.common.annotation.DictDataClass;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 public class ScoreItemRuleServiceImpl extends ServiceImpl<ScoreItemRuleMapper, ScoreItemRule> implements IScoreItemRuleService {
 
     @Resource
-    ISpecialConditionService specialConditionService;
+    IRuleConditionService specialConditionService;
 
     @Resource
     ScoreItemRuleMapper scoreItemRuleMapper;
@@ -31,6 +32,13 @@ public class ScoreItemRuleServiceImpl extends ServiceImpl<ScoreItemRuleMapper, S
     public List<ScoreItemRule> getScoreItemList(ScoreItemRule scoreItemRule) {
 
         return scoreItemRuleMapper.getList(scoreItemRule);
+    }
+
+    @Override
+    @DictDataClass
+    public List<ScoreItemRuleVO> getScoreItemListByDict(ScoreItemRule scoreItemRule) {
+
+        return scoreItemRuleMapper.getListByDict(scoreItemRule);
     }
 
     @Override
@@ -43,18 +51,18 @@ public class ScoreItemRuleServiceImpl extends ServiceImpl<ScoreItemRuleMapper, S
                 .list();
 
         //获取项目的特殊情况
-        List<SpecialCondition> projectList = specialConditionService.lambdaQuery().eq(SpecialCondition::getType,1)
-                .eq(SpecialCondition::getExtId,projectId).list();
+        List<RuleCondition> projectList = specialConditionService.lambdaQuery().eq(RuleCondition::getRuleBelong,1)
+                .eq(RuleCondition::getExtId,projectId).list();
 
         //获取分包的特殊情况
-        List<SpecialCondition> packageList = specialConditionService.lambdaQuery().eq(SpecialCondition::getType,2)
-                .eq(SpecialCondition::getExtId,packageId).list();
+        List<RuleCondition> packageList = specialConditionService.lambdaQuery().eq(RuleCondition::getRuleBelong,2)
+                .eq(RuleCondition::getExtId,packageId).list();
 
         projectList.addAll(packageList);
 
-        Map<String,List<ScoreItemRule>> map = rules.stream().collect(Collectors.groupingBy(ScoreItemRule::getSpecialCondition));
+        Map<Integer,List<ScoreItemRule>> map = rules.stream().collect(Collectors.groupingBy(ScoreItemRule::getSpecialCondition));
 
-        List<String> list = projectList.stream().map(SpecialCondition::getName).collect(Collectors.toList());
+        List<Integer> list = projectList.stream().map(RuleCondition::getRuleId).collect(Collectors.toList());
 
         ScoreItemRule scoreItemRule =  getItemTypeRule(map,list);
         if (scoreItemRule==null){
@@ -71,16 +79,16 @@ public class ScoreItemRuleServiceImpl extends ServiceImpl<ScoreItemRuleMapper, S
      * @author lzp
      * @Date 2024/1/2
      */
-    private ScoreItemRule getItemTypeRule(Map<String,List<ScoreItemRule>> rules,List<String> list){
+    private ScoreItemRule getItemTypeRule(Map<Integer,List<ScoreItemRule>> rules,List<Integer> list){
 
         if (list.size()==0){
             return null;
         }
         //符合的规则
         List<ScoreItemRule> use = new ArrayList<>();
-        for (String rule:list) {
+        for (Integer rule:list) {
             List<ScoreItemRule> value = rules.get(rule);
-            boolean res = judgeRule(value.get(0),rule);
+            boolean res = judgeRule(value.get(0));
             if (res){
                 use.add(value.get(0));
             }
@@ -105,7 +113,7 @@ public class ScoreItemRuleServiceImpl extends ServiceImpl<ScoreItemRuleMapper, S
      * @author lzp
      * @Date 2024/1/2
      */
-    private boolean judgeRule(ScoreItemRule rule,String itemName){
+    private boolean judgeRule(ScoreItemRule rule){
 
         //特殊情况
         Integer specialRelation = rule.getSpecialRelation();
@@ -114,10 +122,6 @@ public class ScoreItemRuleServiceImpl extends ServiceImpl<ScoreItemRuleMapper, S
             return true;
         }
         //为1表示包含关系 为2表示排除
-        if (specialRelation==1){
-            return rule.getSpecialCondition().equals(itemName);
-        }else{
-            return !rule.getSpecialCondition().equals(itemName);
-        }
+        return specialRelation == 1;
     }
 }

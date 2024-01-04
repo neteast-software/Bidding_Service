@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neteast.business.mapper.ProjectRuleConditionMapper">
+
+    <select id="getList" resultType="com.neteast.business.domain.project.ProjectRuleCondition" parameterType="com.neteast.business.domain.project.ProjectRuleCondition">
+        select
+        id,condition_belong,condition_name,del
+        from project_rule_condition
+        <where>
+            del = 1
+            <if test="conditionBelong != null and conditionBelong != ''">
+                and condition_belong = #{conditionBelong}
+            </if>
+            <if test="conditionName != null and conditionName != ''">
+                and condition_name = #{conditionName}
+            </if>
+        </where>
+    </select>
+
+</mapper>

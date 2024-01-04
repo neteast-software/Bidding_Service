@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.common.annotation.DictData;
 import com.neteast.common.core.domain.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,7 +47,7 @@ public class ScoreItemRule extends BaseEntity {
 
     /** 特殊条件 */
     @TableField("special_condition")
-    private String specialCondition;
+    private Integer specialCondition;
 
     /** 评分项类型 */
     @TableField("item_type")

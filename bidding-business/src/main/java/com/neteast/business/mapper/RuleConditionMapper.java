@@ -1,7 +1,7 @@
 package com.neteast.business.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.neteast.business.domain.project.SpecialCondition;
+import com.neteast.business.domain.project.RuleCondition;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface SpecialConditionMapper extends BaseMapper<SpecialCondition> {
+public interface RuleConditionMapper extends BaseMapper<RuleCondition> {
 }

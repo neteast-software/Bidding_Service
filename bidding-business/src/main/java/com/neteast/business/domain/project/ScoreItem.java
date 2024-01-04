@@ -24,6 +24,10 @@ public class ScoreItem {
     @TableField("title")
     private String title;
 
+    /** 项目id */
+    @TableField("project_id")
+    private Integer projectId;
+
     /** 项目的评分项id */
     @TableField("ext_id")
     private Integer extId;

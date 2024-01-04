@@ -2,7 +2,9 @@ package com.neteast.web.controller.project;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.ScoreItemRule;
+import com.neteast.business.domain.project.vo.ScoreItemRuleVO;
 import com.neteast.business.service.IScoreItemRuleService;
+import com.neteast.business.service.ISysDynamicRenderingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -25,22 +27,42 @@ public class ScoreItemRuleController extends BaseController {
     @Resource
     IScoreItemRuleService scoreItemRuleService;
 
-    @PostMapping("/add")
-    public AjaxResult addScoreItemRule(@RequestBody ScoreItemRule rule){
-
-        scoreItemRuleService.save(rule);
-        return addSuccess();
-    }
+    @Resource
+    ISysDynamicRenderingService sysDynamicRenderingService;
 
     @GetMapping("/listByPage")
     public AjaxResult getScoreItemRuleListByPage(ScoreItemRule scoreItemRule){
 
         startPage();
         PageDomain pageDomain = TableSupport.getPageDomain();
-        List<ScoreItemRule> list = scoreItemRuleService.getScoreItemList(scoreItemRule);
+        List<ScoreItemRuleVO> list = scoreItemRuleService.getScoreItemListByDict(scoreItemRule);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","scoreItemRule","list");
         TableDataInfo info = getDataTable(list);
-        JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
-        return success(body);
+        initPageParams(rendering,info,pageDomain.getPageSize(),pageDomain.getPageNum());
+        return success(rendering);
+    }
+
+    @GetMapping("/toModify/{id}")
+    public AjaxResult toModify(@PathVariable("id")Integer id){
+
+        ScoreItemRule rule = scoreItemRuleService.getById(id);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","scoreItemRule","toModify");
+        rendering.put("data",rule);
+        return success(rendering);
+    }
+
+    @GetMapping("/toAdd")
+    public AjaxResult toAdd(){
+
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","scoreItemRule","toAdd");
+        return success(rendering);
+    }
+
+    @PostMapping("/add")
+    public AjaxResult addScoreItemRule(@RequestBody ScoreItemRule rule){
+
+        scoreItemRuleService.save(rule);
+        return addSuccess();
     }
 
     @PostMapping("/update")

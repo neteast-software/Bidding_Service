@@ -390,7 +390,7 @@ insert into sys_dynamic_rendering (module, page, method, rendering) values('${mo
     "name": "编辑${functionName}",
     "inner": false,
     "items": [
-    #foreach($column in $addColumns)
+    #foreach($column in $editColumns)
         #if($column.pk)
             {
             "name": "$column.javaField",

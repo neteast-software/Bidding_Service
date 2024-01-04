@@ -48,4 +48,12 @@ public class ProjectScoreItemServiceImpl extends ServiceImpl<ProjectScoreItemMap
         this.removeById(id);
         return true;
     }
+
+    @Override
+    public boolean clearProjectScoreRecord(Integer projectId) {
+        return this.lambdaUpdate().eq(ProjectScoreItem::getProjectId,projectId)
+                .set(ProjectScoreItem::getNum,0)
+                .set(ProjectScoreItem::getValue,0.0)
+                .update();
+    }
 }

@@ -13,22 +13,21 @@ import lombok.Data;
  */
 
 @Data
-@TableName("special_condition")
-public class SpecialCondition {
+@TableName("rule_condition")
+public class RuleCondition {
 
     /** 主键id */
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
-    /** (项目/分包)id */
+    /** (项目/包id) */
     @TableField("ext_id")
     private Integer extId;
 
-    /** 特殊情况名称 */
-    @TableField("name")
-    private String Name;
+    /** 特殊规则id */
+    @TableField("rule_id")
+    private Integer ruleId;
 
-    /** 1-项目类型 2-分包类型 */
-    @TableField("type")
-    private Integer type;
+    @TableField("rule_belong")
+    private Integer ruleBelong;
 }

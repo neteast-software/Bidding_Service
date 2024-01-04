@@ -13,5 +13,7 @@ import java.util.List;
 @Data
 public class ProjectScoreItemVO {
 
+    private Integer projectId;
+
     List<ScoreItemVO> items;
 }

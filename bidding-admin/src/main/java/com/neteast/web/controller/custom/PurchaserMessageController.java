@@ -3,6 +3,7 @@ package com.neteast.web.controller.custom;
 import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.custom.PurchaserMessage;
 import com.neteast.business.service.IPurchaserMessageService;
+import com.neteast.business.service.ISysDynamicRenderingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -26,6 +27,9 @@ public class PurchaserMessageController extends BaseController {
     @Resource
     IPurchaserMessageService purchaserMessageService;
 
+    @Resource
+    ISysDynamicRenderingService sysDynamicRenderingService;
+
     @GetMapping("/listByPage")
     public AjaxResult getPurchaserMessageListByPage(PurchaserMessage purchaserMessage){
 
@@ -33,8 +37,23 @@ public class PurchaserMessageController extends BaseController {
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<PurchaserMessage> list = purchaserMessageService.getPurchaserMessageList(purchaserMessage);
         TableDataInfo info = getDataTable(list);
-        JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
-        return success(body);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("custom","purchaser","list");
+        initPageParams(rendering,info, pageDomain.getPageSize(),pageDomain.getPageNum());
+        return success(rendering);
+    }
+
+    @GetMapping("/toModify/{id}")
+    public AjaxResult toModify(@PathVariable("id")Integer id){
+        PurchaserMessage message = purchaserMessageService.getById(id);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("custom","purchaser","toModify");
+        rendering.put("data",message);
+        return success(rendering);
+    }
+
+    @GetMapping("/toAdd")
+    public AjaxResult toAdd(){
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("custom","purchaser","toAdd");
+        return success(rendering);
     }
 
     @GetMapping("/list")

@@ -18,4 +18,6 @@ public interface IScoreItemService extends IService<ScoreItem> {
     boolean removeScoreItem(Integer id);
 
     boolean updateScoreItem(ScoreItem scoreItem);
+
+    boolean removeByProjectId(Integer projectId);
 }

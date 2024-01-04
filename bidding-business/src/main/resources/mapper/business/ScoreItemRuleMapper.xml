@@ -30,4 +30,29 @@
         </where>
     </select>
 
+    <select id="getListByDict" resultType="com.neteast.business.domain.project.vo.ProjectScoreVO" parameterType="com.neteast.business.domain.project.ScoreItemRule" >
+        select score.id,score_method,trade_method,project.name project_type,special_condition,item_type,max_value,min_value,child_value,create_time,create_by,update_time,update_by,special_relation
+        from score_item_rule score join project_type project on score.project_type=project.id
+        <where>
+            <if test="scoreMethod != null and scoreMethod != ''">
+                and score_method = #{scoreMethod}
+            </if>
+            <if test="tradeMethod != null and tradeMethod != ''">
+                and trade_method = #{tradeMethod}
+            </if>
+            <if test="projectType != null and projectType != ''">
+                and project_type = #{projectType}
+            </if>
+            <if test="specialCondition != null and specialCondition != ''">
+                and special_condition = #{specialCondition}
+            </if>
+            <if test="itemType != null and itemType != ''">
+                and item_type = #{itemType}
+            </if>
+            <if test="specialRelation != null and specialRelation != ''">
+                and special_relation = #{specialRelation}
+            </if>
+        </where>
+    </select>
+
 </mapper>

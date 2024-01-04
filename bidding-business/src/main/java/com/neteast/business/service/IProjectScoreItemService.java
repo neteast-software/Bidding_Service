@@ -16,4 +16,6 @@ public interface IProjectScoreItemService extends IService<ProjectScoreItem> {
     List<ProjectScoreItem> getProjectScoreItemList(Integer projectId,Integer packageId);
 
     boolean removeProjectScoreItem(Integer id);
+
+    boolean clearProjectScoreRecord(Integer projectId);
 }

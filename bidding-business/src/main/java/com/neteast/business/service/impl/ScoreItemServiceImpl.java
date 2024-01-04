@@ -1,5 +1,6 @@
 package com.neteast.business.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.project.ProjectScoreItem;
 import com.neteast.business.domain.project.ScoreItem;
@@ -64,5 +65,12 @@ public class ScoreItemServiceImpl extends ServiceImpl<ScoreItemMapper, ScoreItem
         }
         updateById(after);
         return true;
+    }
+
+    @Override
+    public boolean removeByProjectId(Integer projectId) {
+        QueryWrapper<ScoreItem> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("project_id",projectId);
+        return this.remove(queryWrapper);
     }
 }
