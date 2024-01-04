@@ -63,13 +63,13 @@ public class ScoreItemController extends BaseController{
                 default:
                     item = new ScoreItem();
             }
-            item.setProjectId(item.getProjectId());
+            item.setProjectId(itemVO.getProjectId());
             list.add(item);
         });
         list.forEach(l->{
             scoreItemService.addScoreItem(l);
         });
-        return success();
+        return addSuccess();
     }
 
     @PostMapping("/update")

@@ -15,5 +15,5 @@ public class ProjectScoreItemVO {
 
     private Integer projectId;
 
-    List<ScoreItemVO> items;
+    private List<ScoreItemVO> items;
 }

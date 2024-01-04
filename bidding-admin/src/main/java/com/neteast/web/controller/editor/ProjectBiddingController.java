@@ -69,13 +69,13 @@ public class ProjectBiddingController extends BaseController {
     public AjaxResult updateProjectBiddingData(@RequestBody ProjectBiddingVO projectBiddingVO){
         ProjectBidding projectBidding = ProjectBiddingVO.convert(projectBiddingVO);
         projectBiddingService.updateProjectBiddingFile(projectBidding);
-        return success();
+        return updateSuccess();
     }
 
     @PostMapping("/save")
     public AjaxResult saveProjectBiddingFile(@RequestBody ProjectFileContent fileContent) throws IOException {
         projectBiddingService.saveProjectBiddingFile(fileContent);
-        return success();
+        return saveSuccess();
     }
 
     @GetMapping("/content/{id}")
