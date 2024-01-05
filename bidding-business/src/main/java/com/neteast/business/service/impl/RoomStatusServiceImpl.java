@@ -38,8 +38,12 @@ public class RoomStatusServiceImpl extends ServiceImpl<RoomStatusMapper, RoomSta
 
     @Override
     public boolean removeRoomStatusByProjectId(Integer projectId) {
-        QueryWrapper<RoomStatus> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("projectId",projectId);
-        return remove(queryWrapper);
+        Long count = this.lambdaQuery().eq(RoomStatus::getProjectId,projectId).count();
+        if (count!=0){
+            QueryWrapper<RoomStatus> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("projectId",projectId);
+            return remove(queryWrapper);
+        }
+        return true;
     }
 }
