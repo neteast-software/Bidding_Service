@@ -43,6 +43,22 @@ public class SensitiveController extends BaseController {
         return success(rendering);
     }
 
+    @GetMapping("/toAdd")
+    public AjaxResult toAdd(){
+
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","sensitive","toAdd");
+        return success(rendering);
+    }
+
+    @GetMapping("/toModify/{id}")
+    public AjaxResult toModify(@PathVariable("id")Integer id){
+
+        Sensitive sensitive = sensitiveService.getById(id);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","sensitive","toModify");
+        rendering.put("data",sensitive);
+        return success(rendering);
+    }
+
     @GetMapping("/list")
     public AjaxResult getSensitiveList(SensitiveVO sensitiveVO){
 

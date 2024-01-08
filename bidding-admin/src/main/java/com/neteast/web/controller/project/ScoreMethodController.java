@@ -53,6 +53,22 @@ public class ScoreMethodController extends BaseController {
         return success(rendering);
     }
 
+    @GetMapping("/toAdd")
+    public AjaxResult toAdd(){
+
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","scoreMethod","toAdd");
+        return success(rendering);
+    }
+
+    @GetMapping("/toModify/{id}")
+    public AjaxResult toModify(@PathVariable("id")Integer id){
+
+        ScoreMethod scoreMethod = scoreMethodService.getById(id);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","scoreMethod","toModify");
+        rendering.put("data",scoreMethod);
+        return success(rendering);
+    }
+
     @GetMapping("/getOne/{id}")
     public AjaxResult getScoreMethodDetail(@PathVariable("id")Integer id){
 

@@ -50,6 +50,22 @@ public class ItemTemplateController extends BaseController {
         return success(rendering);
     }
 
+    @GetMapping("/toAdd")
+    public AjaxResult toAdd(){
+
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","itemTemplate","toAdd");
+        return success(rendering);
+    }
+
+    @GetMapping("/toModify/{id}")
+    public AjaxResult toModify(@PathVariable("id")Integer id){
+
+        ItemTemplate itemTemplate = itemTemplateService.getById(id);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","itemTemplate","toModify");
+        rendering.put("data",itemTemplate);
+        return success(rendering);
+    }
+
     @PostMapping("/add")
     public AjaxResult addItemTemplate(@RequestBody ItemTemplate itemTemplate){
 

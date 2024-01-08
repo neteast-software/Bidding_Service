@@ -43,6 +43,22 @@ public class PlusesConditionController extends BaseController {
         return success(rendering);
     }
 
+    @GetMapping("/toModify/{id}")
+    public AjaxResult toModify(@PathVariable("id")Integer id){
+
+        PlusesCondition plusesCondition = plusesConditionService.getById(id);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","plusesCondition","toModify");
+        rendering.put("data",plusesCondition);
+        return success(rendering);
+    }
+
+    @GetMapping("/toAdd")
+    public AjaxResult toAdd(){
+
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","plusesCondition","toAdd");
+        return success(rendering);
+    }
+
     @GetMapping("/list")
     public AjaxResult getPlusesConditionList(PlusesConditionVO plusesConditionVO){
 
