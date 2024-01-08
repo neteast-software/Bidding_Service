@@ -6,7 +6,7 @@
 
     <select id="getList" resultType="com.neteast.business.domain.project.ScoreItem" parameterType="com.neteast.business.domain.project.ScoreItem">
         select
-        id,ext_id,content,value,choose,title
+        id,ext_id,content,choose,title,min,max,select_array
         from score_item
         <where>
             <if test="id != null and id != ''">
@@ -17,12 +17,6 @@
             </if>
             <if test="content != null and content != ''">
                 and content = #{content}
-            </if>
-            <if test="value != null and value != ''">
-                and value = #{value}
-            </if>
-            <if test="choose != null and choose != ''">
-                and choose = #{choose}
             </if>
         </where>
     </select>

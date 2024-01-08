@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.neteast.business.domain.project.vo.ScoreItemVO;
 import lombok.Data;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class ProjectScoreItem {
 
     /** 该评分的评分项*/
     @TableField(exist = false)
-    private List<ScoreItem> scoreItems;
+    private List<ScoreItemVO> scoreItems;
 
     public void changeNum(Integer change){
         this.num = this.num + change;

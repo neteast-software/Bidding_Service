@@ -58,7 +58,15 @@ public class ScoreItem {
     @TableField("content")
     private String content;
 
-    /** 评分项的分值,无则为0.0 */
-    @TableField("value")
-    private Double value = 0.0D;
+    /** 评分项取值的最大值 */
+    @TableField("min")
+    private Double min = 0.0D;
+
+    /** 评分项取值的最小值 */
+    @TableField("max")
+    private Double max = 0.0D;
+
+    /** 选择内容 */
+    @TableField("select_array")
+    private String selectArray = "";
 }

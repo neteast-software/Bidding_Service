@@ -9,6 +9,7 @@
         id,score_method,trade_method,project_type,special_condition,item_type,max_value,min_value,child_value,create_time,create_by,update_time,update_by,special_relation
         from score_item_rule
         <where>
+            del = 0
             <if test="scoreMethod != null and scoreMethod != ''">
                 and score_method = #{scoreMethod}
             </if>
@@ -30,10 +31,11 @@
         </where>
     </select>
 
-    <select id="getListByDict" resultType="com.neteast.business.domain.project.vo.ProjectScoreVO" parameterType="com.neteast.business.domain.project.ScoreItemRule" >
+    <select id="getListByDict" resultType="com.neteast.business.domain.project.vo.ScoreItemRuleVO" parameterType="com.neteast.business.domain.project.ScoreItemRule" >
         select score.id,score_method,trade_method,project.name project_type,special_condition,item_type,max_value,min_value,child_value,create_time,create_by,update_time,update_by,special_relation
         from score_item_rule score join project_type project on score.project_type=project.id
         <where>
+            score.del = 0
             <if test="scoreMethod != null and scoreMethod != ''">
                 and score_method = #{scoreMethod}
             </if>

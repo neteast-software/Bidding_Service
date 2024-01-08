@@ -1,9 +1,13 @@
 package com.neteast.business.domain.project.vo;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.neteast.business.domain.project.ProjectScoreItem;
 import com.neteast.business.domain.project.ScoreItem;
 import lombok.Data;
+
+import java.util.ArrayList;
 
 /**
  * 评分项子项设置
@@ -40,13 +44,25 @@ public class ScoreItemVO {
      * 1-主观题(同一个供应商，该子项得分不一致)
      * 2-客观题(同一个供应商，该子项得分一致)
      */
-    private Integer titleType;
+    private Integer judgeType;
 
     /** 评分项描述 */
     private String content;
 
-    /** 评分项的分值,无则为0.0 */
-    private Double value = 0.0D;
+    /** 评分项取值的最大值 */
+    private Double max = 0.0D;
+
+    /** 评分项取值的最小值 */
+    private Double min = 0.0D;
+
+    /** 选择内容 */
+    private ArrayList<Double> selectArray = new ArrayList<>();
+
+    public static ScoreItemVO convert(ScoreItem scoreItem){
+        ScoreItemVO scoreItemVO = new ScoreItemVO();
+        BeanUtil.copyProperties(scoreItem,scoreItemVO);
+        return scoreItemVO;
+    }
 
     /** 商务分 */
     public static ScoreItem toBusiness(ScoreItemVO vo){
@@ -55,10 +71,22 @@ public class ScoreItemVO {
         scoreItem.setContent(vo.getContent());
         scoreItem.setTitle(vo.getTitle());
         scoreItem.setPassType(3);
-        scoreItem.setValue(vo.getValue());
+        scoreItem.setMax(vo.getMax());
+        scoreItem.setMin(vo.getMin());
         scoreItem.setExtId(vo.getExtId());
-        scoreItem.setJudgeType(vo.getTitleType());
-        scoreItem.setInputType(2);
+        scoreItem.setJudgeType(vo.getJudgeType());
+        scoreItem.setInputType(vo.getInputType());
+        if (vo.getInputType()==2){
+            scoreItem.setMax(vo.getMax());
+            scoreItem.setMin(vo.getMin());
+        }else if (vo.getInputType()==3){
+            scoreItem.setMax(vo.getMax());
+            StringBuilder content = new StringBuilder();
+            for (Double score: vo.getSelectArray()) {
+                content.append(score.toString()).append(",");
+            }
+            scoreItem.setSelectArray(content.toString());
+        }
         return scoreItem;
     }
 
@@ -67,12 +95,24 @@ public class ScoreItemVO {
         ScoreItem scoreItem = new ScoreItem();
         scoreItem.setTitle(vo.getTitle());
         scoreItem.setContent(vo.getContent());
-        scoreItem.setTitle(vo.getTitle());
-        scoreItem.setPassType(3);
-        scoreItem.setValue(vo.getValue());
+        scoreItem.setPassType(vo.getPassType());
+        scoreItem.setInputType(vo.getInputType());
+        if (vo.getInputType()==2){
+            scoreItem.setMax(vo.getMax());
+            scoreItem.setMin(vo.getMin());
+        }else if (vo.getInputType()==3){
+            scoreItem.setMax(vo.getMax());
+            StringBuilder content = new StringBuilder();
+            for (Double score: vo.getSelectArray()) {
+                content.append(score.toString()).append(",");
+            }
+            scoreItem.setSelectArray(content.toString());
+        }else if (vo.getInputType()==1){
+            scoreItem.setMax(vo.getMax());
+            scoreItem.setMin(vo.getMin());
+        }
         scoreItem.setExtId(vo.getExtId());
-        scoreItem.setJudgeType(vo.getTitleType());
-        scoreItem.setInputType(2);
+        scoreItem.setJudgeType(vo.getJudgeType());
         return scoreItem;
     }
 
@@ -83,11 +123,9 @@ public class ScoreItemVO {
         scoreItem.setContent(vo.getContent());
         Integer passType = vo.getPassType();
         scoreItem.setPassType(passType);
-        if (passType==1){
-            scoreItem.setValue(0.0D);
-        }else {
-            //扣除分数
-            scoreItem.setValue(vo.getValue());
+        if (passType==2){
+            scoreItem.setMin(vo.getMin());
+            scoreItem.setMax(vo.getMax());
         }
         scoreItem.setJudgeType(2);
         scoreItem.setExtId(vo.getExtId());
@@ -102,7 +140,8 @@ public class ScoreItemVO {
         scoreItem.setTitle(vo.getTitle());
         scoreItem.setExtId(vo.getExtId());
         scoreItem.setPassType(3);
-        scoreItem.setValue(vo.getValue());
+        scoreItem.setMax(vo.getMax());
+        scoreItem.setMin(vo.getMin());
         scoreItem.setJudgeType(2);
         scoreItem.setInputType(2);
         return scoreItem;
@@ -117,7 +156,8 @@ public class ScoreItemVO {
         scoreItem.setPassType(1);
         scoreItem.setInputType(1);
         scoreItem.setJudgeType(2);
-        scoreItem.setValue(0.0D);
+        scoreItem.setMax(vo.getMax());
+        scoreItem.setMin(0.0D);
         return scoreItem;
     }
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.dict.Sensitive;
 import com.neteast.business.domain.dict.vo.SensitiveVO;
 import com.neteast.business.service.ISensitiveService;
+import com.neteast.business.service.ISysDynamicRenderingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -27,6 +28,9 @@ public class SensitiveController extends BaseController {
     @Resource
     ISensitiveService sensitiveService;
 
+    @Resource
+    ISysDynamicRenderingService sysDynamicRenderingService;
+
     @GetMapping("/listByPage")
     public AjaxResult getSensitiveListByPage(SensitiveVO sensitiveVO){
 
@@ -34,8 +38,9 @@ public class SensitiveController extends BaseController {
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<SensitiveVO> list = sensitiveService.getSensitiveList(sensitiveVO);
         TableDataInfo info = getDataTable(list);
-        JSONObject body = initPageParams(info, pageDomain.getPageSize(), pageDomain.getPageNum());
-        return success(body);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","sensitive","list");
+        initPageParams(rendering,info, pageDomain.getPageSize(), pageDomain.getPageNum());
+        return success(rendering);
     }
 
     @GetMapping("/list")

@@ -10,6 +10,7 @@ import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
 import com.neteast.common.core.page.TableDataInfo;
 import com.neteast.common.core.page.TableSupport;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,7 +22,8 @@ import java.util.List;
  * @date 2024年01月02 11:56
  */
 
-@RestController("/scoreItemRule")
+@RestController
+@RequestMapping("/scoreItemRule")
 public class ScoreItemRuleController extends BaseController {
 
     @Resource

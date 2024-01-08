@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.dict.PlusesCondition;
 import com.neteast.business.domain.dict.vo.PlusesConditionVO;
 import com.neteast.business.service.IPlusesConditionService;
+import com.neteast.business.service.ISysDynamicRenderingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -27,6 +28,9 @@ public class PlusesConditionController extends BaseController {
     @Resource
     IPlusesConditionService plusesConditionService;
 
+    @Resource
+    ISysDynamicRenderingService sysDynamicRenderingService;
+
     @GetMapping("/listByPage")
     public AjaxResult getPlusesConditionListByPage(PlusesConditionVO plusesConditionVO){
 
@@ -34,8 +38,9 @@ public class PlusesConditionController extends BaseController {
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<PlusesConditionVO> list = plusesConditionService.getPlusesConditionList(plusesConditionVO);
         TableDataInfo info = getDataTable(list);
-        JSONObject body = initPageParams(info, pageDomain.getPageSize(), pageDomain.getPageNum());
-        return success(body);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","plusesCondition","list");
+        initPageParams(rendering,info, pageDomain.getPageSize(), pageDomain.getPageNum());
+        return success(rendering);
     }
 
     @GetMapping("/list")

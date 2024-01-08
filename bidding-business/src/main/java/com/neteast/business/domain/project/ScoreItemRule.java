@@ -65,7 +65,7 @@ public class ScoreItemRule extends BaseEntity {
     @TableField("child_value")
     private Double childValue;
 
-    /** 项目是否删除 */
+    /** 项目是否删除 0-删除 1-未删除 */
     @TableField("del")
     private Boolean del;
 }

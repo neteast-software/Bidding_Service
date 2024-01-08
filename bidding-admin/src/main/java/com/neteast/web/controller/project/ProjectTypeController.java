@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.ProjectType;
 import com.neteast.business.domain.project.vo.ProjectTypeVO;
 import com.neteast.business.service.IProjectTypeService;
+import com.neteast.business.service.ISysDynamicRenderingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -26,10 +27,20 @@ public class ProjectTypeController extends BaseController {
     @Resource
     IProjectTypeService projectTypeService;
 
+    @Resource
+    ISysDynamicRenderingService sysDynamicRenderingService;
+
     @GetMapping("/list")
     public AjaxResult getProjectTypeList(ProjectTypeVO projectTypeVO){
         List<ProjectTypeVO> list = projectTypeService.getProjectTypeList(projectTypeVO);
         return success(list);
+    }
+
+    @GetMapping("/toAdd")
+    public AjaxResult toAdd(){
+
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","projectType","toAdd");
+        return success(rendering);
     }
 
     @GetMapping("/listByPage")

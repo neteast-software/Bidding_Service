@@ -97,10 +97,15 @@ public class ProjectInformationServiceImpl extends ServiceImpl<ProjectInformatio
             projectTypeService.updateById(projectType);
             List<PackageInformationVO> packageInformationList = projectInformationVO.getPackageInformationList();
             if (packageInformationList!=null){
+                if (packageInformationList.size()==0){
+                    throw new BaseBusException("该项目无合同包，无法进行添加");
+                }
                 packageInformationList.forEach(p->{
                     p.setProjectId(projectId);
                     packageInformationService.savePackageInformation(p);
                 });
+            }else {
+                throw new BaseBusException("该项目无合同包，无法进行添加");
             }
             return true;
         }

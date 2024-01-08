@@ -9,6 +9,7 @@ import com.neteast.business.domain.project.vo.ProjectStepStatusVO;
 import com.neteast.business.service.IProjectInformationService;
 import com.neteast.business.service.IProjectStageService;
 import com.neteast.business.service.IProjectStatusService;
+import com.neteast.business.service.ISysDynamicRenderingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -42,6 +43,9 @@ public class ProjectStageController extends BaseController {
     @Resource
     IProjectStatusService statusService;
 
+    @Resource
+    ISysDynamicRenderingService sysDynamicRenderingService;
+
     @GetMapping("/listByPage")
     public AjaxResult getProjectStageListByPage(ProjectStage projectStage){
 
@@ -49,8 +53,9 @@ public class ProjectStageController extends BaseController {
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<ProjectStage> list = stageService.getProjectStageList(projectStage);
         TableDataInfo info = getDataTable(list);
-        JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
-        return success(body);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","projectStage","list");
+        initPageParams(rendering,info,pageDomain.getPageSize(),pageDomain.getPageNum());
+        return success(rendering);
     }
 
     @GetMapping("/getProjectStep/{id}")

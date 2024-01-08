@@ -4,6 +4,7 @@ import com.neteast.business.domain.project.ProjectInformation;
 import com.neteast.business.domain.project.ProjectScoreItem;
 import com.neteast.business.domain.project.ScoreItem;
 import com.neteast.business.domain.project.vo.ProjectInformationVO;
+import com.neteast.business.domain.project.vo.ScoreItemVO;
 import com.neteast.business.service.IProjectScoreItemService;
 import com.neteast.business.service.IScoreItemService;
 import com.neteast.common.core.controller.BaseController;
@@ -12,6 +13,7 @@ import com.neteast.common.core.domain.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,8 +42,13 @@ public class ProjectScoreItemController extends BaseController {
     public AjaxResult getProjectScoreItem(ProjectScoreItem projectScoreItem){
         List<ProjectScoreItem> list = projectScoreItemService.getProjectScoreItemList(projectScoreItem);
         list.forEach(l->{
+            List<ScoreItemVO> scoreItemVOS = new ArrayList<>();
             List<ScoreItem> scoreItems = scoreItemService.getListByExtId(l.getId());
-            l.setScoreItems(scoreItems);
+            scoreItems.forEach(s->{
+                ScoreItemVO vo = ScoreItemVO.convert(s);
+                scoreItemVOS.add(vo);
+            });
+            l.setScoreItems(scoreItemVOS);
         });
         return success(list);
     }

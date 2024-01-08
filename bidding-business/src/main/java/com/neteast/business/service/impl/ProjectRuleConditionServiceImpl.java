@@ -22,6 +22,6 @@ public class ProjectRuleConditionServiceImpl extends ServiceImpl<ProjectRuleCond
 
     @Override
     public List<ProjectRuleCondition> getProjectRuleConditionList(ProjectRuleCondition projectRuleCondition) {
-        return null;
+        return projectRuleConditionMapper.getList(projectRuleCondition);
     }
 }

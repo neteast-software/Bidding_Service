@@ -1,5 +1,6 @@
 package com.neteast.business.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.neteast.business.domain.project.ScoreItemRule;
 import com.neteast.business.domain.project.RuleCondition;
@@ -44,10 +45,10 @@ public class ScoreItemRuleServiceImpl extends ServiceImpl<ScoreItemRuleMapper, S
     @Override
     public ScoreItemRule getScoreItemRole(ScoreItemRule rule,Integer projectId,Integer packageId) {
         //获取相应规则
-        List<ScoreItemRule> rules = this.lambdaQuery().eq(ScoreItemRule::getScoreMethod,rule.getScoreMethod())
-                .eq(ScoreItemRule::getTradeMethod,rule.getTradeMethod())
-                .eq(ScoreItemRule::getProjectType,rule.getProjectType())
-                .eq(ScoreItemRule::getItemType,rule.getItemType())
+        List<ScoreItemRule> rules = this.lambdaQuery().eq(rule.getScoreMethod()!=null,ScoreItemRule::getScoreMethod,rule.getScoreMethod())
+                .eq(rule.getTradeMethod()!=null,ScoreItemRule::getTradeMethod,rule.getTradeMethod())
+                .eq(rule.getProjectType()!=null,ScoreItemRule::getProjectType,rule.getProjectType())
+                .eq(StrUtil.isNotBlank(rule.getItemType()),ScoreItemRule::getItemType,rule.getItemType())
                 .list();
 
         //获取项目的特殊情况

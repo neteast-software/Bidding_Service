@@ -1,11 +1,16 @@
 package com.neteast.web.controller.project;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.project.ScoreMethod;
 import com.neteast.business.domain.template.ItemTemplate;
 import com.neteast.business.service.IItemTemplateService;
 import com.neteast.business.service.IScoreMethodService;
+import com.neteast.business.service.ISysDynamicRenderingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
+import com.neteast.common.core.page.PageDomain;
+import com.neteast.common.core.page.TableDataInfo;
+import com.neteast.common.core.page.TableSupport;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -26,12 +31,26 @@ public class ScoreMethodController extends BaseController {
     @Resource
     IItemTemplateService itemTemplateService;
 
+    @Resource
+    ISysDynamicRenderingService sysDynamicRenderingService;
 
     @GetMapping("/list")
     public AjaxResult getScoreMethodList(ScoreMethod scoreMethod){
 
         List<ScoreMethod> list = scoreMethodService.getScoreMethodList(scoreMethod);
         return success(list);
+    }
+
+    @GetMapping("/listByPage")
+    public AjaxResult getScoreMethodListByPage(ScoreMethod scoreMethod){
+
+        startPage();
+        PageDomain pageDomain = TableSupport.getPageDomain();
+        List<ScoreMethod> list = scoreMethodService.getScoreMethodList(scoreMethod);
+        TableDataInfo info = getDataTable(list);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","scoreMethod","list");
+        initPageParams(rendering,info,pageDomain.getPageSize(),pageDomain.getPageNum());
+        return success(rendering);
     }
 
     @GetMapping("/getOne/{id}")

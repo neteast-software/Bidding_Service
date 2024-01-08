@@ -35,7 +35,7 @@ public class ScoreItemServiceImpl extends ServiceImpl<ScoreItemMapper, ScoreItem
         ProjectScoreItem projectScoreItem = projectScoreItemService.lambdaQuery().eq(ProjectScoreItem::getId,scoreItem.getExtId()).one();
         save(scoreItem);
         projectScoreItem.changeNum(1);
-        projectScoreItem.changeValue(scoreItem.getValue());
+        projectScoreItem.changeValue(scoreItem.getMax());
         projectScoreItemService.updateById(projectScoreItem);
         return true;
     }
@@ -48,7 +48,7 @@ public class ScoreItemServiceImpl extends ServiceImpl<ScoreItemMapper, ScoreItem
         ProjectScoreItem projectScoreItem = projectScoreItemService.lambdaQuery().eq(ProjectScoreItem::getId,item.getExtId()).one();
         removeById(id);
         projectScoreItem.changeNum(-1);
-        projectScoreItem.changeValue(-item.getValue());
+        projectScoreItem.changeValue(-item.getMax());
         projectScoreItemService.updateById(projectScoreItem);
         return true;
     }
@@ -57,9 +57,9 @@ public class ScoreItemServiceImpl extends ServiceImpl<ScoreItemMapper, ScoreItem
     public boolean updateScoreItem(ScoreItem after) {
 
         ScoreItem before = getById(after.getId());
-        if (after.getValue()!=null&&before.getValue().compareTo(after.getValue())!=0){
+        if (after.getMax()!=null&&before.getMax().compareTo(after.getMax())!=0){
             ProjectScoreItem projectScoreItem = projectScoreItemService.lambdaQuery().eq(ProjectScoreItem::getId,after.getExtId()).one();
-            Double change = after.getValue()-before.getValue();
+            Double change = after.getMax()-before.getMax();
             projectScoreItem.changeValue(change);
             projectScoreItemService.updateById(projectScoreItem);
         }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.neteast.business.domain.template.ItemTemplate;
 import com.neteast.business.domain.template.vo.ItemTemplateVO;
 import com.neteast.business.service.IItemTemplateService;
+import com.neteast.business.service.ISysDynamicRenderingService;
 import com.neteast.common.core.controller.BaseController;
 import com.neteast.common.core.domain.AjaxResult;
 import com.neteast.common.core.page.PageDomain;
@@ -27,6 +28,9 @@ public class ItemTemplateController extends BaseController {
     @Resource
     IItemTemplateService itemTemplateService;
 
+    @Resource
+    ISysDynamicRenderingService sysDynamicRenderingService;
+
     @GetMapping("/list")
     public AjaxResult getItemTemplateList(ItemTemplate itemTemplate){
 
@@ -41,8 +45,9 @@ public class ItemTemplateController extends BaseController {
         PageDomain pageDomain = TableSupport.getPageDomain();
         List<ItemTemplate> list = itemTemplateService.getItemTemplateList(itemTemplate);
         TableDataInfo info = getDataTable(list);
-        JSONObject body = initPageParams(info,pageDomain.getPageSize(),pageDomain.getPageNum());
-        return success(body);
+        JSONObject rendering = sysDynamicRenderingService.getSysDynamicRendering("project","itemTemplate","list");
+        initPageParams(rendering,info,pageDomain.getPageSize(),pageDomain.getPageNum());
+        return success(rendering);
     }
 
     @PostMapping("/add")
